@@ -1,8 +1,8 @@
 <?php
 
-echo " <form action='/action_page.php'>
+echo " <form action=''>
   <fieldset>
-    <legend>Personal information:</legend>
+    <legend>Welcome to Prezmark</legend>
     First name:<br>
     <input type='text' name='firstname' value='Mickey'><br>
     Last name:<br>
