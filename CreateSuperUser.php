@@ -83,7 +83,7 @@
             
            /* $subject = "PresMark Password";
             $txt = "Hello Your Password is "+$password;
-            $headers = "From: Prezmark student marking system" . "\r\n" ;
+            $header = "From: Prezmark student marking system" . "\r\n" ;
 
             mail($email,$subject,$txt);*/
         ?> 
