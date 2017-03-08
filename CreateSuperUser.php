@@ -10,7 +10,7 @@
     <body>
         
         <form name="CreateSuperUser" id="CreateSuperUser" method="post" onsubmit="return validateForm()">
-            <legend>Create Super User</legend>
+            <h1>Create Super User</h1>
             
             <label for="email">Email</label>
             <input id="email" name="email" type="email"></input>
