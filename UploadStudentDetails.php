@@ -1,5 +1,9 @@
 <?php
-    //session_start();
+    /*session_start();
+     * if($_SESSION['Role']!="UC")
+     *      Location: (redirect somewhere)
+     */
+    
 ?>
 
 <html> 
