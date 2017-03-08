@@ -81,6 +81,34 @@
 			
 	
             
+
+    
+
+    $to = 'esha.dshetty@email.com';
+
+    $subject = 'Marriage Proposal';
+
+    $message = 'Hi Jane, will you marry me?'; 
+
+    $from = 'esha.dshetty@email.com';
+
+     
+
+    // Sending email
+
+    if(mail($to, $subject, $message)){
+
+        echo 'Your mail has been sent successfully.';
+
+    } else{
+
+        echo 'Unable to send email. Please try again.';
+
+    }
+
+   
+
+
            /* $subject = "PresMark Password";
             $txt = "Hello Your Password is "+$password;
             $header = "From: Prezmark student marking system" . "\r\n" ;
