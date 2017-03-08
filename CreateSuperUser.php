@@ -83,7 +83,7 @@
             
 
     
-
+/*
     $to = 'esha.dshetty@email.com';
 
     $subject = 'Marriage Proposal';
@@ -104,13 +104,34 @@
 
         echo 'Unable to send email. Please try again.';
 
-    }
+    }*/
 
-   
-
-
-           /* $subject = "PresMark Password";
-            $txt = "Hello Your Password is "+$password;
+  
+        $subject = "PresMark Password";
+        $msg = "Hello Your Password is "+$password;
+        $to="esha.dshetty@gmail.com";
+        $from="project_ict333@murdochdubai.ac.ae";
+        $from_name="Esha";
+        $account="project_ict333@murdochdubai.ac.ae";
+        $password="ict@333";
+        
+        include("phpmailer/class.phpmailer.php");
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = 'UTF-8';
+        $mail->Host = "smtp.live.com";
+        $mail->SMTPAuth= true;
+        $mail->Port = 587;
+        $mail->Username= $account;
+        $mail->Password= $password;
+        $mail->SMTPSecure = 'tls';
+        $mail->From = $from;
+        $mail->FromName= $from_name;
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $msg;
+        $mail->addAddress($to);
+           /*
             $header = "From: Prezmark student marking system" . "\r\n" ;
 
             mail($email,$subject,$txt);*/
