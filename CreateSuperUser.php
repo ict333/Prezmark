@@ -1,5 +1,6 @@
 <?php
     //session_start();
+
 ?>
 
 <html> 
@@ -43,13 +44,25 @@
         </script>
         
         <?php
+         function generatePassword($length = 8) 
+         {
+            $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            $count = mb_strlen($characters);
+
+            for ($i = 0, $result = ''; $i < $length; $i++) {
+                $index = rand(0, $count - 1);
+                $result= mb_substr($characters, $index, 1);
+            }
+
+            return $result;
+         }
             if(isset($_POST['submit']))
             {
                 include 'db_connect.php';	
 		$email=$_POST['email'];
                 $role1="SuperUser";
 		$role2=$_POST['role'];
-                $password="123";
+                $password=  generatePassword();
                 $active="1";
                 
                 /*This query looks for the user entered email in the Person table to eliminate same values*/
@@ -67,7 +80,7 @@
                     /*This query inserts the email into the SuperUser table*/
                     $query ="INSERT INTO SuperUser VALUES ('$email', '$role2','$password', '$active');";
                     $result = mysqli_query($dbc,$query);
-                    
+                    echo $query;
                     mysqli_close($dbc);
                     
                     echo '<script>alert("Account created successfully!");</script>';
