@@ -1,4 +1,7 @@
     <?php
+    ini_set('display_errors',1);
+    error_reporting (E_ALL);
+    
     if($_FILES["csvfile"]["error"] > 0)
     {
         echo "Error: " . $_FILES["csvfile"]["error"] . "<br>";
@@ -61,8 +64,7 @@
                 } 
                 else
                 {
-                    chmod("File/", 777);
-                    if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], "File/"))
+                    if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], "File/". $_FILES["csvfile"]["name"]))
                         echo 'Your file was uploaded successfully.';
                     
                     echo "File/" . $_FILES["csvfile"]["name"];
