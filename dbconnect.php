@@ -1,9 +1,11 @@
 <?php
+	$host = "localhost";
+	$user = "root";
+	$password = "123";
+	$dbname = "Prezmark"; 
+	$dbc = mysqli_connect($host,$user,$password,$dbname); 
 
-$con=mysqli_connect("localhost","root","qwerty","Prezmark");
-if(!$con)
-{
-    die("Connection Failed! ".mysqli_connect_error());
-}
-
-
+	if(!$dbc)
+		die("Connection failed: ".mysqli_connect_error());
+	
+?>

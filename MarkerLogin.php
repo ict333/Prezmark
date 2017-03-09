@@ -10,9 +10,9 @@ include ("dbconnect.php");
         <fieldset>
         <legend>Welcome to Prezmark</legend>
         First name:*<br>
-        <input type="text" name="firstname" required><br>
+        <input type="text" name="firstname" id="firstname" required><br>
         Last name:*<br>
-        <input type="text" name="lastname" required><br><br>
+        <input type="text" name="lastname" id="lastname" required><br><br>
         Email:*<br>
         <input type="email" name="mail" required><br><br>
         Role:*<br>
@@ -39,68 +39,76 @@ include ("dbconnect.php");
         </fieldset>
     </form>
 </html>
+  
+        
 <?php
-        ini_set('display_errors',1);
-        error_reporting(E_ALL);
-        if(isset($_POST['m_register']))
-	{
-		$mail=$_POST['mail'];
-                $fn=$_POST['firstname'];
-                $ln=$_POST['lastname'];
-                $role=$_POST['role'];
-                //echo "<script>alert('$role')</script>";
-                echo'$check_per="insert into Person values('.$mail.','.$role.')";';
-		//$check_reg="insert into Marker(FirsName,LastName,Email,Role) values('$fn','$ln','$mail','$role') ";
-		$run_per=mysqli_query($con,$check_per);
-                //$run_reg=mysqli_query($con,$check_reg);
+    if(isset($_POST['m_register']))
+    {
+        include 'dbconnect.php';	
+        $mail=$_POST['mail'];
+        $role1="Marker";
+	$role2=$_POST['role'];
+        $fn=$_POST['firstname'];
+        $ln=$_POST['lastname'];
+        $active="1";
                 
-		
-		if($run_per)
-		{
-			
-			while($row_usr=mysqli_fetch_array($run_per))
-			{
-				echo "<script>alert('Registered! You may login now!')</script>";
-			}
-			if(!mysqli_fetch_array($run_per))
-			{
-				echo "<script>alert('Error')</script>";
-			}
-			
+        /*This query looks for the user entered email in the Person table to eliminate same values*/
+        $query="SELECT * FROM Person WHERE Email='$mail'";
+	$result = mysqli_query($dbc,$query);
+        $outcome=mysqli_num_rows($result);
+                
+        if($outcome==0)
+	{
+            /*This query inserts the email into the Person table*/
+                    $query ="INSERT INTO Person VALUES ('$mail', '$role1');";
+                    $result = mysqli_query($dbc,$query);
+                    echo $query;
+                    /*This query inserts the email into the Marker table*/
+                    $query ="INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','la','32498909','$active');";
+                    $result = mysqli_query($dbc,$query);
+                    echo $query;
+                    mysqli_close($dbc);
+                    
+                    echo '<script>alert("Account created successfully!");</script>';
 		}
-		else 
-		{
-			echo "<script>alert('Query Error!')</script>";
-			
+                else
+                {
+                    echo '<script>alert("This email is already exists!");</script>';
+				
 		}
-	}
+            }
+			
+	
+       
         
 	if(isset($_POST['m_login']))
 	{
 		$email=$_POST['email'];
-		$check_login="select * from Marker where Email='$email'";
-		$run_login=mysqli_query($con,$check_login);
-		
-		if($run_login)
+                
+		/*This query checks if the email exists in the database from the Person table*/
+                $query="SELECT * FROM Person WHERE Email='$email'";
+                $result = mysqli_query($dbc,$query); 
+                $outcome=mysqli_num_rows($result);
+                
+		if($outcome!=0)
 		{
-			
-			while($row_usr=mysqli_fetch_array($run_login))
-			{
-				
-				echo "<script>alert('Welcome back!)</script>";
-				echo "<script>window.open('dbconnect.php','_self')</script>";
-			}
-			if(!mysqli_fetch_array($run_login))
-			{
-				echo "<script>alert('Please Register First')</script>";
-			}
-			
+                    $query="SELECT * FROM Marker WHERE Email='$email'";
+                    $result = mysqli_query($dbc,$query); 
+                    echo $query;
+                    $outcome=mysqli_num_rows($result);
+                    if($outcome!=0)
+                    {
+                        session_start();
+                        $_SESSION['Role']="Marker";
+                        echo '<script>alert("Login successful");</script>';
+                    }
+                    else
+                         echo '<script>alert("Please Register First!");</script>';
+					
 		}
-		else 
-		{
-			echo "<script>alert('Query Error!')</script>";
-			
-		}
+                 else
+                         echo '<script>alert("Please Register First!");</script>';
+                
 	}
         
         

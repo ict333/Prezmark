@@ -44,25 +44,29 @@
         </script>
         
         <?php
-         function generatePassword($length = 8) 
+         function generatePassword() 
          {
+            $length=8;
             $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             $count = mb_strlen($characters);
 
-            for ($i = 0, $result = ''; $i < $length; $i++) {
+            for ($i = 0, $r = ''; $i < $length; $i++)
+            {
                 $index = rand(0, $count - 1);
-                $result= mb_substr($characters, $index, 1);
+                $r= mb_substr($characters, $index, 1);
             }
 
-            return $result;
-         }
+            return $r;
+          }
+          
             if(isset($_POST['submit']))
             {
-                include 'db_connect.php';	
+                include 'dbconnect.php';	
 		$email=$_POST['email'];
                 $role1="SuperUser";
 		$role2=$_POST['role'];
                 $password=  generatePassword();
+                echo $password;
                 $active="1";
                 
                 /*This query looks for the user entered email in the Person table to eliminate same values*/
@@ -76,7 +80,7 @@
                     /*This query inserts the email into the Person table*/
                     $query ="INSERT INTO Person VALUES ('$email', '$role1');";
                     $result = mysqli_query($dbc,$query);
-                    
+                    echo $query;
                     /*This query inserts the email into the SuperUser table*/
                     $query ="INSERT INTO SuperUser VALUES ('$email', '$role2','$password', '$active');";
                     $result = mysqli_query($dbc,$query);
@@ -93,62 +97,7 @@
             }
 			
 	
-            
-
-    
-/*
-    $to = 'esha.dshetty@email.com';
-
-    $subject = 'Marriage Proposal';
-
-    $message = 'Hi Jane, will you marry me?'; 
-
-    $from = 'esha.dshetty@email.com';
-
-     
-
-    // Sending email
-
-    if(mail($to, $subject, $message)){
-
-        echo 'Your mail has been sent successfully.';
-
-    } else{
-
-        echo 'Unable to send email. Please try again.';
-
-    }*/
-
-  
-        $subject = "PresMark Password";
-        $msg = "Hello Your Password is "+$password;
-        $to="esha.dshetty@gmail.com";
-        $from="project_ict333@murdochdubai.ac.ae";
-        $from_name="Esha";
-        $account="project_ict333@murdochdubai.ac.ae";
-        $password="ict@333";
-        
-        include("phpmailer/class.phpmailer.php");
-        $mail = new PHPMailer();
-        $mail->IsSMTP();
-        $mail->CharSet = 'UTF-8';
-        $mail->Host = "smtp.live.com";
-        $mail->SMTPAuth= true;
-        $mail->Port = 587;
-        $mail->Username= $account;
-        $mail->Password= $password;
-        $mail->SMTPSecure = 'tls';
-        $mail->From = $from;
-        $mail->FromName= $from_name;
-        $mail->isHTML(true);
-        $mail->Subject = $subject;
-        $mail->Body = $msg;
-        $mail->addAddress($to);
-           /*
-            $header = "From: Prezmark student marking system" . "\r\n" ;
-
-            mail($email,$subject,$txt);*/
-        ?> 
+          ?>
         
     </body>
 </html>
