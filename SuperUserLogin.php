@@ -27,23 +27,27 @@
                     {
                         echo 'Logged in successfully';
                         if($role=="Admin")
+                        {
                             $_SESSION['Role']="Admin";  
+                        }
                         else
+                        {
                             $_SESSION['Role']="UC";
-                        
-                        //displays the role of the user(remove)
-                         echo $_SESSION['Role'];
-
+                        }
                     }
                     else
+                    {
                         echo 'Account not active';
+                    }
                         
                 }
             }
                     
         }
         else
+        {
             echo 'This user does not exist';
+        }
     }
                         
  ?>
@@ -54,49 +58,31 @@
     
     <body>
         
-        <form name="SuperUserLogin" id="SuperUserLogin" method="post" onsubmit="return validateForm()">
-            <h1>Super User Login</h1>
+    <form name="SuperUserLogin" id="SuperUserLogin" method="post" onsubmit="return validateForm()">
+        <fieldset>
+        <legend>Super User Login</legend>
             
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email"></input>
+        <label for="email">Email*:</label>
+        <input id="email" name="email" type="email" required></input>  
+        <br> </br>
             
-            <br> </br>
+        <label for="password">Password*:</label>
+        <input id="password" name="password" type="password" required></input>
+        <br> </br>
             
-            <label for="role">Password</label>
-            <input id="password" name="password" type="password"></input>
-            <br> </br>
-            
-            <input type="submit" name="submit" value="Login"></input>
-        </form>
+        <input type="submit" name="submit" value="Login"></input>
+        </fieldset>
+    </form>
         
-        <script>
-            function validateForm()
-            {
-                var email=document.SuperUserLogin.email.value;
-                var password=document.SuperUserLogin.password.value;
-                
-                if((email==""||email==null)&&(password==""||password==null))
-		{
-                    alert("Please enter your details");
-                    return false;
-		}
-                
-                 if(email==""||email==null)
-		{
-                    alert("Please enter your email");
-                    return false;
-		}
-                
-                 if(password==""||password==null)
-		{
-                    alert("Please enter your password");
-                    return false;
-		}
-                
-            }
-        </script>
-        
-       
+    <script>
+       function validateForm()
+       {
+            var email=document.SuperUserLogin.email.value;
+            var password=document.SuperUserLogin.password.value;
+            
+            /*some validation tests*/
+        }
+    </script>  
            
     </body>
 </html>

@@ -65,7 +65,9 @@
                 else
                 {
                     if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], "File/". $_FILES["csvfile"]["name"]))
+                    {
                         echo 'Your file was uploaded successfully.';
+                    }
                     
                     echo "File/" . $_FILES["csvfile"]["name"];
                 } 
@@ -83,5 +85,5 @@
         echo "Error: Invalid parameters - please contact your server administrator.";
     }
 
-    ?>
+?>
 
