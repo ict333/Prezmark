@@ -1,7 +1,9 @@
 <?php session_start();
+  ini_set('display_errors',1);
+    error_reporting (E_ALL);
     if(isset($_POST['submit']))
     {
-        include 'db_connect.php';	
+        include 'dbconnect.php';	
         $email=$_POST['email'];
         $password=$_POST['password'];
                 
@@ -9,13 +11,13 @@
 	$query="SELECT * FROM Person WHERE Email='$email'";
 	$result = mysqli_query($dbc,$query); 
 	$outcome=mysqli_num_rows($result);
-                
+        
 	if($outcome!=0)
         {
             $query="SELECT * FROM SuperUser WHERE Email='$email' AND Password='$password'";
             $result = mysqli_query($dbc,$query); 
             $outcome=mysqli_num_rows($result);
-                    
+            
             if($outcome!=0)
             {
                 while ($row=mysqli_fetch_assoc($result))

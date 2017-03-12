@@ -35,7 +35,7 @@
         </label>
         <br></br>
         
-        <label for="student">Student:
+        <label for="student">Student Number:
         <input type="integer" name="student" id="student">
         </label>
         <br></br>
@@ -100,6 +100,7 @@
 /*PHP script for the marker login form*/
     if(isset($_POST['m_login']))
     {
+        include 'dbconnect.php';
 	$email=$_POST['email'];
                 
 	/*This query checks if the email exists in the database from the Person table*/
@@ -111,23 +112,36 @@
 	{
             $query="SELECT * FROM Marker WHERE Email='$email'";
             $result = mysqli_query($dbc,$query); 
-            echo $query;
             $outcome=mysqli_num_rows($result);
+            
             if($outcome!=0)
-            {
-                session_start();
-                $_SESSION['Role']="Marker";
-                echo '<script>alert("Login successful");</script>';
+            { 
+                while ($row=mysqli_fetch_assoc($result))
+                {
+                    $role=$row['Role'];
+                    $active=$row['Active'];
+                    
+                    if($active==1)
+                    {
+                        session_start();
+                        $_SESSION['Role']="Marker";
+                        echo 'Login successful';
+                    }
+                    else
+                    {
+                        echo 'Account not active';
+                    }
+                }
             }
             else
             {
-                echo '<script>alert("Please Register First!");</script>';
+                echo 'Please Register First!';
             }
 					
 	}
         else
         {
-            echo '<script>alert("Please Register First!");</script>';
+            echo 'Please Register First';
         }
                 
     }

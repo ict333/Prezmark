@@ -39,21 +39,18 @@
     </script>
         
 <?php
-    function generatePassword() 
+  
+   function generatePassword() 
     {
-        $length=8;
-        $r ="";
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $count = mb_strlen($characters);
-
-        for ($i = 0 ; $i < $length; $i++)
+        $passwordRange = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); 
+        $length = strlen($passwordRange) - 1;
+        for ($i = 0; $i < 8; $i++) 
         {
-            $index = rand(0, $count - 1);
-            $r= mb_substr($characters, $index, 1);
-            echo $r;
+            $n = rand(0, $length);
+            $pass[] = $passwordRange[$n];
         }
-
-        return $r;
+        return implode($pass);
     }
           
     if(isset($_POST['submit']))
@@ -64,32 +61,42 @@
 	$role2=$_POST['role'];
         $password=  generatePassword();
         $active="1";
-        echo $password;
-                
-        /*This query looks for the user entered email in the Person table to eliminate same values*/
-        $query="SELECT * FROM Person WHERE Email='$email'";
-	$result = mysqli_query($dbc,$query);
-        $outcome=mysqli_num_rows($result);
-                
-	if($outcome==0)
-	{
+        
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
+        {
+          echo $email.' is a valid email address';
+          /*This query looks for the user entered email in the Person table to eliminate same values*/
+          $query="SELECT * FROM Person WHERE Email='$email'";
+          $result = mysqli_query($dbc,$query);
+          $outcome=mysqli_num_rows($result);
+
+          if($outcome==0)
+          {
             /*This query inserts the email into the Person table*/
             $query ="INSERT INTO Person VALUES ('$email', '$role1');";
             $result = mysqli_query($dbc,$query);
-            echo $query;
             /*This query inserts the email into the SuperUser table*/
             $query ="INSERT INTO SuperUser VALUES ('$email', '$role2','$password', '$active');";
             $result = mysqli_query($dbc,$query);
-            echo $query;
             mysqli_close($dbc);
-                   
-            echo '<script>alert("Account created successfully!");</script>';
-        }
+
+            echo 'Account created successfully!';
+          }
+          
+          else
+          {
+            echo 'This email is already exists!';
+
+          }
+        } 
+        
         else
         {
-            echo '<script>alert("This email is already exists!");</script>';
-				
-	}
+          echo $email.' is not a valid email address';
+        }
+                
+        
     }
 			
 ?>
