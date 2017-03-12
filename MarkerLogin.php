@@ -1,117 +1,174 @@
-<?php
-include ("Functions.php");
-include ("dbconnect.php");
-?>
 <html>
-<head>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-</head>
-    <form action="MarkerLogin.php" method="post">
+    <head>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <script>
+        function check()
+        {
+            if (grecaptcha.getResponse().length==0){
+                alert("You can't proceed!");
+                return false;
+            }
+            else
+            {
+                alert("Thank you");
+            }
+        }
+        function checkStudent()
+        {
+            
+            if (document.getElementById("role").value==="Student")
+            {
+                    document.getElementById("student").disabled=false;
+                    document.getElementById("affiliation").disabled=true;
+            }
+            else if (document.getElementById("role").value==="Client")
+            {
+                    document.getElementById("student").disabled=true;
+                    document.getElementById("affiliation").disabled=false;
+            }
+            else if (document.getElementById("role").value==="Visitor")
+            {
+                    document.getElementById("student").disabled=true;
+                    document.getElementById("affiliation").disabled=false;
+            }
+            
+        }
+        </script>
+    </head>
+    <form name="Register" onsubmit="return check()" method="post">
         <fieldset>
-        <legend>Welcome to Prezmark</legend>
-        First name:*<br>
-        <input type="text" name="firstname" required><br>
-        Last name:*<br>
-        <input type="text" name="lastname" required><br><br>
-        Email:*<br>
-        <input type="email" name="mail" required><br><br>
-        Role:*<br>
-        <select name="role" required>
-        <option value="Student">Student</option>
-        <option value="Visitor">Visitor</option>
-        <option value="Client">Client</option>
-        </select><br><br>
-        Affiliation:<br>
-        <input type="text" name="affiliation" ><br><br>
-        Student:<br>
-        <input type="text" name="id" ><br><br>
-        <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
-        <input type="submit" name="m_register" value="Register">
+            <legend>Welcome to Prezmark</legend>
+
+            <label for="firstname">First Name*:
+                <input type="text" name="firstname" id="firstname" required>
+            </label>
+            <br></br>
+
+            <label for="lastname">Last Name*:
+                <input type="text" name="lastname" id="lastname" required>
+            </label>
+            <br></br>
+
+            <label for="email">Email*:
+                <input type="email" name="mail" id="mail" required>
+            </label>
+            <br></br>
+
+            <label for="role">Role*:
+                <select onblur="checkStudent()" name="role" id="role" required>
+                    <option value="Student">Student</option>
+                    <option value="Visitor">Visitor</option>
+                    <option value="Client">Client</option>
+                </select>
+            </label>
+            <br></br>
+
+            <label for="affiliation">Affiliation:
+                <input  type="text" name="affiliation" id="affiliation">
+            </label>
+            <br></br>
+
+            <label for="student">Student Number:
+                <input type="integer" name="student" id="student">
+            </label>
+            <br></br>
+
+            <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
+            <input type="submit" name="m_register" value="Register">
         </fieldset>
     </form>
 
-    <form action="MarkerLogin.php" method="post">
+    <form name="MarkerLogin" onsubmit="" method="post">
         <fieldset>
-        <legend>Login</legend>
-        Email:<br>
-        <input type="email" name="email" ><br><br>
-        <input type="submit" name="m_login" value="Login">
+            <legend>Login</legend>
+
+            <label for="email">Email*:
+                <input type="email" name="email" >
+            </label>
+            <br></br>
+            <input type="submit" name="m_login" value="Login">
         </fieldset>
     </form>
 </html>
+
+
 <?php
-        ini_set('display_errors',1);
-        error_reporting(E_ALL);
-        if(isset($_POST['m_register']))
-	{
-		$mail=$_POST['mail'];
-                $fn=$_POST['firstname'];
-                $ln=$_POST['lastname'];
-                $role=$_POST['role'];
-                $aff=$_POST['affiliation'];
-                $id=$_POST['id'];
-                $check_per="SELECT * FROM Person WHERE Email='$mail'";
-		$run_per=mysqli_query($con,$check_per);
-                $outcome=mysqli_num_rows($run_per);
-		
-		if($outcome==0)
-		{
-                    //This query inserts marker details to marker table
-                    $query ="INSERT INTO Person VALUES ('$mail', '$role');";
-                    $result = mysqli_query($con,$query);
-                    
-                    //This query inserts marker details to marker table
-                    $query ="INSERT INTO Marker VALUES('$fn','$ln','$mail','$role','$aff','$id',1);";
-                    $result = mysqli_query($con,$query);
-                    //if($result) 
-                    //{
-                    //    echo "Yes";
-                    //} 
-                    //else 
-                    //{
-                    //    echo "No";
-                    //}
-                    //echo $query;
-                    mysqli_close($con);
-                    
-                    echo '<script>alert("Account created successfully!");</script>';
-		}
-		else 
-		{
-			echo "<script>alert('Account Exists!Log in *facepalm*')</script>";
-			
-		}
-	}
+/* PHP script for the marker registration form */
+if (isset($_POST['m_register']))
+{
+    include 'dbconnect.php';
+    $mail = $_POST['mail'];
+    $role1 = "Marker";
+    $role2 = $_POST['role'];
+    $fn = $_POST['firstname'];
+    $ln = $_POST['lastname'];
+    $success = $_POST['g-recaptcha-response'];
+    $active = "1";
+
+    /* This query looks for the user entered email in the Person table to eliminate same values */
+    $query = "SELECT * FROM Person WHERE Email='$mail'";
+    $result = mysqli_query($dbc, $query);
+    $outcome = mysqli_num_rows($result);
+
+    if ($success) 
+    {
+        if ($outcome == 0) {
+            /* This query inserts the email into the Person table */
+            $query = "INSERT INTO Person VALUES ('$mail', '$role1');";
+            $result = mysqli_query($dbc, $query);
+
+            /* This query inserts the email into the Marker table */
+            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','la','32498909','$active');";
+            $result = mysqli_query($dbc, $query);
+            mysqli_close($dbc);
+
+            echo '<script>alert("Account created successfully!");</script>';
+        } else {
+            echo '<script>alert("This email is already exists!");</script>';
+        }
+    }
+    else if(!$success)
+    {
+        echo '<script>alert("Please verify that you are a human!")</script>';
+        return false;
+    }
+}
 ?>
 
 <?php
-	if(isset($_POST['m_login']))
-	{
-		$email=$_POST['email'];
-		$check_login="select * from Marker where Email='$email'";
-		$run_login=mysqli_query($con,$check_login);
-		
-		if($run_login)
-		{
-			
-			while($row_usr=mysqli_fetch_array($run_login))
-			{
-				
-				echo "<script>alert('Welcome back!)</script>";
-				echo "<script>window.open('dbconnect.php','_self')</script>";
-			}
-			if(!mysqli_fetch_array($run_login))
-			{
-				echo "<script>alert('Please Register First')</script>";
-			}
-			
-		}
-		else 
-		{
-			echo "<script>alert('Query Error!')</script>";
-			
-		}
-	}
-        
-        
+/* PHP script for the marker login form */
+if (isset($_POST['m_login'])) {
+    include 'dbconnect.php';
+    $email = $_POST['email'];
+
+    /* This query checks if the email exists in the database from the Person table */
+    $query = "SELECT * FROM Person WHERE Email='$email'";
+    $result = mysqli_query($dbc, $query);
+    $outcome = mysqli_num_rows($result);
+
+    if ($outcome != 0) {
+        $query = "SELECT * FROM Marker WHERE Email='$email'";
+        $result = mysqli_query($dbc, $query);
+        $outcome = mysqli_num_rows($result);
+
+        if ($outcome != 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $role = $row['Role'];
+                $active = $row['Active'];
+
+                if ($active == 1) {
+                    session_start();
+                    $_SESSION['Role'] = "Marker";
+                    echo '<script>alert("Login successful")</script>';
+                } else {
+                    echo '<script>alert("Account not active")</script>';
+                }
+            }
+        } else {
+            echo '<script>alert("Please Register First!")</script>';
+        }
+    } else {
+        echo '<script>alert("Please Register First")</script>';
+    }
+}
 ?>
