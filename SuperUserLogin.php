@@ -5,7 +5,8 @@
     {
         include 'dbconnect.php';	
         $email=$_POST['email'];
-        $password=$_POST['password'];
+        $pass=$_POST['password'];
+        
                 
         /*This query checks if the email exists in the database from the Person table*/
 	$query="SELECT * FROM Person WHERE Email='$email'";
@@ -14,7 +15,7 @@
         
 	if($outcome!=0)
         {
-            $query="SELECT * FROM SuperUser WHERE Email='$email' AND Password='$password'";
+            $query="SELECT * FROM SuperUser WHERE Email='$email'";
             $result = mysqli_query($dbc,$query); 
             $outcome=mysqli_num_rows($result);
             
@@ -24,23 +25,32 @@
                 {
                     $role=$row['Role'];
                     $active=$row['Active'];
-
-                    if($active==1)
+                    $password=$row['Password'];
+                    echo $pass.'----'.$password;
+                    if(password_verify($pass, $password))
                     {
-                        echo 'Logged in successfully';
-                        if($role=="Admin")
+                        if($active==1)
                         {
-                            $_SESSION['Role']="Admin";  
+                         echo 'Logged in successfully';
+                         if($role=="Admin")
+                         {
+                             $_SESSION['Role']="Admin";  
+                         }
+                         else
+                         {
+                             $_SESSION['Role']="UC";
+                         }
                         }
                         else
                         {
-                            $_SESSION['Role']="UC";
-                        }
+                         echo 'Account not active';
+                         } 
                     }
                     else
                     {
-                        echo 'Account not active';
+                        echo 'Wrong Password';
                     }
+                    
                         
                 }
             }

@@ -39,9 +39,11 @@ ini_set('display_errors',1);
         </fieldset>
     </form> 
 <?php
+
 if(isset($_POST['upload']))
 {
-    include 'dbconnect';
+    include 'dbconnect.php';
+    $folder="File/";
     $unit=$_POST['unit'];
     $semester=$_POST['semester'];
     $year=$_POST['year'];
@@ -85,12 +87,15 @@ if(isset($_POST['upload']))
             if(in_array($filetype, $allowed))
             {
                 // Check whether file exists before uploading it
-                if(file_exists("File/" . $_FILES["csvfile"]["name"]))
+                if(file_exists("Test/" . $_FILES["csvfile"]["name"]))
                 {
                     echo $_FILES["csvfile"]["name"] . " already exists.";
                 } 
                 else
                 {
+                   /* $path="/var/www/html/Prezmark/Test/";
+                    exec("chmod $path 0777");*/
+                    
                     if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], "File/". $_FILES["csvfile"]["name"]))
                     {
                         echo 'Your file was uploaded successfully.';
@@ -115,9 +120,9 @@ if(isset($_POST['upload']))
                     
                     while(! feof($file))
                     {
-                       // print_r(fgetcsv($file));
-                        //$teamcode[$count]=$unitoffering+$line[6];  
-                        //$count++;
+                        print_r(fgetcsv($file));
+                        $teamcode[$count]=$unitoffering+$line[6];  
+                        $count++;
                     }
 
                     fclose($file);
@@ -141,8 +146,6 @@ if(isset($_POST['upload']))
 }
 
 ?>
-
-
     
     </body>
 </html>
