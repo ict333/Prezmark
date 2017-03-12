@@ -24,7 +24,7 @@ include ("dbconnect.php");
         Affiliation:<br>
         <input type="text" name="affiliation" ><br><br>
         Student:<br>
-        <input type="integer" name="id" ><br><br>
+        <input type="text" name="id" ><br><br>
         <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
         <input type="submit" name="m_register" value="Register">
         </fieldset>
@@ -48,33 +48,43 @@ include ("dbconnect.php");
                 $fn=$_POST['firstname'];
                 $ln=$_POST['lastname'];
                 $role=$_POST['role'];
-                //echo "<script>alert('$role')</script>";
-                echo'$check_per="insert into Person values('.$mail.','.$role.')";';
-		//$check_reg="insert into Marker(FirsName,LastName,Email,Role) values('$fn','$ln','$mail','$role') ";
+                $aff=$_POST['affiliation'];
+                $id=$_POST['id'];
+                $check_per="SELECT * FROM Person WHERE Email='$mail'";
 		$run_per=mysqli_query($con,$check_per);
-                //$run_reg=mysqli_query($con,$check_reg);
-                
+                $outcome=mysqli_num_rows($run_per);
 		
-		if($run_per)
+		if($outcome==0)
 		{
-			
-			while($row_usr=mysqli_fetch_array($run_per))
-			{
-				echo "<script>alert('Registered! You may login now!')</script>";
-			}
-			if(!mysqli_fetch_array($run_per))
-			{
-				echo "<script>alert('Error')</script>";
-			}
-			
+                    //This query inserts marker details to marker table
+                    $query ="INSERT INTO Person VALUES ('$mail', '$role');";
+                    $result = mysqli_query($con,$query);
+                    
+                    //This query inserts marker details to marker table
+                    $query ="INSERT INTO Marker VALUES('$fn','$ln','$mail','$role','$aff','$id',1);";
+                    $result = mysqli_query($con,$query);
+                    //if($result) 
+                    //{
+                    //    echo "Yes";
+                    //} 
+                    //else 
+                    //{
+                    //    echo "No";
+                    //}
+                    //echo $query;
+                    mysqli_close($con);
+                    
+                    echo '<script>alert("Account created successfully!");</script>';
 		}
 		else 
 		{
-			echo "<script>alert('Query Error!')</script>";
+			echo "<script>alert('Account Exists!Log in *facepalm*')</script>";
 			
 		}
 	}
-        
+?>
+
+<?php
 	if(isset($_POST['m_login']))
 	{
 		$email=$_POST['email'];
