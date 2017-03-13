@@ -1,3 +1,6 @@
+<?php
+include("dbconnect.php");
+?>
 <!DOCTYPE html>
 <html> 
     <head>
@@ -6,16 +9,24 @@
     
     <body>
         
-        <form action="CreateSchedule2.php" name="CreateSchedule1" id="CreateSchedule1" method="post">
+        <form  name="CreateSchedule1" id="CreateSchedule1" method="post">
             <h1>Create a new schedule</h1>
             
             <label for="unit">Unit Offering</label>
+       
             <select name="unit" required>
-                <option value="ICT333TJD2017">ICT333TJD2017</option>
-                <option value="ICT323TJD2017">ICT323TJD2017</option>
-                <option value="ICT333TJD2018">ICT333TJD2018</option>
+            <?php
+                $get_offering="select DISTINCT UnitOffering from Team ;";
+
+                $runsql=mysqli_query($dbc,$get_offering);
+
+                while($rows=mysqli_fetch_array($runsql))
+                {
+                        $offering=$rows['UnitOffering'];
+                        echo "<option value='$offering'>$offering</option>";
+                }
+            ?>
             </select><br><br>
-            <br> </br>
             
             <label for="date">Date</label>
             <input id="date" name="date" type="date" required></input>
@@ -24,52 +35,28 @@
             <label for="venue">Venue</label>
             <input id="venue" name="venue" type="text" required></input>
             <br> </br>
-             <input type="submit" value="Next"></input>
+             <input type="submit" name="next" value="Next"></input>
         </form>        
     </body>
 </html>
 <?php
-    include("dbconnect.php");
+    
         ini_set('display_errors',1);
         error_reporting(E_ALL);
-        if(isset($_POST['m_register']))
+        if(isset($_POST['next']))
 	{
-		$offering=$_POST['UnitOffering'];
-                $date=$_POST['Date'];
-                $venue=$_POST['Venue'];
-                $role=$_POST['role'];
-                $aff=$_POST['affiliation'];
-                $id=$_POST['id'];
-                $check_per="SELECT * FROM Person WHERE Email='$mail'";
-		$run_per=mysqli_query($con,$check_per);
-                $outcome=mysqli_num_rows($run_per);
-		
-		if($outcome==0)
-		{
-                    //This query inserts marker details to marker table
-                    $query ="INSERT INTO Person VALUES ('$mail', '$role');";
-                    $result = mysqli_query($con,$query);
-                    
-                    //This query inserts marker details to marker table
-                    $query ="INSERT INTO Marker VALUES('$fn','$ln','$mail','$role','$aff','$id',1);";
-                    $result = mysqli_query($con,$query);
-                    //if($result) 
-                    //{
-                    //    echo "Yes";
-                    //} 
-                    //else 
-                    //{
-                    //    echo "No";
-                    //}
-                    //echo $query;
-                    mysqli_close($con);
-                    
-                    echo '<script>alert("Account created successfully!");</script>';
-		}
-		else 
-		{
-			echo "<script>alert('Account Exists!Log in *facepalm*')</script>";
-			
-		}
+                $date=$_POST['date'];
+                //echo"<script>alert('$date')</script>";
+                $venue=$_POST['venue'];
+                $query="Insert into PresentationSchedule values('$date','peter.cole@gmail.com','ICT313S12016IT02','$venue')";
+		$run=mysqli_query($dbc,$query);
+		if(!$run)
+                {
+                    echo"<script>alert('Query Error!')</script>";
+                }
+                else
+                {
+                    echo"<script>window.open('CreateSchedule2.php','_self')</script>";
+                }
 	}
 ?>
