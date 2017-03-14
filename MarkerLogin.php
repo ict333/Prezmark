@@ -109,7 +109,8 @@ if (isset($_POST['m_register']))
     $query = "SELECT * FROM Person WHERE Email='$mail'";
     $result = mysqli_query($dbc, $query);
     $outcome = mysqli_num_rows($result);
-
+  if (!filter_var($mail, FILTER_VALIDATE_EMAIL) === false) 
+   {
     if ($success) 
     {
         if ($outcome == 0) {
@@ -132,6 +133,11 @@ if (isset($_POST['m_register']))
         echo '<script>alert("Please verify that you are a human!")</script>';
         return false;
     }
+  }
+  else
+  {
+      echo 'Incorrect email format';
+  }
 }
 ?>
 
