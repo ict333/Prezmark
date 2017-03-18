@@ -106,29 +106,22 @@ if(isset($_POST['upload']))
                     while (($line = fgetcsv($file)) !== FALSE) 
                     {
                         
+                        echo 'loop value'.$count;
                         $temp=array($unitoffering,$line[6]);
                         $teamcode[$count]=  implode($temp);
                         
                         $query="INSERT INTO Team VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering','null','null','2017-03-14 00:00:00')";
                         echo $query;
                         $result = mysqli_query($dbc,$query); 
+                        
                         $query="INSERT INTO Student VALUES('$line[0]','$teamcode[$count]','$line[2]','$line[3]','$line[1]','$line[4]')";
                         echo $query;
                         $result = mysqli_query($dbc,$query); 
                         $count++;
                     }
-                    
-                    while(! feof($file))
-                    {
-                        print_r(fgetcsv($file));
-                        $teamcode[$count]=$unitoffering+$line[6];  
-                        $count++;
-                    }
+                  
 
                     fclose($file);
-                    //echo "File/" . $_FILES["csvfile"]["name"];
-                    //for($i=0;$i<2;$i++)
-                    //    echo $teamcode[$i];
                 } 
 
             }
