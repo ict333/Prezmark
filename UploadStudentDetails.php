@@ -117,7 +117,7 @@ if(isset($_POST['upload']))
                         $query="INSERT INTO Student VALUES('$line[0]','$teamcode[$count]','$line[2]','$line[3]','$line[1]','$line[4]')";
                         echo $query;
                         $result = mysqli_query($dbc,$query); 
-                        $count++;
+                        
                     }
                   
 
