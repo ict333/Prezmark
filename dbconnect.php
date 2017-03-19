@@ -1,7 +1,7 @@
 <?php
 	$host = "localhost";
 	$user = "root";
-	$password = "qwerty";
+	$password = "123";
 	$dbname = "Prezmark"; 
 	$dbc = mysqli_connect($host,$user,$password,$dbname); 
 

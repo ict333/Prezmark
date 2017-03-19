@@ -102,6 +102,8 @@ if (isset($_POST['m_register']))
     $role2 = $_POST['role'];
     $fn = $_POST['firstname'];
     $ln = $_POST['lastname'];
+    $aff = $_POST['affiliation'];
+    $stud = $_POST['student'];
     $success = $_POST['g-recaptcha-response'];
     $active = "1";
 
@@ -118,7 +120,7 @@ if (isset($_POST['m_register']))
             $result = mysqli_query($dbc, $query);
 
             /* This query inserts the email into the Marker table */
-            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','la','32498909','$active');";
+            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','$aff','$stud','$active');";
             $result = mysqli_query($dbc, $query);
             mysqli_close($dbc);
 
