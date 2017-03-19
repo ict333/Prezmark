@@ -39,6 +39,8 @@
     </script>
         
 <?php
+
+   
   
    function generatePassword() 
     {
@@ -50,10 +52,23 @@
             $n = rand(0, $length);
             $pass[] = $passwordRange[$n];
         }
-        return implode($pass);
+        $password=implode($pass);
+        echo $password;
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        echo $hashedPassword;
+        // You can now safely store the contents of $hashedPassword in your database!
+
+        // Check if a user has provided the correct password by comparing what they typed with our hash
+        //
+
+       // password_verify('my super cool password', $hashedPassword); 
+        
+        return $hashedPassword;
+        
     }
           
-    if(isset($_POST['submit']))
+
+if(isset($_POST['submit']))
     {
         include 'dbconnect.php';	
         $email=$_POST['email'];
@@ -82,6 +97,36 @@
             mysqli_close($dbc);
 
             echo 'Account created successfully!';
+            
+            
+            //send password email
+            require_once "Mail.php";
+
+            $from = '<project_ict333@murdochdubai.ac.ae>';
+            $to = '<christopherthomas665@gmail.com>';
+            $subject = 'Hi!';
+            $body = "Hi,How are you?";
+            $headers = array(
+                'From' => $from,
+                'To' => $to,
+                'Subject' => $subject
+            );
+
+            $smtp = Mail::factory('smtp', array(
+                    'host' => 'smtp.outlook.office365.com',
+                    'port' => '587',
+                    'auth' => true,
+                    'username' => 'project_ict333@murdochdubai.ac.ae',
+                    'password' => 'ict@333'
+                ));
+
+            $mail = $smtp->send($to, $headers, $body);
+
+            if (PEAR::isError($mail)) {
+                echo('<p>' . $mail->getMessage() . '</p>');
+            } else {
+                echo('<p>Message successfully sent!</p>');
+            }
           }
           
           else

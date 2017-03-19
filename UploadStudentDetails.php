@@ -39,9 +39,10 @@ ini_set('display_errors',1);
         </fieldset>
     </form> 
 <?php
+
 if(isset($_POST['upload']))
 {
-    include 'dbconnect';
+    $folder="File/";
     $unit=$_POST['unit'];
     $semester=$_POST['semester'];
     $year=$_POST['year'];
@@ -59,7 +60,6 @@ if(isset($_POST['upload']))
         else
         {
             $allowed =array("csv"=>"text/csv");
-                    //array('text/csv', 'text/plain', 'application/csv', 'text/comma-separated-values', 'application/excel', 'application/vnd.ms-excel', 'application/vnd.msexcel', 'text/anytext', 'application/octet-stream', 'application/txt');
             $filename = $_FILES["csvfile"]["name"];
             $filetype = $_FILES["csvfile"]["type"];
             $filesize = $_FILES["csvfile"]["size"];      
@@ -85,13 +85,14 @@ if(isset($_POST['upload']))
             if(in_array($filetype, $allowed))
             {
                 // Check whether file exists before uploading it
-                if(file_exists("File/" . $_FILES["csvfile"]["name"]))
+                if(file_exists($folder . $_FILES["csvfile"]["name"]))
                 {
                     echo $_FILES["csvfile"]["name"] . " already exists.";
                 } 
                 else
                 {
-                    if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], "File/". $_FILES["csvfile"]["name"]))
+                                       
+                    if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], $folder. $_FILES["csvfile"]["name"]))
                     {
                         echo 'Your file was uploaded successfully.';
                     }
@@ -101,29 +102,26 @@ if(isset($_POST['upload']))
                     //skips first line
                     fgetcsv($file);
                     $count=0;
-                    
+                    include 'dbconnect.php';
                     while (($line = fgetcsv($file)) !== FALSE) 
                     {
+                        
+                        echo 'loop value'.$count;
                         $temp=array($unitoffering,$line[6]);
                         $teamcode[$count]=  implode($temp);
-                        echo $line[5].'----'.$line[6];
-                        $query="INSERT INTO Team VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering')";
+                        
+                        $query="INSERT INTO Team VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering','null','null','2017-03-14 00:00:00')";
                         echo $query;
                         $result = mysqli_query($dbc,$query); 
-                        $count++;
+                        
+                        $query="INSERT INTO Student VALUES('$line[0]','$teamcode[$count]','$line[2]','$line[3]','$line[1]','$line[4]')";
+                        echo $query;
+                        $result = mysqli_query($dbc,$query); 
+                        
                     }
-                    
-                    while(! feof($file))
-                    {
-                       // print_r(fgetcsv($file));
-                        //$teamcode[$count]=$unitoffering+$line[6];  
-                        //$count++;
-                    }
+                  
 
                     fclose($file);
-                    //echo "File/" . $_FILES["csvfile"]["name"];
-                    //for($i=0;$i<2;$i++)
-                    //    echo $teamcode[$i];
                 } 
 
             }
@@ -141,8 +139,6 @@ if(isset($_POST['upload']))
 }
 
 ?>
-
-
     
     </body>
 </html>
