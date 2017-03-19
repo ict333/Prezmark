@@ -104,8 +104,7 @@ if(isset($_POST['upload']))
                     $count=0;
                     include 'dbconnect.php';
                     while (($line = fgetcsv($file)) !== FALSE) 
-                    {
-                        
+                    {                        
                         echo 'loop value'.$count;
                         $temp=array($unitoffering,$line[6]);
                         $teamcode[$count]=  implode($temp);

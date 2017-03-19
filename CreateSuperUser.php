@@ -103,7 +103,7 @@ if(isset($_POST['submit']))
             require_once "Mail.php";
 
             $from = '<project_ict333@murdochdubai.ac.ae>';
-            $to = '<christopherthomas665@gmail.com>';
+            $to = '<32498909@murdochdubai.ac.ae>';
             $subject = 'Hi!';
             $body = "Hi,How are you?";
             $headers = array(
@@ -122,9 +122,12 @@ if(isset($_POST['submit']))
 
             $mail = $smtp->send($to, $headers, $body);
 
-            if (PEAR::isError($mail)) {
+            if (PEAR::isError($mail)) 
+            {
                 echo('<p>' . $mail->getMessage() . '</p>');
-            } else {
+            } 
+            else 
+            {
                 echo('<p>Message successfully sent!</p>');
             }
           }
