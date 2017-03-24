@@ -109,7 +109,7 @@ if(isset($_POST['upload']))
                         $temp=array($unitoffering,$line[6]);
                         $teamcode[$count]=  implode($temp);
                         
-                        $query="INSERT INTO Team VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering','null','null','2017-03-14 00:00:00')";
+                        $query="INSERT INTO Team (TeamCode, TeamNo, TeamName, UnitOffering) VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering')";
                         echo $query;
                         $result = mysqli_query($dbc,$query); 
                         
