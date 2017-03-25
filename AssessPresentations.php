@@ -1,7 +1,14 @@
 <?php
-session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
+session_start();
+$role= $_SESSION['Role'];
+if($role=="Admin")
+{
+    echo '<script>alert("Admin cannot Assess. Please Login as Unit Coordinator or Marker:")';
+    header("Location: SuperUserLogin.php");
+}
 
 $query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
 $result = mysqli_query($dbc, $query);
