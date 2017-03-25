@@ -27,7 +27,7 @@ error_reporting(E_ALL);
             }
             
         ?>
-        <form action="" name="FillPresentationSchedule" id="FillPresentationSchedule" method="post">
+        <form action="" name="FillPresentationSchedule" id="FillPresentationSchedule" method="post"enctype="multipart/form-data">
             <legend></legend>
             
             <label for="teamname">Team Name
@@ -53,9 +53,14 @@ error_reporting(E_ALL);
             </label>
             <br> </br>
             
+            <label for="duration">Duration
+            <input id="duration" name="duration" value="0" type="number"></input>
+            </label>
+            <br> </br>
+            
             <label for="slot">Time Slot
             <select name="slot" id="slot" required>
-                <option value="9:30-10:00">9:30-10:00</option>
+                <!--<option value="9:30-10:00">9:30-10:00</option>
                 <option value="10:00-10:30">10:00-10:30</option>
                 <option value="10:30-11:00">10:30-11:00</option>
                 <option value="11:00-11:30">11:00-11:30</option>
@@ -71,7 +76,21 @@ error_reporting(E_ALL);
                 <option value="4:00-4:30">4:00-4:30</option>
                 <option value="4:30-5:00">4:30-5:00</option>
                 <option value="5:00-5:30">5:00-5:30</option>
-                <option value="5:30-6:00">5:30-6:00</option>
+                <option value="5:30-6:00">5:30-6:00</option>-->
+            <?php
+                $start = strtotime('9:30 AM');
+                $end   = strtotime('6:30 PM');
+                echo "<script>$t=document.getElementById('duration').value</script>";
+                for ($hours = 9; $hours < 18; $hours++)
+                { // the interval for hours is '1'
+                    if ($hours>12){$hours=$hours-12;}
+                    for ($mins = 0; $mins < 60; $mins+=$t) 
+                    { // the interval for mins is '35'
+                    echo '<option>' . str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
+                    . str_pad($mins, 2, '0', STR_PAD_LEFT) . '</option>';
+                    }
+                }
+            ?>
             </select>
             </label>
             <br></br>
@@ -85,6 +104,7 @@ error_reporting(E_ALL);
             {
                 $teamname=$_POST['teamname'];
                 $description=$_POST['description'];
+                $time=$_POST['time'];
                 $query="SELECT TeamCode FROM Team WHERE TeamName='$teamname' AND UnitOffering='$unitoffering'";
                 $result=mysqli_query($dbc,$query);
 
@@ -96,9 +116,70 @@ error_reporting(E_ALL);
                 $query="INSERT INTO PresentationSchedule VALUES('$date','peter.cole@gmail.com','$teamcode','$venue')";
                 $result = mysqli_query($dbc,$query); 
 
-                $query="UPDATE Team SET Logo='/path', Description='$description',TimeSlot='2017-03-04 15:27:26' WHERE TeamCode='$teamcode'";
+                $query="UPDATE Team SET Description='$description',TimeSlot='2017-03-04 15:27:26' WHERE TeamCode='$teamcode'";
                 $result = mysqli_query($dbc,$query); 
                 echo $query;
+                
+                
+
+                $target_dir = "TeamLogo/";
+                $target_file = $target_dir . basename($_FILES["imagefile"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                // Check if image file is a actual image or fake image
+
+                $check = getimagesize($_FILES["imagefile"]["tmp_name"]);
+                if($check !== false) 
+                {
+                    echo "File is an image - " . $check["mime"] . ".";
+                    $uploadOk = 1;
+                } 
+                else 
+                {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+                }
+
+                // Check if file already exists
+                if (file_exists($target_file)) 
+                {
+                    echo "Sorry, file already exists.";
+                    $uploadOk = 0;
+                }
+                // Check file size
+                if ($_FILES["imagefile"]["size"] > 500000) 
+                {
+                    echo "Sorry, your file is too large.";
+                    $uploadOk = 0;
+                }
+                // Allow certain file formats
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" ) 
+                {
+                    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    $uploadOk = 0;
+                }
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0)
+                {
+                    echo "Sorry, your file was not uploaded.";
+                // if everything is ok, try to upload file
+                } 
+                else 
+                {
+                    if (move_uploaded_file($_FILES["imagefile"]["tmp_name"], $target_file))
+                    {
+                        echo "The file ". basename( $_FILES["imagefile"]["name"]). " has been uploaded.";
+                        $query="UPDATE Team SET Logo='$target_file' WHERE TeamCode='$teamcode'";
+                        $result=mysqli_query($dbc,$query);
+                    } 
+                    else 
+                    {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                }
+
+
                 //header("Location: FillPresentationSchedule.php");
             } 
                

@@ -1,5 +1,7 @@
 <?php
-    //session_start();
+    //session_start(); 
+     ini_set('display_errors',1);
+    error_reporting (E_ALL);
 ?>
 
 <html> 
@@ -54,18 +56,23 @@
         }
         $password=implode($pass);
         echo $password;
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        echo $hashedPassword;
+       
         // You can now safely store the contents of $hashedPassword in your database!
 
         // Check if a user has provided the correct password by comparing what they typed with our hash
         //
 
        // password_verify('my super cool password', $hashedPassword); 
+        return $password;
         
-        return $hashedPassword;
         
     }
+  function hashPassword($pass)
+  {
+      $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+      echo $hashedPassword;
+      return $hashedPassword;
+  }
           
 
 if(isset($_POST['submit']))
@@ -75,6 +82,7 @@ if(isset($_POST['submit']))
         $role1="SuperUser";
 	$role2=$_POST['role'];
         $password=  generatePassword();
+        $hashPass=  hashPassword($password);
         $active="1";
         
 
@@ -92,7 +100,7 @@ if(isset($_POST['submit']))
             $query ="INSERT INTO Person VALUES ('$email', '$role1');";
             $result = mysqli_query($dbc,$query);
             /*This query inserts the email into the SuperUser table*/
-            $query ="INSERT INTO SuperUser VALUES ('$email', '$role2','$password', '$active');";
+            $query ="INSERT INTO SuperUser VALUES ('$email', '$role2','$hashPass', '$active');";
             $result = mysqli_query($dbc,$query);
             mysqli_close($dbc);
 
@@ -100,12 +108,12 @@ if(isset($_POST['submit']))
             
             
             //send password email
-            require_once "Mail.php";
+            require_once "pear2/Mail.php";
 
             $from = '<project_ict333@murdochdubai.ac.ae>';
-            $to = '<32498909@murdochdubai.ac.ae>';
-            $subject = 'Hi!';
-            $body = "Hi,How are you?";
+            $to = $email;
+            $subject = 'Account Password';
+            $body = "Your account password is: $password";
             $headers = array(
                 'From' => $from,
                 'To' => $to,
