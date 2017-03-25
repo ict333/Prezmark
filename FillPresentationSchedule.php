@@ -73,9 +73,14 @@ while ($rows = mysqli_fetch_array($result)) {
             </label>
             <br> </br>
             
-            <label for="slot">Time Slot<br>
+            <label for="duration">Duration
+            <input id="duration" name="duration" value="0" type="number"></input>
+            </label>
+            <br> </br>
+            
+            <label for="slot">Time Slot
             <select name="slot" id="slot" required>
-                <option value="9:30-10:00">9:30-10:00</option>
+                <!--<option value="9:30-10:00">9:30-10:00</option>
                 <option value="10:00-10:30">10:00-10:30</option>
                 <option value="10:30-11:00">10:30-11:00</option>
                 <option value="11:00-11:30">11:00-11:30</option>
@@ -91,7 +96,21 @@ while ($rows = mysqli_fetch_array($result)) {
                 <option value="4:00-4:30">4:00-4:30</option>
                 <option value="4:30-5:00">4:30-5:00</option>
                 <option value="5:00-5:30">5:00-5:30</option>
-                <option value="5:30-6:00">5:30-6:00</option>
+                <option value="5:30-6:00">5:30-6:00</option>-->
+            <?php
+                $start = strtotime('9:30 AM');
+                $end   = strtotime('6:30 PM');
+                echo "<script>$t=document.getElementById('duration').value</script>";
+                for ($hours = 9; $hours < 18; $hours++)
+                { // the interval for hours is '1'
+                    if ($hours>12){$hours=$hours-12;}
+                    for ($mins = 0; $mins < 60; $mins+=$t) 
+                    { // the interval for mins is '35'
+                    echo '<option>' . str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
+                    . str_pad($mins, 2, '0', STR_PAD_LEFT) . '</option>';
+                    }
+                }
+            ?>
             </select>
             </label>
             <br></br>

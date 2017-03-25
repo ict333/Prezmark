@@ -50,12 +50,16 @@ while ($rows = mysqli_fetch_array($result))
         <label for="teamname">Team Name
             <select name="teamname" id="teamname" required>
             <?php
-                for($i=0;$i<count($name);$i++)
+                $query="SELECT distinct TeamName FROM Team";
+                $result=mysqli_query($dbc,$query);
+                while($rows=mysqli_fetch_array($result))
                 {
-                    echo "<option value='$name[$i]'>$name[$i]</option>";
+                        $team=$rows['TeamName'];
+                        echo "<option value='$team'>$team</option>";
                 }
             
             ?>
+            </select>
             <table>
             <tr> 
                 <td>
@@ -63,7 +67,19 @@ while ($rows = mysqli_fetch_array($result))
                and clearly explaining the original client problem</label>
                 </td>
                 <td>
-               <input id="introduction" name="introduction" type="number" required></input>  
+                    <select id="introduction" name="introduction" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -73,7 +89,19 @@ while ($rows = mysqli_fetch_array($result))
                in terms of the problem and the methodologies the team used to solve the problem</label>
                 </td>
                 <td>
-               <input id="objective" name="objective" type="number" required></input>  
+                    <select id="objective" name="objective" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -83,7 +111,19 @@ while ($rows = mysqli_fetch_array($result))
                3 above</label>
                 </td>
                 <td>
-               <input id="demo1" name="demo1" type="number" required></input>  
+                    <select id="demo1" name="demo1"  required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -93,7 +133,19 @@ while ($rows = mysqli_fetch_array($result))
                and demostrating the product well.</label>
                 </td>
                 <td>
-               <input id="demo2" name="demo2" type="number" required></input>  
+                    <select id="demo2" name="demo2" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -103,7 +155,19 @@ while ($rows = mysqli_fetch_array($result))
                project, the self assessment and how it could have been improved.</label>
                 </td>
                 <td>
-               <input id="conclusion" name="conclusion" type="number" required></input>  
+                    <select id="conclusion" name="conclusion"  required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -112,7 +176,19 @@ while ($rows = mysqli_fetch_array($result))
                <label for="questions">Responded to questions reasonalbly</label>
                 </td>
                 <td>
-               <input id="questions" name="questions" type="number" required></input>  
+                    <select id="questions" name="questions" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -121,7 +197,19 @@ while ($rows = mysqli_fetch_array($result))
                <label for="preparation">The group's preparation and teamwork was evident</label>
                 </td>
                 <td>
-               <input id="preparation" name="preparation" type="number" required></input>  
+                    <select id="preparation" name="preparation" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -131,7 +219,19 @@ while ($rows = mysqli_fetch_array($result))
                starting and finishing on time.</label>
                 </td>
                 <td>
-               <input id="structure" name="structure" type="number" required></input>  
+                    <select id="structure" name="structure"  required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -141,7 +241,19 @@ while ($rows = mysqli_fetch_array($result))
                and was easy to understand</label>
                 </td>
                 <td>
-               <input id="enthusiasm" name="enthusiasm" type="number" required></input>  
+                    <select id="enthusiasm" name="enthusiasm" type="number" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
             
@@ -151,7 +263,19 @@ while ($rows = mysqli_fetch_array($result))
                was smoothe and professional</label>
                 </td>
                 <td>
-               <input id="visual" name="visual" type="number" required></input>  
+                    <select id="visual" name="visual" type="number" required>
+                        <option value="0">Mark</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>  
                 </td>
             </tr>
 
@@ -180,7 +304,32 @@ while ($rows = mysqli_fetch_array($result))
 <?php
         if(isset($_POST['Assess']))
         {
-            
+            $intro=$_POST['introduction'];
+            $obj=$_POST['objective'];
+            $demo1=$_POST['demo1'];
+            $demo2=$_POST['demo2'];
+            $conclusion=$_POST['conclusion'];
+            $questions=$_POST['questions'];
+            $visual=$_POST['visual'];
+            $enthusiasm=$_POST['enthusiasm'];
+            $preparation=$_POST['preparation'];
+            $structure=$_POST['structure'];
+            /*$query="insert into Assessment Introduction,Objectives,Demonstration1"
+                    . ",Demonstration2,Conclusion,Question,Preparation,Structure"
+                    . ",Enthusiasm,VisualAid values(intro,obj,demo1,demo2,conclusion"
+                    . "questions,preparation,structure,enthusiasm,visual) where"
+                    . "TeamName='$team'";*/
+            $query="update Assessment set Introduction=$intro,Objectives=$obj,"
+                    . "Demonstration1=$demo1,Demonstration2=$demo2,Conclusion=$conclusion"
+                    . ",Question=$questions,Preparation=$preparation,Structure=$structure"
+                    . ",Enthusiasm=$enthusiasm,VisualAid=$visual where TeamCode like 'ICT333TJD%'";
+            $result=mysqli_query($dbc,$query);
+            if($result)
+            {
+                echo"yeah";
+            }
+            else
+                echo "no";
         }
     
 ?>
