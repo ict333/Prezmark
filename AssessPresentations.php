@@ -1,29 +1,45 @@
-<?php session_start();
-  ini_set('display_errors',1);
-    error_reporting (E_ALL);
-   ?>
+<?php
+session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
+$result = mysqli_query($dbc, $query);
+$name = array();
+$i = 0;
+while ($rows = mysqli_fetch_array($result)) 
+{
+    $name[$i] = $rows['TeamName'];
+    $i++;
+}
+?>
 <html>
-    <head>
-        
+    <head> 
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="icon" href="icon.png" type="image/x-icon"></link>
     </head>
     
     <body>
-        <?php
-            $query="SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
-            $result=mysqli_query($dbc,$query);
-            $name=array();
-            $i=0;
-            while($rows=mysqli_fetch_array($result))
-            {
-                $name[$i]=$rows['TeamName'];
-                $i++;
-            }
-            
-        ?>
+        <div class="header">
+         <a href="index.php"> <img src="logo.png"></a>
+        <nav>
+            <a href="UploadStudentDetails.php" >Upload Student Details</a>
+            <a href="CreateSchedule.php">New Schedule</a>
+            <a href="AssessPresentations.php" class="active">Assess Presentations</a>
+            <a href="">Download Marks</a>
+            <a href="">Modify Student Details</a>
+            <a href="">Modify Schedule</a>
+            <a href="">Logout</a>
+        </nav>
+        </div>
+        <div id="separator"></div>
         
-    <form name="Assess" id="Assess" method="post" onsubmit="">
+        
+        <div class="form">
+        <h1>Assessment</h1>
+       <form name="Assess" id="Assess" method="post" onsubmit="">
       
-        <legend>Assessment</legend>
+       
         <label for="teamname">Team Name
             <select name="teamname" id="teamname" required>
             <?php
@@ -134,10 +150,10 @@
 
             
             </table>
-        <input type="submit" name="Assess" value="Assess"></input>
+        <input class="button" type="submit" name="Assess" value="Assess"></input>
        
     </form>
-        
+        </div> 
     <script>
        function validateForm()
        {
@@ -147,15 +163,17 @@
             /*some validation tests*/
         }
     </script> 
-    
-    <?php
+     
+    </body>
+    <footer>
+           &#169;2017 All rights reserved by Murdoch University 
+     </footer>
+</html>
+
+<?php
         if(isset($_POST['Assess']))
         {
             
         }
     
-    ?>
-           
-    </body>
-</html>
-
+?>

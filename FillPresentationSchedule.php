@@ -1,36 +1,56 @@
 <?php
 include("dbconnect.php");
 session_start();
+$role= $_SESSION['Role'];
+if($role!="UC")
+{
+    header("Location: SuperUserLogin.php");
+}
 $date=$_SESSION['Date'];
 $venue=$_SESSION['Venue'];
 $unitoffering=$_SESSION['UnitOffering'];
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 //$user=$_SESSION[user];
+
+
+$query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
+$result = mysqli_query($dbc, $query);
+$name = array();
+$i = 0;
+while ($rows = mysqli_fetch_array($result)) {
+    $name[$i] = $rows['TeamName'];
+    $i++;
+}
 ?>
 <!DOCTYPE html>
 <html> 
     <head>
-        
+        <link rel="stylesheet" type="text/css" href="style.css">  
+        <link rel="icon" href="icon.png" type="image/x-icon"></link>      
     </head>
     
     <body>
-        <?php
-            $query="SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
-            $result=mysqli_query($dbc,$query);
-            $name=array();
-            $i=0;
-            while($rows=mysqli_fetch_array($result))
-            {
-                $name[$i]=$rows['TeamName'];
-                $i++;
-            }
-            
-        ?>
+        <div class="header">
+         <a href="index.php"> <img src="logo.png"></a>
+        <nav>
+            <a href="UploadStudentDetails.php" >Upload Student Details</a>
+            <a href="CreateSchedule.php" class="active">New Schedule</a>
+            <a href="AssessPresentations.php">Assess Presentations</a>
+            <a href="">Download Marks</a>
+            <a href="">Modify Student Details</a>
+            <a href="">Modify Schedule</a>
+            <a href="Logout.php">Logout</a>
+        </nav>
+        </div>
+        
+	<div id="separator"></div>
+         <div class="form">
         <form action="" name="FillPresentationSchedule" id="FillPresentationSchedule" method="post"enctype="multipart/form-data">
-            <legend></legend>
+           
+        <h1>Team Schedule</h1>
             
-            <label for="teamname">Team Name
+            <label for="teamname">Team Name<br>
             <select name="teamname" id="teamname" required>
             <?php
                 for($i=0;$i<count($name);$i++)
@@ -43,17 +63,17 @@ error_reporting(E_ALL);
             </label>
             <br></br>
             
-            <label for="logo">Logo
+            <label for="logo">Logo<br>
             <input id="imagefile" name="imagefile" type="file" ></input>
             </label>
             <br> </br>
             
-            <label for="description">Description
-            <textarea id="description" name="description" type="textarea"></textarea>
+            <label for="description">Description<br>
+            <input id="description" name="description" type="text"></input>
             </label>
             <br> </br>
             
-            <label for="slot">Time Slot
+            <label for="slot">Time Slot<br>
             <select name="slot" id="slot" required>
                 <option value="9:30-10:00">9:30-10:00</option>
                 <option value="10:00-10:30">10:00-10:30</option>
@@ -75,12 +95,20 @@ error_reporting(E_ALL);
             </select>
             </label>
             <br></br>
-            
-             <input name="next" type="submit" value="Next">
-             <input name="finish" type="submit" value="Finish">
+            <div class="button-container">
+            <input class="button" name="next" type="submit" value="Next" style="float:left;width:150px;">
+             <input class="button" name="finish" type="submit" value="Finish" style="width:150px;">
+            </div>
         </form>  
+         </div>
         
-        <?php
+  
+        <footer>
+           &#169;2017 All rights reserved by Murdoch University 
+        </footer>
+    </body>
+</html>
+      <?php
             if(isset($_POST['next']))
             {
                 $teamname=$_POST['teamname'];
@@ -176,5 +204,3 @@ error_reporting(E_ALL);
             
         
         ?>
-    </body>
-</html>

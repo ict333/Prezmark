@@ -1,26 +1,44 @@
 <?php
-    //session_start(); 
-     ini_set('display_errors',1);
-    error_reporting (E_ALL);
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_start();
+$role= $_SESSION['Role'];
+if($role!="Admin")
+{
+    header("Location: SuperUserLogin.php");
+}
 ?>
 
 <html> 
     <head>
-        
+        <link rel="stylesheet" type="text/css" href="style.css">  
+        <link rel="icon" href="icon.png" type="image/x-icon"></link>      
     </head>
     
     <body>
+    <div class="header">
+         <a href="index.php"> <img src="logo.png"></a>
+        <nav>
+            <a href="">Disable Account</a>
+            <a href="CreateSuperUser.php" class="active">Create Super User</a>
+            <a href="">Create Backup</a>
+            <a href="Logout.php">Logout</a>
+        </nav>
+    </div>
+    <div id="separator"></div>
+        
+        
+    <div class="form bottom">
         
     <form name="CreateSuperUser" id="CreateSuperUser" method="post" onsubmit="return validateForm()">
-        <fieldset>
-        <legend>Create Super User</legend>
-            
-        <label for="email">Email*:
+        <h1>Create Super User</h1>         
+        <label for="email">Email<br>
         <input id="email" name="email" type="email" required></input>
         </label>
         <br> </br>
             
-        <label for="role">Role*:
+        <label for="role"> Role<br>
         <select name="role" required>
             <option id="role" name="role" value="Admin">Administrator</option>
             <option id="role" name="role" value="UC">Unit Coordinator</option>
@@ -28,10 +46,10 @@
         </label>
         <br> </br>
             
-        <input type="submit" name="submit" value="Create"></input>
-        </field>  
-    </form>
+        <input class="button" type="submit" name="submit" value="Create"></input>
         
+    </form>
+    </div>   
     <script>
         function validateForm()
         {
@@ -39,7 +57,11 @@
            /* some tests*/ 
         }
     </script>
-        
+    </body>
+     <footer>
+           &#169;2017 All rights reserved by Murdoch University 
+    </footer>  
+</html>
 <?php
 
    
@@ -156,6 +178,3 @@ if(isset($_POST['submit']))
     }
 			
 ?>
-        
-    </body>
-</html>

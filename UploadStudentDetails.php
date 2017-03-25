@@ -1,43 +1,74 @@
 <?php
-    /*session_start();
-     * if($_SESSION['Role']!="UC")
-     *      Location: (redirect somewhere)
-     */
+session_start();
+$role= $_SESSION['Role'];
+if($role!="UC")
+{
+    header("Location: SuperUserLogin.php");
+}
 ini_set('display_errors',1);
     error_reporting (E_ALL);
     
 ?>
 <html> 
-    <head>
-        
+    <head>        
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="icon" href="icon.png" type="image/x-icon"></link>
     </head>
     
     <body>
+        <div class="header">
+         <a href="index.php"> <img src="logo.png" style="float:left;"></a>
+         <h2>PREZMARK - Presentation Marking System</h2>
+        <nav>
+            <a href="UploadStudentDetails.php" class="active">Upload Student Details</a>
+            <a href="CreateSchedule.php">New Schedule</a>
+            <a href="AssessPresentations.php">Assess Presentations</a>
+            <a href="">Download Marks</a>
+            <a href="">Modify Student Details</a>
+            <a href="">Modify Schedule</a>
+            <a href="Logout.php">Logout</a>
+        </nav>
+        </div>
         
-        <form method="post" action="UploadStudentDetails.php" enctype="multipart/form-data">
-        <fieldset>
-        <legend>Upload Student Details</legend>
+	<div id="separator"></div>
+        
+        
+        <div class="form">
             
-        <label for="unit">Unit*:</label>
+        <h1>Upload Student Details</h1>
+        <form method="post" action="UploadStudentDetails.php" enctype="multipart/form-data">
+                   
+        <label for="unit">Unit</label>
+        <br> 
         <input id="unit" name="unit" type="text" required></input>
         <br> </br>
             
-        <label for="semester">Semester*:</label>
+        <label for="semester">Semester</label>
+        <br> 
         <input id="semester" name="semester" type="text" required></input>
         <br> </br>
             
-        <label for="year">Year*:</label>
+        <label for="year">Year</label>
+        <br> 
         <input id="year" name="year" type="text" required></input>
         <br> </br>
         
    
-        <label>Choose file to upload*:</label>
+        <label>Choose file to upload</label>
+        <br>
         <input type="file" name="csvfile" id="csvfile" required> 
         <br> </br>
+        <input class="button" name="upload" type="submit" value="Upload"/>
+     
+        </form> 
+        </div>
+        <footer>
+           &#169;2017 All rights reserved by Murdoch University 
+        </footer>
+    </body>
+</html>
 
-        <input name="upload" type="submit" value="Upload"/>
-        </fieldset>
-    </form> 
+
 <?php
 
 if(isset($_POST['upload']))
@@ -138,6 +169,3 @@ if(isset($_POST['upload']))
 }
 
 ?>
-    
-    </body>
-</html>
