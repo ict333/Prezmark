@@ -104,7 +104,7 @@ while ($rows = mysqli_fetch_array($result)) {
                 for ($hours = 9; $hours < 18; $hours++)
                 { // the interval for hours is '1'
                     if ($hours>12){$hours=$hours-12;}
-                    for ($mins = 0; $mins < 60; $mins+=$t) 
+                    for ($mins = 0; $mins < 60; $mins+=30) 
                     { // the interval for mins is '35'
                     echo '<option>' . str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
                     . str_pad($mins, 2, '0', STR_PAD_LEFT) . '</option>';

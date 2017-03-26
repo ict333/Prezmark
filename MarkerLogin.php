@@ -1,70 +1,8 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        
         <script src="https://www.google.com/recaptcha/api.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="icon" href="icon.png" type="image/x-icon"></link>
-    </head>
-    <body>
-      <div class="header">
-         <img src="logo.png">
-    </div>
-    <div id="separator"></div>
-    <h1>Marker Login</h1>
-    <div class="form">
-    <form name="Register" onsubmit="return check()" method="post">
-
-        <label for="firstname">First Name <br>
-            <input type="text" name="firstname" id="firstname" required>
-        </label>
-        <br></br>
-
-        <label for="lastname">Last Name<br>
-            <input type="text" name="lastname" id="lastname" required>
-        </label>
-        <br></br>
-
-        <label for="email">Email <br>
-            <input type="email" name="mail" id="mail" required>
-        </label>
-        <br></br>
-
-        <label for="role">Role <br>
-            <select onblur="checkStudent()" name="role" id="role" required>
-                <option value="Student">Student</option>
-                <option value="Visitor">Visitor</option>
-                <option value="Client">Client</option>
-            </select>
-        </label>
-        <br></br>
-
-        <label for="affiliation">Affiliation<br>
-            <input  type="text" name="affiliation" id="affiliation">
-        </label>
-        <br></br>
-
-        <label for="student">Student Number<br>
-            <input type="integer" name="student" id="student">
-        </label>
-        <br></br>
-
-        <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
-        <input class="button" type="submit" name="m_register" value="Register">
-
-    </form>
-    </div>
-    <form name="MarkerLogin" onsubmit="" method="post">
-
-        <legend>Login</legend>
-
-        <label for="email">Email<br>
-            <input type="email" name="email" >
-        </label>
-        <br></br>
-        <input class="button" type="submit" name="m_login" value="Login">
-    </form>
-
-         <script>
+        <script>
         function check()
         {
             if (grecaptcha.getResponse().length==0){
@@ -97,11 +35,61 @@
             
         }
         </script>
-        
-        <footer>
-           &#169;2017 All rights reserved by Murdoch University 
-        </footer>
-    </body>
+    </head>
+    <form name="Register" onsubmit="return check()" method="post">
+        <fieldset>
+            <legend>Welcome to Prezmark</legend>
+
+            <label for="firstname">First Name*:
+                <input type="text" name="firstname" id="firstname" required>
+            </label>
+            <br></br>
+
+            <label for="lastname">Last Name*:
+                <input type="text" name="lastname" id="lastname" required>
+            </label>
+            <br></br>
+
+            <label for="email">Email*:
+                <input type="email" name="mail" id="mail" required>
+            </label>
+            <br></br>
+
+            <label for="role">Role*:
+                <select onblur="checkStudent()" name="role" id="role" required>
+                    <option value="Student">Student</option>
+                    <option value="Visitor">Visitor</option>
+                    <option value="Client">Client</option>
+                </select>
+            </label>
+            <br></br>
+
+            <label for="affiliation">Affiliation:
+                <input  type="text" name="affiliation" id="affiliation">
+            </label>
+            <br></br>
+
+            <label for="student">Student Number:
+                <input type="integer" name="student" id="student">
+            </label>
+            <br></br>
+
+            <div class="g-recaptcha" data-sitekey="6Le3_BkUAAAAAJCTekADAGYtGJHE67goShnAPFM6"></div><br>
+            <input type="submit" name="m_register" value="Register">
+        </fieldset>
+    </form>
+
+    <form name="MarkerLogin" onsubmit="" method="post">
+        <fieldset>
+            <legend>Login</legend>
+
+            <label for="email">Email*:
+                <input type="email" name="email" >
+            </label>
+            <br></br>
+            <input type="submit" name="m_login" value="Login">
+        </fieldset>
+    </form>
 </html>
 
 
@@ -115,8 +103,6 @@ if (isset($_POST['m_register']))
     $role2 = $_POST['role'];
     $fn = $_POST['firstname'];
     $ln = $_POST['lastname'];
-    $aff = $_POST['affiliation'];
-    $stud = $_POST['student'];
     $success = $_POST['g-recaptcha-response'];
     $active = "1";
 
@@ -134,7 +120,7 @@ if (isset($_POST['m_register']))
             $result = mysqli_query($dbc, $query);
 
             /* This query inserts the email into the Marker table */
-            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','$aff','$stud','$active');";
+            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','la','32498909','$active');";
             $result = mysqli_query($dbc, $query);
             mysqli_close($dbc);
 

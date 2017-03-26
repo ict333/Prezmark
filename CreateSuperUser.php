@@ -3,11 +3,11 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 session_start();
-$role= $_SESSION['Role'];
+/*$role= $_SESSION['Role'];
 if($role!="Admin")
 {
     header("Location: SuperUserLogin.php");
-}
+}*/
 ?>
 
 <html> 
@@ -176,5 +176,5 @@ if(isset($_POST['submit']))
                 
         
     }
-			
+	//HvA9WHlr		
 ?>
