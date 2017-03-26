@@ -3,11 +3,11 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 session_start();
-/*$role= $_SESSION['Role'];
+$role= $_SESSION['Role'];
 if($role!="Admin")
 {
     header("Location: SuperUserLogin.php");
-}*/
+}
 ?>
 
 <html> 
@@ -92,7 +92,7 @@ if($role!="Admin")
   function hashPassword($pass)
   {
       $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
-      echo $hashedPassword;
+     // echo $hashedPassword;
       return $hashedPassword;
   }
           
@@ -110,7 +110,6 @@ if(isset($_POST['submit']))
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
         {
-          echo $email.' is a valid email address';
           /*This query looks for the user entered email in the Person table to eliminate same values*/
           $query="SELECT * FROM Person WHERE Email='$email'";
           $result = mysqli_query($dbc,$query);
@@ -126,16 +125,17 @@ if(isset($_POST['submit']))
             $result = mysqli_query($dbc,$query);
             mysqli_close($dbc);
 
-            echo 'Account created successfully!';
+            echo '<script>alert("Account created successfully!");</script>';
             
             
-            //send password email
-            require_once "pear2/Mail.php";
+            /*send password email
+            require_once "Mail.php";
 
             $from = '<project_ict333@murdochdubai.ac.ae>';
             $to = $email;
-            $subject = 'Account Password';
-            $body = "Your account password is: $password";
+            $subject = 'Prezmark Account Password';
+            $body = "Your account password is: $password\n"
+                    . "You can log in by clicking on http://localhost/Prezmark/SuperUserLogin.php";
             $headers = array(
                 'From' => $from,
                 'To' => $to,
@@ -159,7 +159,7 @@ if(isset($_POST['submit']))
             else 
             {
                 echo('<p>Message successfully sent!</p>');
-            }
+            }*/
           }
           
           else
@@ -175,6 +175,5 @@ if(isset($_POST['submit']))
         }
                 
         
-    }
-	//HvA9WHlr		
+    }		
 ?>

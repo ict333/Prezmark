@@ -140,7 +140,7 @@ if (isset($_POST['m_register']))
 
             echo '<script>alert("Account created successfully!");</script>';
         } else {
-            echo '<script>alert("This email is already exists!");</script>';
+            echo '<script>alert("This email already exists!");</script>';
         }
     }
     else if(!$success)

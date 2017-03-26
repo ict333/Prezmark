@@ -34,8 +34,8 @@ while ($rows = mysqli_fetch_array($result))
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="AssessPresentations.php" class="active">Assess Presentations</a>
             <a href="">Download Marks</a>
-            <a href="">Modify Student Details</a>
-            <a href="">Modify Schedule</a>
+           <!-- <a href="">Modify Student Details</a>
+            <a href="">Modify Schedule</a-->
             <a href="">Logout</a>
         </nav>
         </div>
@@ -130,7 +130,7 @@ while ($rows = mysqli_fetch_array($result))
              <tr> 
                 <td>
                <label for="demo2">Product Demonstration: Appropriate amount of detail, flowed smoothly,
-               and demostrating the product well.</label>
+               and demonstrating the product well.</label>
                 </td>
                 <td>
                     <select id="demo2" name="demo2" required>
@@ -173,7 +173,7 @@ while ($rows = mysqli_fetch_array($result))
             
              <tr> 
                 <td>
-               <label for="questions">Responded to questions reasonalbly</label>
+               <label for="questions">Responded to questions reasonably</label>
                 </td>
                 <td>
                     <select id="questions" name="questions" required>
@@ -237,7 +237,7 @@ while ($rows = mysqli_fetch_array($result))
             
              <tr> 
                 <td>
-               <label for="enthusiasm">The presentation was enthusiastic, interesting, clear and consise 
+               <label for="enthusiasm">The presentation was enthusiastic, interesting, clear and concise 
                and was easy to understand</label>
                 </td>
                 <td>

@@ -24,8 +24,8 @@ ini_set('display_errors',1);
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="AssessPresentations.php">Assess Presentations</a>
             <a href="">Download Marks</a>
-            <a href="">Modify Student Details</a>
-            <a href="">Modify Schedule</a>
+            <!--a href="">Modify Student Details</a>
+            <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>
         </nav>
         </div>
@@ -80,7 +80,7 @@ if(isset($_POST['upload']))
     $offering=array($unit,$semester,$year);
     $unitoffering=implode($offering);
     $teamcode=array();
-    echo $unitoffering;
+    //echo $unitoffering;
     
     if(isset($_FILES["csvfile"]["error"]))
     {
@@ -125,7 +125,7 @@ if(isset($_POST['upload']))
                                        
                     if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], $folder. $_FILES["csvfile"]["name"]))
                     {
-                        echo 'Your file was uploaded successfully.';
+                        echo '<script>alert("Your file was uploaded successfully");</script>';
                     }
                     
                     //Read from file
@@ -136,21 +136,20 @@ if(isset($_POST['upload']))
                     include 'dbconnect.php';
                     while (($line = fgetcsv($file)) !== FALSE) 
                     {                        
-                        echo 'loop value'.$count;
                         $temp=array($unitoffering,$line[6]);
                         $teamcode[$count]=  implode($temp);
                         
                         $query="INSERT INTO Team (TeamCode, TeamNo, TeamName, UnitOffering) VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering')";
-                        echo $query;
+                        //echo $query;
                         $result = mysqli_query($dbc,$query); 
                         
                         $query="INSERT INTO Student VALUES('$line[0]','$teamcode[$count]','$line[2]','$line[3]','$line[1]','$line[4]')";
-                        echo $query;
+                        //echo $query;
                         $result = mysqli_query($dbc,$query); 
                         
                     }
                   
-
+                    mysqli_close($dbc);
                     fclose($file);
                 } 
 
