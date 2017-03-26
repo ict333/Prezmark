@@ -17,8 +17,7 @@ ini_set('display_errors',1);
     
     <body>
         <div class="header">
-         <a href="index.php"> <img src="logo.png" style="float:left;"></a>
-         <h2>PREZMARK - Presentation Marking System</h2>
+         <a href="index.php"> <img src="logo.png" ></a>
         <nav>
             <a href="UploadStudentDetails.php" class="active">Upload Student Details</a>
             <a href="CreateSchedule.php">New Schedule</a>

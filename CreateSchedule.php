@@ -23,7 +23,7 @@ if($role!="UC")
         <nav>
             <a href="UploadStudentDetails.php">Upload Student Details</a>
             <a href="CreateSchedule.php" class="active">New Schedule</a>
-            <a href="AssessPresentations.php">Assess Presentations</a>
+            <a href="PresentationDisplay.php">Assess Presentations</a>
             <a href="">Download Marks</a>
             <!--a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->

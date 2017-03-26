@@ -32,7 +32,7 @@ while ($rows = mysqli_fetch_array($result))
         <nav>
             <a href="UploadStudentDetails.php" >Upload Student Details</a>
             <a href="CreateSchedule.php">New Schedule</a>
-            <a href="AssessPresentations.php" class="active">Assess Presentations</a>
+            <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
             <a href="">Download Marks</a>
            <!-- <a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
