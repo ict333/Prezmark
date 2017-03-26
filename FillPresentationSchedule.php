@@ -2,6 +2,7 @@
 include("dbconnect.php");
 session_start();
 $role= $_SESSION['Role'];
+$email=$_SESSION['Email'];
 if($role!="UC")
 {
     header("Location: SuperUserLogin.php");
@@ -73,14 +74,14 @@ while ($rows = mysqli_fetch_array($result)) {
             </label>
             <br> </br>
             
-            <label for="duration">Duration
+            <!--label for="duration">Duration
             <input id="duration" name="duration" value="0" type="number"></input>
             </label>
-            <br> </br>
+            <br> </br-->
             
             <label for="slot">Time Slot
             <select name="slot" id="slot" required>
-                <!--<option value="9:30-10:00">9:30-10:00</option>
+                <option value="9:30-10:00">9:30-10:00</option>
                 <option value="10:00-10:30">10:00-10:30</option>
                 <option value="10:30-11:00">10:30-11:00</option>
                 <option value="11:00-11:30">11:00-11:30</option>
@@ -96,8 +97,8 @@ while ($rows = mysqli_fetch_array($result)) {
                 <option value="4:00-4:30">4:00-4:30</option>
                 <option value="4:30-5:00">4:30-5:00</option>
                 <option value="5:00-5:30">5:00-5:30</option>
-                <option value="5:30-6:00">5:30-6:00</option>-->
-            <?php
+                <option value="5:30-6:00">5:30-6:00</option>
+            <!--?php
                 $start = strtotime('9:30 AM');
                 $end   = strtotime('6:30 PM');
                 echo "<script>$t=document.getElementById('duration').value</script>";
@@ -110,7 +111,7 @@ while ($rows = mysqli_fetch_array($result)) {
                     . str_pad($mins, 2, '0', STR_PAD_LEFT) . '</option>';
                     }
                 }
-            ?>
+            ?-->
             </select>
             </label>
             <br></br>
@@ -132,7 +133,7 @@ while ($rows = mysqli_fetch_array($result)) {
             {
                 $teamname=$_POST['teamname'];
                 $description=$_POST['description'];
-                $time=$_POST['time'];
+               // $time=$_POST['time'];
                 $query="SELECT TeamCode FROM Team WHERE TeamName='$teamname' AND UnitOffering='$unitoffering'";
                 $result=mysqli_query($dbc,$query);
 
@@ -141,12 +142,13 @@ while ($rows = mysqli_fetch_array($result)) {
                    $teamcode=$rows['TeamCode'];
                 }
 
-                $query="INSERT INTO PresentationSchedule VALUES('$date','peter.cole@gmail.com','$teamcode','$venue')";
+                $query="INSERT INTO PresentationSchedule VALUES('$date','$email','$teamcode','$venue')";
                 $result = mysqli_query($dbc,$query); 
+               // echo $query;
 
                 $query="UPDATE Team SET Description='$description',TimeSlot='2017-03-04 15:27:26' WHERE TeamCode='$teamcode'";
                 $result = mysqli_query($dbc,$query); 
-                echo $query;
+               // echo $query;
                 
                 
 
@@ -159,38 +161,38 @@ while ($rows = mysqli_fetch_array($result)) {
                 $check = getimagesize($_FILES["imagefile"]["tmp_name"]);
                 if($check !== false) 
                 {
-                    echo "File is an image - " . $check["mime"] . ".";
+                    echo '<script>alert("File is an image - " . $check["mime"] . ".")</script>';
                     $uploadOk = 1;
                 } 
                 else 
                 {
-                    echo "File is not an image.";
+                    echo '<script>alert("File is not an image")<script>';
                     $uploadOk = 0;
                 }
 
                 // Check if file already exists
                 if (file_exists($target_file)) 
                 {
-                    echo "Sorry, file already exists.";
+                    echo '<script>alert("Sorry, file already exists.")</script>';
                     $uploadOk = 0;
                 }
                 // Check file size
                 if ($_FILES["imagefile"]["size"] > 500000) 
                 {
-                    echo "Sorry, your file is too large.";
+                    echo '<script>alert("Sorry, your file is too large")</script>';
                     $uploadOk = 0;
                 }
                 // Allow certain file formats
                 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
                 && $imageFileType != "gif" ) 
                 {
-                    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    echo '<script>alert("Sorry, only JPG, JPEG, PNG & GIF files are allowed")</script>';
                     $uploadOk = 0;
                 }
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk == 0)
                 {
-                    echo "Sorry, your file was not uploaded.";
+                    echo '<script>alert("Sorry, your file was not uploaded"</script>';
                 // if everything is ok, try to upload file
                 } 
                 else 
@@ -200,15 +202,14 @@ while ($rows = mysqli_fetch_array($result)) {
                         echo "The file ". basename( $_FILES["imagefile"]["name"]). " has been uploaded.";
                         $query="UPDATE Team SET Logo='$target_file' WHERE TeamCode='$teamcode'";
                         $result=mysqli_query($dbc,$query);
+                        echo '<script>alert("Schedule Created Successfully");</script>';
                     } 
                     else 
                     {
-                        echo "Sorry, there was an error uploading your file.";
+                        echo '<script>alert("Sorry, there was an error uploading your file");</script>';
                     }
                 }
 
-
-                //header("Location: FillPresentationSchedule.php");
             } 
                
                                

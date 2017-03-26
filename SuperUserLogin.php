@@ -40,6 +40,7 @@
                          else
                          {
                              $_SESSION['Role']="UC";
+                             $_SESSION['Email']=$email;
                              header("Location: UploadStudentDetails.php");
                          }
                         }

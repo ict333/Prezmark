@@ -73,7 +73,7 @@
             }
             else
             {
-                alert("Thank you");
+               // alert("Thank you");
             }
         }
         function checkStudent()
@@ -92,7 +92,7 @@
             else if (document.getElementById("role").value==="Visitor")
             {
                     document.getElementById("student").disabled=true;
-                    document.getElementById("affiliation").disabled=false;
+                    document.getElementById("affiliation").disabled=true;
             }
             
         }
@@ -180,6 +180,7 @@ if (isset($_POST['m_login'])) {
                 if ($active == 1) {
                     session_start();
                     $_SESSION['Role'] = "Marker";
+                    $_SESSION['Email']=$email;
                     echo '<script>alert("Login successful")</script>';
                 } else {
                     echo '<script>alert("Account not active")</script>';
