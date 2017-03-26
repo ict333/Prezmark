@@ -26,12 +26,12 @@
                     $role=$row['Role'];
                     $active=$row['Active'];
                     $password=$row['Password'];
-                    echo $pass.'----'.$password;
+                    //echo $pass.'----'.$password;
                     if(password_verify($pass, $password))
                     {
                         if($active==1)
                         {
-                         echo 'Logged in successfully';
+                         echo '<script>alert("Logged in successfully")</script>';
                          if($role=="Admin")
                          {
                              $_SESSION['Role']="Admin";  
@@ -45,12 +45,12 @@
                         }
                         else
                         {
-                         echo 'Account not active';
+                         echo '<script>alert("Account not active")</scipt>';
                          } 
                     }
                     else
                     {
-                        echo 'Wrong Password';
+                        echo '<script>alert("Wrong Password")</script>';
                     }
                     
                         
@@ -60,7 +60,7 @@
         }
         else
         {
-            echo 'This user does not exist';
+            echo '<script>alert("This user does not exist")</script>';
         }
     }
                         
