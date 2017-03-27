@@ -4,20 +4,20 @@ error_reporting(E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
+$email=$_SESSION['Email'];
+$teamcode=$_SESSION['TeamCodeAssess'];
 if($role=="Admin")
 {
     echo '<script>alert("Admin cannot Assess. Please Login as Unit Coordinator or Marker:")';
     header("Location: SuperUserLogin.php");
 }
 
-$query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
+include 'dbconnect.php';
+$query = "SELECT TeamName FROM Team WHERE TeamCode='$teamcode';";
 $result = mysqli_query($dbc, $query);
-$name = array();
-$i = 0;
 while ($rows = mysqli_fetch_array($result)) 
 {
-    $name[$i] = $rows['TeamName'];
-    $i++;
+    $teamname = $rows['TeamName'];
 }
 ?>
 <html>
@@ -48,18 +48,9 @@ while ($rows = mysqli_fetch_array($result))
       
        
         <label for="teamname">Team Name
-            <select name="teamname" id="teamname" required>
             <?php
-                $query="SELECT distinct TeamName FROM Team";
-                $result=mysqli_query($dbc,$query);
-                while($rows=mysqli_fetch_array($result))
-                {
-                        $team=$rows['TeamName'];
-                        echo "<option value='$team'>$team</option>";
-                }
-            
+                echo '<input id="teamname" name="teamname" type="text" value="'.$teamname.'"></input>';            
             ?>
-            </select>
             <table>
             <tr> 
                 <td>
@@ -302,6 +293,7 @@ while ($rows = mysqli_fetch_array($result))
 </html>
 
 <?php
+    
         if(isset($_POST['Assess']))
         {
             $intro=$_POST['introduction'];
@@ -314,22 +306,20 @@ while ($rows = mysqli_fetch_array($result))
             $enthusiasm=$_POST['enthusiasm'];
             $preparation=$_POST['preparation'];
             $structure=$_POST['structure'];
-            /*$query="insert into Assessment Introduction,Objectives,Demonstration1"
-                    . ",Demonstration2,Conclusion,Question,Preparation,Structure"
-                    . ",Enthusiasm,VisualAid values(intro,obj,demo1,demo2,conclusion"
-                    . "questions,preparation,structure,enthusiasm,visual) where"
-                    . "TeamName='$team'";*/
-            $query="update Assessment set Introduction=$intro,Objectives=$obj,"
-                    . "Demonstration1=$demo1,Demonstration2=$demo2,Conclusion=$conclusion"
-                    . ",Question=$questions,Preparation=$preparation,Structure=$structure"
-                    . ",Enthusiasm=$enthusiasm,VisualAid=$visual where TeamCode like 'ICT333TJD%'";
+            
+            $query="INSERT INTO Assessment VALUES ('$teamcode', '$email', '2017-03-09 00:00:00', "
+                    . "'$intro', '$obj', '$demo1', '$demo2', '$conclusion', '$questions', '$preparation', '$structure', '$enthusiasm', '$visual', '33.6666', '-33.222');";
             $result=mysqli_query($dbc,$query);
+            /*echo $query;*/
             if($result)
             {
-                echo"yeah";
+                echo '<script>alert("Assessment Successful");</script>';
             }
             else
-                echo "no";
+            {
+                echo '<script>alert("Assessment Failed! Try again!");</script>';
+            }
+            mysqli_close($dbc);
         }
     
 ?>

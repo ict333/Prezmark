@@ -10,7 +10,7 @@
          <img src="logo.png">
     </div>
     <div id="separator"></div>
-    <h1>Marker Login</h1>
+    <h1>Register</h1>
     <div class="form">
     <form name="Register" onsubmit="return check()" method="post">
 
@@ -55,7 +55,7 @@
     </div>
     <form name="MarkerLogin" onsubmit="" method="post">
 
-        <legend>Login</legend>
+        <h1>Login</h1>
 
         <label for="email">Email<br>
             <input type="email" name="email" >
@@ -182,6 +182,7 @@ if (isset($_POST['m_login'])) {
                     $_SESSION['Role'] = "Marker";
                     $_SESSION['Email']=$email;
                     echo '<script>alert("Login successful")</script>';
+                    header("Location: PresentationDisplay.php");
                 } else {
                     echo '<script>alert("Account not active")</script>';
                 }
