@@ -79,7 +79,7 @@ while ($rows = mysqli_fetch_array($result)) {
             </label>
             <br> </br-->
             
-            <label for="slot">Time Slot
+            <label for="slot">Time Slot<br>
             <select name="slot" id="slot" required>
                 <option value="9:30-10:00">9:30-10:00</option>
                 <option value="10:00-10:30">10:00-10:30</option>
@@ -148,7 +148,7 @@ while ($rows = mysqli_fetch_array($result)) {
 
                 $query="UPDATE Team SET Description='$description',TimeSlot='2017-03-04 15:27:26' WHERE TeamCode='$teamcode'";
                 $result = mysqli_query($dbc,$query); 
-               // echo $query;
+               echo $query;
                 
                 
 
@@ -177,7 +177,9 @@ while ($rows = mysqli_fetch_array($result)) {
                     $uploadOk = 0;
                 }
                 // Check file size
-                if ($_FILES["imagefile"]["size"] > 500000) 
+                
+                $maxsize = 2 * 1024 * 1024;
+                if ($_FILES["imagefile"]["size"] > $maxsize) 
                 {
                     echo '<script>alert("Sorry, your file is too large")</script>';
                     $uploadOk = 0;

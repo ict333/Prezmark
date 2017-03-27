@@ -36,7 +36,7 @@ while ($rows = mysqli_fetch_array($result))
             <a href="">Download Marks</a>
            <!-- <a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
-            <a href="">Logout</a>
+           <a href="Logout.php">Logout</a>
         </nav>
         </div>
         <div id="separator"></div>
@@ -53,12 +53,12 @@ while ($rows = mysqli_fetch_array($result))
             ?>
             <table>
             <tr> 
-                <td>
+                <td class="column1">
                <label for="introduction">Effectiveness of the Introduction, the value proposition for the project
                and clearly explaining the original client problem</label>
                 </td>
-                <td>
-                    <select id="introduction" name="introduction" required>
+                <td class="column2">
+                    <select class="mark" id="introduction" name="introduction" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -75,12 +75,12 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
             <tr> 
-                <td>
+                <td class="column1">
                <label for="objective">Clearly identified the objectives of the project explaining the solution 
                in terms of the problem and the methodologies the team used to solve the problem</label>
                 </td>
-                <td>
-                    <select id="objective" name="objective" required>
+                <td class="column2">
+                    <select class="mark" id="objective" name="objective" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -97,12 +97,12 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="demo1">Product Demonstration: Demonstrated the requirements mentioned in point
                3 above</label>
                 </td>
-                <td>
-                    <select id="demo1" name="demo1"  required>
+                <td class="column2">
+                    <select class="mark" id="demo1" name="demo1"  required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -119,12 +119,12 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="demo2">Product Demonstration: Appropriate amount of detail, flowed smoothly,
                and demonstrating the product well.</label>
                 </td>
-                <td>
-                    <select id="demo2" name="demo2" required>
+                <td class="column2">
+                    <select class="mark" id="demo2" name="demo2" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -140,13 +140,13 @@ while ($rows = mysqli_fetch_array($result))
                 </td>
             </tr>
             
-             <tr> 
-                <td>
+            <tr> 
+                <td class="column1">
                <label for="conclusion">Effectiveness of the conclusion including the final status at the end of the 
                project, the self assessment and how it could have been improved.</label>
                 </td>
-                <td>
-                    <select id="conclusion" name="conclusion"  required>
+                <td class="column2">
+                    <select class="mark" id="conclusion" name="conclusion"  required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -163,11 +163,11 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="questions">Responded to questions reasonably</label>
                 </td>
-                <td>
-                    <select id="questions" name="questions" required>
+                <td class="column2">
+                    <select class="mark" id="questions" name="questions" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -184,11 +184,11 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="preparation">The group's preparation and teamwork was evident</label>
                 </td>
-                <td>
-                    <select id="preparation" name="preparation" required>
+                <td class="column2">
+                    <select class="mark" id="preparation" name="preparation" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -205,12 +205,12 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="structure">The presentation was well-structured, organized into appropriate sections
                starting and finishing on time.</label>
                 </td>
-                <td>
-                    <select id="structure" name="structure"  required>
+                <td class="column2">
+                    <select class="mark" id="structure" name="structure"  required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -227,12 +227,12 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="enthusiasm">The presentation was enthusiastic, interesting, clear and concise 
                and was easy to understand</label>
                 </td>
-                <td>
-                    <select id="enthusiasm" name="enthusiasm" type="number" required>
+                <td class="column2">
+                    <select class="mark" id="enthusiasm" name="enthusiasm" type="number" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -249,12 +249,12 @@ while ($rows = mysqli_fetch_array($result))
             </tr>
             
              <tr> 
-                <td>
+                <td class="column1">
                <label for="visual">Visual aids were used effectively and changeover between speakers
                was smoothe and professional</label>
                 </td>
-                <td>
-                    <select id="visual" name="visual" type="number" required>
+                <td class="column2">
+                    <select class="mark" id="visual" name="visual" type="number" required>
                         <option value="0">Mark</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -272,7 +272,10 @@ while ($rows = mysqli_fetch_array($result))
 
             
             </table>
-        <input class="button" type="submit" name="Assess" value="Assess"></input>
+            <div class="button-container">
+            <input class="button" name="back" type="submit" value="Back" style="float:left;width:150px;">
+            <input class="button" type="submit" name="Assess" value="Assess"></input>
+            </div>
        
     </form>
         </div> 
@@ -310,10 +313,11 @@ while ($rows = mysqli_fetch_array($result))
             $query="INSERT INTO Assessment VALUES ('$teamcode', '$email', '2017-03-09 00:00:00', "
                     . "'$intro', '$obj', '$demo1', '$demo2', '$conclusion', '$questions', '$preparation', '$structure', '$enthusiasm', '$visual', '33.6666', '-33.222');";
             $result=mysqli_query($dbc,$query);
-            /*echo $query;*/
+            
             if($result)
             {
                 echo '<script>alert("Assessment Successful");</script>';
+                 header("Location: PresentationDisplay.php");
             }
             else
             {
@@ -321,5 +325,6 @@ while ($rows = mysqli_fetch_array($result))
             }
             mysqli_close($dbc);
         }
+        
     
 ?>
