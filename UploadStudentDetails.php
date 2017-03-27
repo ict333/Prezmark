@@ -85,7 +85,7 @@ if(isset($_POST['upload']))
     {
         if($_FILES["csvfile"]["error"] > 0)
         {
-            echo "Error: " . $_FILES["csvfile"]["error"] . "<br>";
+            echo "<script>alert('Error: " . $_FILES["csvfile"]["error"] . "')</scrpt>";
         }
         else
         {
@@ -117,7 +117,7 @@ if(isset($_POST['upload']))
                 // Check whether file exists before uploading it
                 if(file_exists($folder . $_FILES["csvfile"]["name"]))
                 {
-                    echo $_FILES["csvfile"]["name"] . " already exists.";
+                    echo "<script>alert('".$_FILES["csvfile"]["name"] ." already exists.')</script>";
                 } 
                 else
                 {
@@ -155,14 +155,14 @@ if(isset($_POST['upload']))
             }
             else
             {
-                echo "Error: There was a problem uploading your file - please try again."; 
+                echo "<script>alert('Error: There was a problem uploading your file - please try again.')</script>"; 
             }
         }
 
     }
     else
     {
-        echo "Error: Invalid parameters - please contact your server administrator.";
+        echo "<script>alert('Error: Invalid parameters - please contact your server administrator.')</script>";
     }
 }
 

@@ -31,6 +31,7 @@
 
         <label for="role">Role <br>
             <select onblur="checkStudent()" name="role" id="role" required>
+                <option value="invalid">Role</option>
                 <option value="Student">Student</option>
                 <option value="Visitor">Visitor</option>
                 <option value="Client">Client</option>
@@ -68,12 +69,14 @@
         function check()
         {
             if (grecaptcha.getResponse().length==0){
-                alert("You can't proceed!");
+                alert("PLease verify that you are not a robot!");
                 return false;
             }
-            else
+            else if(document.getElementById("role").value==="invalid")
             {
-               // alert("Thank you");
+                alert("Please select a role!");
+                document.getElementById("role").focus();
+                return false;
             }
         }
         function checkStudent()
@@ -151,14 +154,15 @@ if (isset($_POST['m_register']))
   }
   else
   {
-      echo 'Incorrect email format';
+      echo '<script>alert("Incorrect email format")</script>';
   }
 }
 ?>
 
 <?php
 /* PHP script for the marker login form */
-if (isset($_POST['m_login'])) {
+if (isset($_POST['m_login'])) 
+{
     include 'dbconnect.php';
     $email = $_POST['email'];
 
@@ -166,32 +170,47 @@ if (isset($_POST['m_login'])) {
     $query = "SELECT * FROM Person WHERE Email='$email'";
     $result = mysqli_query($dbc, $query);
     $outcome = mysqli_num_rows($result);
-
-    if ($outcome != 0) {
-        $query = "SELECT * FROM Marker WHERE Email='$email'";
-        $result = mysqli_query($dbc, $query);
-        $outcome = mysqli_num_rows($result);
-
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
+    {
         if ($outcome != 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $role = $row['Role'];
-                $active = $row['Active'];
+            $query = "SELECT * FROM Marker WHERE Email='$email'";
+            $result = mysqli_query($dbc, $query);
+            $outcome = mysqli_num_rows($result);
 
-                if ($active == 1) {
-                    session_start();
-                    $_SESSION['Role'] = "Marker";
-                    $_SESSION['Email']=$email;
-                    echo '<script>alert("Login successful")</script>';
-                    header("Location: PresentationDisplay.php");
-                } else {
-                    echo '<script>alert("Account not active")</script>';
+            if ($outcome != 0) 
+            {
+                while ($row = mysqli_fetch_assoc($result)) 
+                {
+                    $role = $row['Role'];
+                    $active = $row['Active'];
+
+                    if ($active == 1) 
+                    {
+                        session_start();
+                        $_SESSION['Role'] = "Marker";
+                        $_SESSION['Email']=$email;
+                        echo '<script>alert("Login successful")</script>';
+                        header("Location: PresentationDisplay.php");
+                    } 
+                    else 
+                    {
+                        echo '<script>alert("Account not active")</script>';
+                    }
                 }
+            } 
+            else 
+            {
+                echo '<script>alert("Please Register First!")</script>';
             }
-        } else {
-            echo '<script>alert("Please Register First!")</script>';
         }
-    } else {
-        echo '<script>alert("Please Register First")</script>';
+        else
+        {
+            echo '<script>alert("Please Register First")</script>';
+        }
+    }
+    else
+    {
+        echo "<script>alert('$email is not a valid email address')</script>";
     }
 }
 ?>
