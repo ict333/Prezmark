@@ -40,14 +40,22 @@ if($role=="Admin")
             
             $query="SELECT TeamCode FROM PresentationSchedule WHERE Date='$dateCurrent'";
             $result=mysqli_query($dbc,$query);
-                echo $query;
+                echo $query; $j=0;
             while($rows=mysqli_fetch_array($result))
             {
-                $j=1;
-                $teamcode[$j]=$rows['TeamCode'];
-                    $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$j]'";
+               
+                $teamcode[$j]=$rows['TeamCode'];    
+                $j++; 
+            }         
+            
+print_r($teamcode);
+            for($k=0;$k<$j;$k++)
+                {
+                    echo $teamcode[$k];
+                    $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
                     $result=mysqli_query($dbc,$query);
-                    echo $query;
+                    echo $query.''.$k;
+                    
                     $i=1;
                     echo '<table>';
                     while($rows=mysqli_fetch_array($result))
@@ -70,12 +78,11 @@ if($role=="Admin")
                             $_SESSION['TeamCodeAssess']=$teamcode;
                             header("Location: AssessPresentations.php");
                         }
-                          $i++;$j++;
+                          $i++;
                       
                       echo '</table>'; 
+                    }
                 }
-                
-            }         
            
             mysqli_close($dbc);  
         
