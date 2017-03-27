@@ -49,9 +49,11 @@
         </label>
         <br></br>
 
-        <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
+        <div class="captcha">
+            <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
+        </div>
         <input class="button" type="submit" name="m_register" value="Register">
-
+        
     </form>
     </div>
     <form name="MarkerLogin" onsubmit="" method="post">
