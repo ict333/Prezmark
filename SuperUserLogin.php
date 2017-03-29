@@ -1,4 +1,4 @@
-<?php session_start();
+<?php 
   ini_set('display_errors',1);
     error_reporting (E_ALL);
     if(isset($_POST['submit']))
@@ -7,7 +7,7 @@
         $email=$_POST['email'];
         $pass=$_POST['password'];
         
-                
+        echo '<script>alert("button pressed");</script.';
         /*This query checks if the email exists in the database from the Person table*/
 	$query="SELECT * FROM Person WHERE Email='$email'";
 	$result = mysqli_query($dbc,$query); 
@@ -113,4 +113,3 @@
            &#169;2017 All rights reserved by Murdoch University 
     </footer>  
 </html>
-
