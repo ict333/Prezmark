@@ -1,3 +1,8 @@
+<?php
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+
+?>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
@@ -10,64 +15,78 @@
          <img src="logo.png">
     </div>
     <div id="separator"></div>
-    <h1>Register</h1>
-    <div class="form">
-    <form name="Register" onsubmit="return check()" method="post">
+    
+    <table>
+        <tr>
+            <td rowspan="2" style="text-align: center;width:500px;">
+                <h1>Register</h1>
+                <form name="Register" onsubmit="return check()" method="post">
 
-        <label for="firstname">First Name <br>
-            <input type="text" name="firstname" id="firstname" required>
-        </label>
-        <br></br>
+                <label for="firstname">First Name <br>
+                    <input class="input" type="text" name="firstname" id="firstname" required>
+                </label>
+                <br></br>
 
-        <label for="lastname">Last Name<br>
-            <input type="text" name="lastname" id="lastname" required>
-        </label>
-        <br></br>
+                <label for="lastname">Last Name<br>
+                    <input class="input" type="text" name="lastname" id="lastname" required>
+                </label>
+                <br></br>
 
-        <label for="email">Email <br>
-            <input type="email" name="mail" id="mail" required>
-        </label>
-        <br></br>
+                <label for="email">Email <br>
+                    <input class="input"type="email" name="mail" id="mail" required>
+                </label>
+                <br></br>
 
-        <label for="role">Role <br>
-            <select onblur="checkStudent()" name="role" id="role" required>
-                <option value="invalid">Role</option>
-                <option value="Student">Student</option>
-                <option value="Visitor">Visitor</option>
-                <option value="Client">Client</option>
-            </select>
-        </label>
-        <br></br>
+                <label for="role">Role <br>
+                    <select class="input" onblur="checkStudent()" name="role" id="role" required>
+                        <option value="invalid">Role</option>
+                        <option value="Student">Student</option>
+                        <option value="Visitor">Visitor</option>
+                        <option value="Client">Client</option>
+                    </select>
+                </label>
+                <br></br>
 
-        <label for="affiliation">Affiliation<br>
-            <input  type="text" name="affiliation" id="affiliation">
-        </label>
-        <br></br>
+                <label for="affiliation">Affiliation<br>
+                    <input class="input" type="text" name="affiliation" id="affiliation">
+                </label>
+                <br></br>
 
-        <label for="student">Student Number<br>
-            <input type="integer" name="student" id="student">
-        </label>
-        <br></br>
+                <label for="student">Student Number<br>
+                    <input class="input" type="integer" name="student" id="student">
+                </label>
+                <br></br>
 
-        <div class="captcha">
-            <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
-        </div>
-        <input class="button" type="submit" name="m_register" value="Register">
-        
-    </form>
-    </div>
-    <form name="MarkerLogin" onsubmit="" method="post">
+                <div class="captcha">
+                    <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
+                </div>
+                <input class="button" type="submit" name="m_register" value="Register">
 
-        <h1>Login</h1>
+                </form>
+            </td>
+            
+            <td style="text-align: center;width:500px;"> 
+                <form name="MarkerLogin" onsubmit="" method="post">
+                <h1>Login</h1>
+                <label for="email">Email<br>
+                    <input  class="input" type="email" name="email" >
+                </label>
+                <br></br>
+                <input class="button" type="submit" name="m_login" value="Login">
+                </form>
+            </td>
+        <tr> 
+            <td style="text-align: center;">
+                <h1>User Guide</h1>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, 
+               
+            </td>
+        </tr>
+    </table>
+    
+   
 
-        <label for="email">Email<br>
-            <input type="email" name="email" >
-        </label>
-        <br></br>
-        <input class="button" type="submit" name="m_login" value="Login">
-    </form>
-
-         <script>
+    <script>
         function check()
         {
             if (grecaptcha.getResponse().length==0){
@@ -101,11 +120,11 @@
             }
             
         }
-        </script>
+    </script>
         
-        <footer>
-           &#169;2017 All rights reserved by Murdoch University 
-        </footer>
+    <footer>
+         &#169;2017 All rights reserved by Murdoch University 
+    </footer>
     </body>
 </html>
 

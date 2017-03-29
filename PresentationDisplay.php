@@ -24,7 +24,7 @@ if($role=="Admin")
             <a href="UploadStudentDetails.php" >Upload Student Details</a>
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-            <a href="">Download Marks</a>
+            <a href="DownloadMarks.php">Download Marks</a>
            <!-- <a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
            <a href="Logout.php">Logout</a>
@@ -40,56 +40,51 @@ if($role=="Admin")
             
             $query="SELECT TeamCode FROM PresentationSchedule WHERE Date='$dateCurrent'";
             $result=mysqli_query($dbc,$query);
-                echo $query; $j=0;
+            $j=0;
             while($rows=mysqli_fetch_array($result))
-            {
-               
-                $teamcode[$j]=$rows['TeamCode'];    
+            {               
+                $teamcode[$j]=$rows['TeamCode']; 
                 $j++; 
             }         
             
-print_r($teamcode);
             for($k=0;$k<$j;$k++)
-                {
-                    echo $teamcode[$k];
-                    $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
-                    $result=mysqli_query($dbc,$query);
-                    echo $query.''.$k;
+            {
+                $test=$teamcode[$k];
+                $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
+                $result=mysqli_query($dbc,$query);
                     
-                    $i=1;
-                    echo '<table>';
-                    while($rows=mysqli_fetch_array($result))
-                    {
-                        echo '<tr>';
-                        $teamcode=$rows['TeamCode'];
-                        $teamname=$rows['TeamName'];
-                        $logo=$rows['Logo'];
-                        $description=$rows['Description'];
-                        echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
-                        echo '<td class="column2">'.$teamname.'</td>';
-                        echo '<td class="column3">'.$description.'</td>';
-                        echo '<td> <form method="post">'
-                        . '<input class="button" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
-                          . '</form></td>';
-                        echo '</tr>';
+                $i=1;
+                echo '<table>';
+                while($rows=mysqli_fetch_array($result))
+                {
+                    echo '<tr>';
+                    $teamname=$rows['TeamName'];
+                    $logo=$rows['Logo'];
+                    $description=$rows['Description'];
+                    echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
+                    echo '<td class="column2">'.$teamname.'</td>';
+                    echo '<td class="column3">'.$description.'</td>';
+                    echo '<td> <form method="post">'
+                       . '<input class="button" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
+                       . '</form></td>';
+                    echo '</tr>';
 
-                         if(isset($_POST['assess'.$i]))
-                        {
-                            $_SESSION['TeamCodeAssess']=$teamcode;
-                            header("Location: AssessPresentations.php");
-                        }
-                          $i++;
-                      
-                      echo '</table>'; 
+                    if(isset($_POST['assess'.$i]))
+                    {
+                        $_SESSION['TeamCodeAssess']=$teamcode;
+                        header("Location: AssessPresentations.php");
                     }
+                    $i++;
+                      
+                    echo '</table>'; 
                 }
+            }
            
             mysqli_close($dbc);  
         
         ?>          
         </div>
-        
-     
+            
     </body>
     <footer>
            &#169;2017 All rights reserved by Murdoch University 

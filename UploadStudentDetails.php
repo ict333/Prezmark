@@ -22,7 +22,7 @@ ini_set('display_errors',1);
             <a href="UploadStudentDetails.php" class="active">Upload Student Details</a>
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="PresentationDisplay.php">Assess Presentations</a>
-            <a href="">Download Marks</a>
+            <a href="DownloadMarks.php">Download Marks</a>
             <!--a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>
