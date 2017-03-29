@@ -1,7 +1,7 @@
 <?php
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
 session_start();
 $role= $_SESSION['Role'];
 if($role!="Admin")
@@ -26,9 +26,9 @@ if($role!="Admin")
             <a href="Logout.php">Logout</a>
         </nav>
     </div>
+        
     <div id="separator"></div>
-        
-        
+                
     <div class="form bottom">
         
     <form name="CreateSuperUser" id="CreateSuperUser" method="post" onsubmit="return validateForm()">
@@ -62,71 +62,57 @@ if($role!="Admin")
            &#169;2017 All rights reserved by Murdoch University 
     </footer>  
 </html>
+
 <?php
-
-   
-  
-   function generatePassword() 
+function generatePassword() 
+{
+    $passwordRange = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $pass = array(); 
+    $length = strlen($passwordRange) - 1;
+    for ($i = 0; $i < 8; $i++) 
     {
-        $passwordRange = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $pass = array(); 
-        $length = strlen($passwordRange) - 1;
-        for ($i = 0; $i < 8; $i++) 
-        {
-            $n = rand(0, $length);
-            $pass[] = $passwordRange[$n];
-        }
-        $password=implode($pass);
-        echo $password;
-       
-        // You can now safely store the contents of $hashedPassword in your database!
-
-        // Check if a user has provided the correct password by comparing what they typed with our hash
-        //
-
-       // password_verify('my super cool password', $hashedPassword); 
-        return $password;
-        
-        
+        $n = rand(0, $length);
+        $pass[] = $passwordRange[$n];
     }
-  function hashPassword($pass)
-  {
-      $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
-     // echo $hashedPassword;
-      return $hashedPassword;
-  }
+    $password=implode($pass);
+    echo $password;
+    return $password;       
+}
+function hashPassword($pass)
+{
+    $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+    return $hashedPassword;
+}
           
-
 if(isset($_POST['submit']))
+{
+    include 'dbconnect.php';	
+    $email=$_POST['email'];
+    $role1="SuperUser";
+    $role2=$_POST['role'];
+    $password=  generatePassword();
+    $hashPass=  hashPassword($password);
+    $active="1";
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
     {
-        include 'dbconnect.php';	
-        $email=$_POST['email'];
-        $role1="SuperUser";
-	$role2=$_POST['role'];
-        $password=  generatePassword();
-        $hashPass=  hashPassword($password);
-        $active="1";
-        
+        /*This query looks for the user entered email in the Person table to eliminate same values*/
+        $query="SELECT * FROM Person WHERE Email='$email'";
+        $result = mysqli_query($dbc,$query);
+        $outcome=mysqli_num_rows($result);
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
+        if($outcome==0)
         {
-          /*This query looks for the user entered email in the Person table to eliminate same values*/
-          $query="SELECT * FROM Person WHERE Email='$email'";
-          $result = mysqli_query($dbc,$query);
-          $outcome=mysqli_num_rows($result);
-
-          if($outcome==0)
-          {
-            /*This query inserts the email into the Person table*/
+           /*This query inserts the email into the Person table*/
             $query ="INSERT INTO Person VALUES ('$email', '$role1');";
             $result = mysqli_query($dbc,$query);
+            
             /*This query inserts the email into the SuperUser table*/
             $query ="INSERT INTO SuperUser VALUES ('$email', '$role2','$hashPass', '$active');";
             $result = mysqli_query($dbc,$query);
             mysqli_close($dbc);
 
             echo '<script>alert("Account created successfully!");</script>';
-            
             
             /*send password email
             require_once "Mail.php";
@@ -172,8 +158,6 @@ if(isset($_POST['submit']))
         else
         {
           echo $email.' is not a valid email address';
-        }
-                
-        
+        }        
     }		
 ?>

@@ -1,7 +1,7 @@
 <?php
-include("dbconnect.php");
 ini_set('display_errors',1);
 error_reporting(E_ALL);
+
 session_start();
 $role= $_SESSION['Role'];
 if($role!="UC")
@@ -9,8 +9,25 @@ if($role!="UC")
     header("Location: SuperUserLogin.php");
 }
 
+if(isset($_POST['next']))
+{    
+    $date=$_POST['date'];
+    $venue=$_POST['venue'];
+    $unitoffering=$_POST['unitoffering'];
+    $duration=$_POST['duration'];
+    $start=$_POST['start'];
+    $end=$_POST['end'];
+    $_SESSION['Date']=$date;
+    $_SESSION['Venue']=$venue;
+    $_SESSION['UnitOffering']=$unitoffering;
+    $_SESSION['Duration']=$duration;
+    $_SESSION['Start']=$start;
+    $_SESSION['End']=$end;
+      
+    header("Location: FillPresentationSchedule.php");
+}
 ?>
-<!DOCTYPE html>
+
 <html> 
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
@@ -24,14 +41,14 @@ if($role!="UC")
             <a href="UploadStudentDetails.php">Upload Student Details</a>
             <a href="CreateSchedule.php" class="active">New Schedule</a>
             <a href="PresentationDisplay.php">Assess Presentations</a>
-            <a href="">Download Marks</a>
+            <a href="DownloadMarks.php">Download Marks</a>
             <!--a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>
         </nav>
         </div>
-        <div id="separator"></div>
         
+        <div id="separator"></div>        
         
         <div class="form">
         
@@ -41,7 +58,8 @@ if($role!="UC")
             <label for="unitoffering">Unit Offering<br>
        
             <select name="unitoffering" id="unitoffering" required>
-            <?php
+            <?php            
+                include("dbconnect.php");
                 $get_offering="SELECT DISTINCT UnitOffering FROM Team";
 
                 $runsql=mysqli_query($dbc,$get_offering);
@@ -51,6 +69,8 @@ if($role!="UC")
                         $offering=$rows['UnitOffering'];
                         echo "<option value='$offering'>$offering</option>";
                 }
+                
+                mysqli_close($dbc);
             ?>
             </select>
             </label>
@@ -66,7 +86,22 @@ if($role!="UC")
             </label>
             <br> </br>
             
-             <input class="button" type="submit" name="next" value="Next"></input>
+            <label for="duration">Duration<br>
+            <input id="duration" name="duration" type="number" required></input>
+            </label>
+            <br> </br>
+            
+            <label for="start">Start Time<br>
+            <input id="start" name="start" type="time" required></input>
+            </label>
+            <br> </br>
+
+            <label for="end">End Time<br>
+            <input id="end" name="end" type="time" required></input>
+            </label>
+            <br> </br>
+            
+            <input class="button" type="submit" name="next" value="Next"></input>
         </form>  
         </div>
         <footer>
@@ -76,20 +111,3 @@ if($role!="UC")
     </body>
 </html>
 
-
-
-
-
-<?php
-    if(isset($_POST['next']))
-    {    
-        $date=$_POST['date'];
-        $venue=$_POST['venue'];
-        $unitoffering=$_POST['unitoffering'];
-        $_SESSION['Date']=$date;
-        $_SESSION['Venue']=$venue;
-        $_SESSION['UnitOffering']=$unitoffering;
-        
-        header("Location: FillPresentationSchedule.php");
-    }
-?>
