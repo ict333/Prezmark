@@ -22,6 +22,7 @@ while ($rows = mysqli_fetch_array($result))
 function totalTime($hr,$min)
 {
     $totaltime=($hr*60)+$min;
+    return $totaltime;
 }
 
 function convertTo24hr($hr, $ampm)
