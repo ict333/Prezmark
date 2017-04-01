@@ -1,7 +1,6 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
 session_start();
 $role= $_SESSION['Role'];
 $email=$_SESSION['Email'];
@@ -19,6 +18,26 @@ while ($rows = mysqli_fetch_array($result))
 {
     $teamname = $rows['TeamName'];
 }
+
+function totalTime($hr,$min)
+{
+    $totaltime=($hr*60)+$min;
+    return $totaltime;
+}
+
+function convertTo24hr($hr, $ampm)
+{
+    if($ampm=="am" && $hr==12)
+    {
+        $hr=0;
+    }
+    else if($ampm=="pm")
+    {
+        $hr=$hr+12;
+    }
+    return $hr;
+}
+
 ?>
 
 <html>
@@ -28,29 +47,116 @@ while ($rows = mysqli_fetch_array($result))
     </head>
     
     <body>
-        <div class="header">
-         <a href="index.php"> <img src="logo.png"></a>
-        <nav>
-            <a href="UploadStudentDetails.php" >Upload Student Details</a>
-            <a href="CreateSchedule.php">New Schedule</a>
-            <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-            <a href="DownloadMarks.php">Download Marks</a>
-           <!-- <a href="">Modify Student Details</a>
-            <a href="">Modify Schedule</a-->
-           <a href="Logout.php">Logout</a>
-        </nav>
-        </div>
+       <?php
+        if($role=="UC")
+        {
+            echo '<div class="header">
+            <a href="index.php"> <img src="logo.png"></a>
+           <nav>
+               <a href="UploadStudentDetails.php" >Upload Student Details</a>
+               <a href="CreateSchedule.php">New Schedule</a>
+               <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
+               <a href="DownloadMarks.php">Download Marks</a>
+              <!-- <a href="">Modify Student Details</a>
+               <a href="">Modify Schedule</a-->
+              <a href="Logout.php">Logout</a>
+           </nav>
+           </div>';
+        }
+        else
+        {
+            echo '<div class="header">
+            <a href="index.php"> <img src="logo.png"></a>
+           <nav>
+               <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
+               <a href="index.php">Logout</a>
+           </nav>
+           </div>';
+        }
+        ?>
         
         <div id="separator"></div>
-                
+        <p id="demo"></p>
+        
+        <?php
+        $query = "SELECT TimeSlot FROM Team WHERE TeamCode='$teamcode';";
+        $result = mysqli_query($dbc, $query);
+
+        while ($rows = mysqli_fetch_array($result)) 
+        {
+            $datetime= $rows['TimeSlot']; 
+        }
+        
+        
+        //Getting the hours and minutes for the presentation start time and calculating the time in minutes
+        $starttime=substr($datetime, -8);
+        $start_hr=substr($starttime,0,-6);
+        $start_min=substr($starttime,3,-3);
+        $totalStartTime=totalTime($start_hr, $start_min);
+        
+        //Getting the hours and minutes for the current time and calculating the time in minutes
+        $current_hr=date("h");
+        $current_min=date("i");
+        $ampm=date("a");
+        $current_hr=  convertTo24hr($current_hr, $ampm);
+        $totalCurrentTime=totalTime($current_hr, $current_min);
+        
+        //Getting calculating the time in minutes for countdown time
+        $end_hr=2;
+        $end_min=8;
+        $totalEndTime=totalTime($end_hr, $end_min);
+        
+        //Getting the date when the presentation ends and restricting marking time to midnight
+        $date=substr($datetime,0,-9);
+        $time="02:08:00";
+        $temp=array($date," ",$time);
+        $datetime=implode($temp);
+       
+        
+        
+        if($totalCurrentTime<$totalStartTime)
+        {
+            echo "Presentation Not Commensed Yet";
+        }
+        else
+        {
+            echo '        
+        <script>
+        var countDownDate = new Date("'.$datetime.'");
+
+        var x = setInterval(function() {
+
+            var now = new Date().getTime();
+
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("demo").innerHTML = "Time Left: "+ hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+        </script>';
+            
+            
+        if($totalCurrentTime!=$totalEndTime)
+        {
+          echo '
         <div class="form">
         <h1>Assessment</h1>
         <form name="Assess" id="Assess" method="post">
       
             <label for="teamname">Team Name
-            <?php
-                echo '<input id="teamname" name="teamname" type="text" value="'.$teamname.'"></input>';            
-            ?>
+            
+                <input id="teamname" name="teamname" type="text" value="'.$teamname.'"></input>          
+            
             <table>
             <tr> 
                 <td class="column1">
@@ -185,7 +291,7 @@ while ($rows = mysqli_fetch_array($result))
             
              <tr> 
                 <td class="column1">
-               <label for="preparation">The group's preparation and teamwork was evident</label>
+               <label for="preparation">The groups preparation and teamwork was evident</label>
                 </td>
                 <td class="column2">
                     <select class="mark" id="preparation" name="preparation" required>
@@ -276,8 +382,18 @@ while ($rows = mysqli_fetch_array($result))
             <input class="button" name="back" type="submit" value="Back" style="float:left;width:150px;">
             <input class="button" type="submit" name="submit" value="Submit"></input>
             </div>
-        </form>
-        </div> 
+        </form> 
+        </div> ';   
+        }
+        else
+        {
+            echo 'Presentation Expired';
+        }
+                   
+        }
+
+        
+        ?>
         
     <script>
        function validateForm()
@@ -295,34 +411,38 @@ while ($rows = mysqli_fetch_array($result))
      </footer>
 </html>
 
+
 <?php
+if(isset($_POST['submit']))
+{
+    $time=date("h:i:s");
+    $date=date("Y-m-d");
+    $temp=array($date," ",$time);
+    $datetime=implode($temp);
     
-        if(isset($_POST['submit']))
-        {
-            $intro=$_POST['introduction'];
-            $obj=$_POST['objective'];
-            $demo1=$_POST['demo1'];
-            $demo2=$_POST['demo2'];
-            $conclusion=$_POST['conclusion'];
-            $questions=$_POST['questions'];
-            $visual=$_POST['visual'];
-            $enthusiasm=$_POST['enthusiasm'];
-            $preparation=$_POST['preparation'];
-            $structure=$_POST['structure'];
-            
-            $query="INSERT INTO Assessment VALUES ('$teamcode', '$email', '2017-03-09 00:00:00', "
-                    . "'$intro', '$obj', '$demo1', '$demo2', '$conclusion', '$questions', '$preparation', '$structure', '$enthusiasm', '$visual', '33.6666', '-33.222');";
-            $result=mysqli_query($dbc,$query);
-            
-            if($result)
-            {
-                echo '<script>alert("Assessment Successful");</script>';
-                 header("Location: PresentationDisplay.php");
-            }
-            else
-            {
-                echo '<script>alert("Assessment Failed! Try again!");</script>';
-            }
-            mysqli_close($dbc);
-        }
+    $intro=$_POST['introduction'];
+    $obj=$_POST['objective'];
+    $demo1=$_POST['demo1'];
+    $demo2=$_POST['demo2'];
+    $conclusion=$_POST['conclusion'];
+    $questions=$_POST['questions'];
+    $visual=$_POST['visual'];
+    $enthusiasm=$_POST['enthusiasm'];
+    $preparation=$_POST['preparation'];
+    $structure=$_POST['structure'];
+           
+    $query="INSERT INTO Assessment VALUES ('$teamcode', '$email', '$datetime', "
+                  . "'$intro', '$obj', '$demo1', '$demo2', '$conclusion', '$questions', '$preparation', '$structure', '$enthusiasm', '$visual', '33.6666', '-33.222');";
+    $result=mysqli_query($dbc,$query);
+    if($result)
+    {
+        echo '<script>alert("Assessment Successful");</script>';
+        header("Location: PresentationDisplay.php");
+    }
+    else
+    {
+        echo '<script>alert("Assessment Failed! Try again!");</script>';
+    }
+    mysqli_close($dbc);
+}
    ?>
