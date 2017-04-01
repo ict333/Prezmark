@@ -1,4 +1,4 @@
-<?php 
+<?php session_start();
   ini_set('display_errors',1);
     error_reporting (E_ALL);
     if(isset($_POST['submit']))
@@ -7,24 +7,18 @@
         $email=$_POST['email'];
         $pass=$_POST['password'];
         
-        echo '<script>alert("button pressed");</script.';
+                
         /*This query checks if the email exists in the database from the Person table*/
 	$query="SELECT * FROM Person WHERE Email='$email'";
 	$result = mysqli_query($dbc,$query); 
-        if($result)
-            echo 'Yes';
-        else
-            echo 'na';
 	$outcome=mysqli_num_rows($result);
-        echo $query;
+        
 	if($outcome!=0)
         {
             $query="SELECT * FROM SuperUser WHERE Email='$email'";
             $result = mysqli_query($dbc,$query); 
-            
             $outcome=mysqli_num_rows($result);
             
-        echo $query;
             if($outcome!=0)
             {
                 while ($row=mysqli_fetch_assoc($result))
@@ -35,7 +29,6 @@
                     //echo $pass.'----'.$password;
                     if(password_verify($pass, $password))
                     {
-                        echo 'YOO';
                         if($active==1)
                         {
                          echo '<script>alert("Logged in successfully")</script>';
@@ -77,8 +70,6 @@
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" href="icon.png" type="image/x-icon"></link>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     </head>
     
     <body>
@@ -90,7 +81,7 @@
 
     <div class="form bottom" >
         
-    <form  name="SuperUserLogin" id="SuperUserLogin" method="post">
+    <form  name="SuperUserLogin" id="SuperUserLogin" method="post" onsubmit="return validateForm()">
         <h1>Unit Coordinator/ Administrator Login</h1>
         <label for="email">Email<br>
         <input id="email" name="email" type="email" required></input> 
