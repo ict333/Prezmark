@@ -11,14 +11,20 @@
         /*This query checks if the email exists in the database from the Person table*/
 	$query="SELECT * FROM Person WHERE Email='$email'";
 	$result = mysqli_query($dbc,$query); 
+        if($result)
+            echo 'Yes';
+        else
+            echo 'na';
 	$outcome=mysqli_num_rows($result);
-        
+        echo $query;
 	if($outcome!=0)
         {
             $query="SELECT * FROM SuperUser WHERE Email='$email'";
             $result = mysqli_query($dbc,$query); 
+            
             $outcome=mysqli_num_rows($result);
             
+        echo $query;
             if($outcome!=0)
             {
                 while ($row=mysqli_fetch_assoc($result))
@@ -29,6 +35,7 @@
                     //echo $pass.'----'.$password;
                     if(password_verify($pass, $password))
                     {
+                        echo 'YOO';
                         if($active==1)
                         {
                          echo '<script>alert("Logged in successfully")</script>';
@@ -83,7 +90,7 @@
 
     <div class="form bottom" >
         
-    <form  name="SuperUserLogin" id="SuperUserLogin" method="post" onsubmit="return validateForm()">
+    <form  name="SuperUserLogin" id="SuperUserLogin" method="post">
         <h1>Unit Coordinator/ Administrator Login</h1>
         <label for="email">Email<br>
         <input id="email" name="email" type="email" required></input> 
@@ -113,3 +120,4 @@
            &#169;2017 All rights reserved by Murdoch University 
     </footer>  
 </html>
+
