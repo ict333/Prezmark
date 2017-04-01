@@ -18,19 +18,33 @@ if($role=="Admin")
     </head>
     
     <body>
-        
-        <div class="header">
-         <a href="index.php"> <img src="logo.png"></a>
-        <nav>
-            <a href="UploadStudentDetails.php" >Upload Student Details</a>
-            <a href="CreateSchedule.php">New Schedule</a>
-            <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-            <a href="DownloadMarks.php">Download Marks</a>
-           <!-- <a href="">Modify Student Details</a>
-            <a href="">Modify Schedule</a-->
-           <a href="Logout.php">Logout</a>
-        </nav>
-        </div>
+        <?php
+        if($role=="UC")
+        {
+            echo '<div class="header">
+            <a href="index.php"> <img src="logo.png"></a>
+           <nav>
+               <a href="UploadStudentDetails.php" >Upload Student Details</a>
+               <a href="CreateSchedule.php">New Schedule</a>
+               <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
+               <a href="DownloadMarks.php">Download Marks</a>
+              <!-- <a href="">Modify Student Details</a>
+               <a href="">Modify Schedule</a-->
+              <a href="Logout.php">Logout</a>
+           </nav>
+           </div>';
+        }
+        else
+        {
+            echo '<div class="header">
+            <a href="index.php"> <img src="logo.png"></a>
+           <nav>
+               <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
+               <a href="index.php">Logout</a>
+           </nav>
+           </div>';
+        }
+        ?>
          
         <div id="separator"></div>
         
@@ -42,7 +56,9 @@ if($role=="Admin")
             
             $query="SELECT TeamCode FROM PresentationSchedule WHERE Date='$dateCurrent'";
             $result=mysqli_query($dbc,$query);
+            
             $j=0;
+            $i=0;
             while($rows=mysqli_fetch_array($result))
             {               
                 $teamcode[$j]=$rows['TeamCode']; 
@@ -51,11 +67,8 @@ if($role=="Admin")
             
             for($k=0;$k<$j;$k++)
             {
-                $test=$teamcode[$k];
                 $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
                 $result=mysqli_query($dbc,$query);
-                    
-                $i=1;
                 echo '<table>';
                 while($rows=mysqli_fetch_array($result))
                 {
@@ -73,7 +86,7 @@ if($role=="Admin")
 
                     if(isset($_POST['assess'.$i]))
                     {
-                        $_SESSION['TeamCodeAssess']=$teamcode;
+                        $_SESSION['TeamCodeAssess']=$teamcode[$k];
                         header("Location: AssessPresentations.php");
                     }
                     $i++;
