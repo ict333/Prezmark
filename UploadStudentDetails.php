@@ -35,16 +35,16 @@ ini_set('display_errors',1);
         <div class="form">
             
         <h1>Upload Student Details</h1>
-        <form method="post" action="UploadStudentDetails.php" enctype="multipart/form-data">
+        <form name="UploadStudent" method="post" action="UploadStudentDetails.php" onsubmit="return validate()" enctype="multipart/form-data">
                    
         <label for="unit">Unit</label>
         <br> 
-        <input id="unit" name="unit" type="text" required></input>
+        <input id="unit" name="unit" type="text" required placeholder="For example: ICT333/ICT312"></input>
         <br> </br>
             
-        <label for="semester">Semester</label>
+        <label for="semester">Teaching Period</label>
         <br> 
-        <input id="semester" name="semester" type="text" required></input>
+        <input id="semester" name="semester" type="text" required placeholder="For example: S1/S2/TJD/TMD/TSD"></input>
         <br> </br>
             
         <label for="year">Year</label>
@@ -55,12 +55,25 @@ ini_set('display_errors',1);
    
         <label>Choose file to upload</label>
         <br>
-        <input type="file" name="csvfile" id="csvfile" required> 
+        <input type="file" name="csvfile" id="csvfile" accept=".csv"  required> 
         <br> </br>
         <input class="button" name="upload" type="submit" value="Upload"/>
      
         </form> 
         </div>
+        
+        <script>
+            function validate()
+            {
+                var year=document.UploadStudent.year.value;
+                if(isNaN(year))
+                {
+                    alert("Please Enter Numeric Values for Year!");
+                    return false;
+                }
+            }
+        </script>
+        
         <footer>
            &#169;2017 All rights reserved by Murdoch University 
         </footer>
@@ -79,7 +92,6 @@ if(isset($_POST['upload']))
     $offering=array($unit,$semester,$year);
     $unitoffering=implode($offering);
     $teamcode=array();
-    //echo $unitoffering;
     
     if(isset($_FILES["csvfile"]["error"]))
     {
