@@ -2,6 +2,108 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
+/* PHP script for the marker registration form */
+if (isset($_POST['m_register']))
+{
+    include 'dbconnect.php';
+    $mail = $_POST['mail'];
+    $role1 = "Marker";
+    $role2 = $_POST['role'];
+    $fn = $_POST['firstname'];
+    $ln = $_POST['lastname'];
+    $aff = $_POST['affiliation'];
+    $stud = $_POST['student'];
+    $success = $_POST['g-recaptcha-response'];
+    $active = "1";
+
+    /* This query looks for the user entered email in the Person table to eliminate same values */
+    $query = "SELECT * FROM Person WHERE Email='$mail'";
+    $result = mysqli_query($dbc, $query);
+    $outcome = mysqli_num_rows($result);
+  if (!filter_var($mail, FILTER_VALIDATE_EMAIL) === false) 
+   {
+    if ($success) 
+    {
+        if ($outcome == 0) {
+            /* This query inserts the email into the Person table */
+            $query = "INSERT INTO Person VALUES ('$mail', '$role1');";
+            $result = mysqli_query($dbc, $query);
+
+            /* This query inserts the email into the Marker table */
+            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','$aff','$stud','$active');";
+            $result = mysqli_query($dbc, $query);
+            mysqli_close($dbc);
+
+            echo '<script>alert("Account created successfully!");</script>';
+        } else {
+            echo '<script>alert("This email already exists!");</script>';
+        }
+    }
+    else if(!$success)
+    {
+        echo '<script>alert("Please verify that you are a human!")</script>';
+        return false;
+    }
+  }
+  else
+  {
+      echo '<script>alert("Incorrect email format")</script>';
+  }
+}
+
+/* PHP script for the marker login form */
+if (isset($_POST['m_login'])) 
+{
+    include 'dbconnect.php';
+    $email = $_POST['email'];
+
+    /* This query checks if the email exists in the database from the Person table */
+    $query = "SELECT * FROM Person WHERE Email='$email'";
+    $result = mysqli_query($dbc, $query);
+    $outcome = mysqli_num_rows($result);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
+    {
+        if ($outcome != 0) {
+            $query = "SELECT * FROM Marker WHERE Email='$email'";
+            $result = mysqli_query($dbc, $query);
+            $outcome = mysqli_num_rows($result);
+
+            if ($outcome != 0) 
+            {
+                while ($row = mysqli_fetch_assoc($result)) 
+                {
+                    $role = $row['Role'];
+                    $active = $row['Active'];
+
+                    if ($active == 1) 
+                    {
+                        session_start();
+                        $_SESSION['Role'] = "Marker";
+                        $_SESSION['Email']=$email;
+                        echo '<script>alert("Login successful")</script>';
+                        header("Location: PresentationDisplay.php");
+                    } 
+                    else 
+                    {
+                        echo '<script>alert("Account not active")</script>';
+                    }
+                }
+            } 
+            else 
+            {
+                echo '<script>alert("Please Register First!")</script>';
+            }
+        }
+        else
+        {
+            echo '<script>alert("Please Register First")</script>';
+        }
+    }
+    else
+    {
+        echo "<script>alert('$email is not a valid email address')</script>";
+    }
+}
 ?>
 <html>
     <head>
@@ -127,111 +229,3 @@ error_reporting(E_ALL);
     </footer>
     </body>
 </html>
-
-
-<?php
-/* PHP script for the marker registration form */
-if (isset($_POST['m_register']))
-{
-    include 'dbconnect.php';
-    $mail = $_POST['mail'];
-    $role1 = "Marker";
-    $role2 = $_POST['role'];
-    $fn = $_POST['firstname'];
-    $ln = $_POST['lastname'];
-    $aff = $_POST['affiliation'];
-    $stud = $_POST['student'];
-    $success = $_POST['g-recaptcha-response'];
-    $active = "1";
-
-    /* This query looks for the user entered email in the Person table to eliminate same values */
-    $query = "SELECT * FROM Person WHERE Email='$mail'";
-    $result = mysqli_query($dbc, $query);
-    $outcome = mysqli_num_rows($result);
-  if (!filter_var($mail, FILTER_VALIDATE_EMAIL) === false) 
-   {
-    if ($success) 
-    {
-        if ($outcome == 0) {
-            /* This query inserts the email into the Person table */
-            $query = "INSERT INTO Person VALUES ('$mail', '$role1');";
-            $result = mysqli_query($dbc, $query);
-
-            /* This query inserts the email into the Marker table */
-            $query = "INSERT INTO Marker VALUES ('$fn','$ln','$mail','$role2','$aff','$stud','$active');";
-            $result = mysqli_query($dbc, $query);
-            mysqli_close($dbc);
-
-            echo '<script>alert("Account created successfully!");</script>';
-        } else {
-            echo '<script>alert("This email already exists!");</script>';
-        }
-    }
-    else if(!$success)
-    {
-        echo '<script>alert("Please verify that you are a human!")</script>';
-        return false;
-    }
-  }
-  else
-  {
-      echo '<script>alert("Incorrect email format")</script>';
-  }
-}
-?>
-
-<?php
-/* PHP script for the marker login form */
-if (isset($_POST['m_login'])) 
-{
-    include 'dbconnect.php';
-    $email = $_POST['email'];
-
-    /* This query checks if the email exists in the database from the Person table */
-    $query = "SELECT * FROM Person WHERE Email='$email'";
-    $result = mysqli_query($dbc, $query);
-    $outcome = mysqli_num_rows($result);
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
-    {
-        if ($outcome != 0) {
-            $query = "SELECT * FROM Marker WHERE Email='$email'";
-            $result = mysqli_query($dbc, $query);
-            $outcome = mysqli_num_rows($result);
-
-            if ($outcome != 0) 
-            {
-                while ($row = mysqli_fetch_assoc($result)) 
-                {
-                    $role = $row['Role'];
-                    $active = $row['Active'];
-
-                    if ($active == 1) 
-                    {
-                        session_start();
-                        $_SESSION['Role'] = "Marker";
-                        $_SESSION['Email']=$email;
-                        echo '<script>alert("Login successful")</script>';
-                        header("Location: PresentationDisplay.php");
-                    } 
-                    else 
-                    {
-                        echo '<script>alert("Account not active")</script>';
-                    }
-                }
-            } 
-            else 
-            {
-                echo '<script>alert("Please Register First!")</script>';
-            }
-        }
-        else
-        {
-            echo '<script>alert("Please Register First")</script>';
-        }
-    }
-    else
-    {
-        echo "<script>alert('$email is not a valid email address')</script>";
-    }
-}
-?>

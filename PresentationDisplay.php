@@ -18,6 +18,7 @@ if($role=="Admin")
     </head>
     
     <body>
+        
         <div class="header">
          <a href="index.php"> <img src="logo.png"></a>
         <nav>
@@ -30,6 +31,7 @@ if($role=="Admin")
            <a href="Logout.php">Logout</a>
         </nav>
         </div>
+         
         <div id="separator"></div>
         
         <div>
