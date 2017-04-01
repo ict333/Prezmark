@@ -102,13 +102,13 @@ function convertTo24hr($hr, $ampm)
         $totalCurrentTime=totalTime($current_hr, $current_min);
         
         //Getting calculating the time in minutes for countdown time
-        $end_hr=2;
-        $end_min=8;
+        $end_hr=23;
+        $end_min=59;
         $totalEndTime=totalTime($end_hr, $end_min);
         
         //Getting the date when the presentation ends and restricting marking time to midnight
         $date=substr($datetime,0,-9);
-        $time="02:08:00";
+        $time="23:59:00";
         $temp=array($date," ",$time);
         $datetime=implode($temp);
        
@@ -146,249 +146,250 @@ function convertTo24hr($hr, $ampm)
         </script>';
             
             
-        if($totalCurrentTime!=$totalEndTime)
-        {
-          echo '
-        <div class="form">
-        <h1>Assessment</h1>
-        <form name="Assess" id="Assess" method="post">
-      
-            <label for="teamname">Team Name
-            
-                <input id="teamname" name="teamname" type="text" value="'.$teamname.'"></input>          
-            
-            <table>
-            <tr> 
-                <td class="column1">
-               <label for="introduction">Effectiveness of the Introduction, the value proposition for the project
-               and clearly explaining the original client problem</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="introduction" name="introduction" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-            <tr> 
-                <td class="column1">
-               <label for="objective">Clearly identified the objectives of the project explaining the solution 
-               in terms of the problem and the methodologies the team used to solve the problem</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="objective" name="objective" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="demo1">Product Demonstration: Demonstrated the requirements mentioned in point
-               3 above</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="demo1" name="demo1"  required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="demo2">Product Demonstration: Appropriate amount of detail, flowed smoothly,
-               and demonstrating the product well.</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="demo2" name="demo2" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-            <tr> 
-                <td class="column1">
-               <label for="conclusion">Effectiveness of the conclusion including the final status at the end of the 
-               project, the self assessment and how it could have been improved.</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="conclusion" name="conclusion"  required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="questions">Responded to questions reasonably</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="questions" name="questions" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="preparation">The groups preparation and teamwork was evident</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="preparation" name="preparation" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="structure">The presentation was well-structured, organized into appropriate sections
-               starting and finishing on time.</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="structure" name="structure"  required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="enthusiasm">The presentation was enthusiastic, interesting, clear and concise 
-               and was easy to understand</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="enthusiasm" name="enthusiasm" type="number" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-            
-             <tr> 
-                <td class="column1">
-               <label for="visual">Visual aids were used effectively and changeover between speakers
-               was smoothe and professional</label>
-                </td>
-                <td class="column2">
-                    <select class="mark" id="visual" name="visual" type="number" required>
-                        <option value="0">Mark</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>  
-                </td>
-            </tr>
-
-            
-            </table>
-            <div class="button-container">
-            <input class="button" name="back" type="submit" value="Back" style="float:left;width:150px;">
-            <input class="button" type="submit" name="submit" value="Submit"></input>
-            </div>
-        </form> 
-        </div> ';   
-        }
-        else
+        if($totalCurrentTime>$totalEndTime)
         {
             echo 'Presentation Expired';
         }
+        else
+        {
+                echo '
+              <div class="form">
+              <h1>Assessment</h1>
+              <form name="Assess" id="Assess" method="post">
+
+                  <label for="teamname">Team Name
+
+                      <input id="teamname" name="teamname" type="text" value="'.$teamname.'"></input>          
+
+                  <table>
+                  <tr> 
+                      <td class="column1">
+                     <label for="introduction">Effectiveness of the Introduction, the value proposition for the project
+                     and clearly explaining the original client problem</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="introduction" name="introduction" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                  <tr> 
+                      <td class="column1">
+                     <label for="objective">Clearly identified the objectives of the project explaining the solution 
+                     in terms of the problem and the methodologies the team used to solve the problem</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="objective" name="objective" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="demo1">Product Demonstration: Demonstrated the requirements mentioned in point
+                     3 above</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="demo1" name="demo1"  required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="demo2">Product Demonstration: Appropriate amount of detail, flowed smoothly,
+                     and demonstrating the product well.</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="demo2" name="demo2" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                  <tr> 
+                      <td class="column1">
+                     <label for="conclusion">Effectiveness of the conclusion including the final status at the end of the 
+                     project, the self assessment and how it could have been improved.</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="conclusion" name="conclusion"  required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="questions">Responded to questions reasonably</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="questions" name="questions" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="preparation">The groups preparation and teamwork was evident</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="preparation" name="preparation" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="structure">The presentation was well-structured, organized into appropriate sections
+                     starting and finishing on time.</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="structure" name="structure"  required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="enthusiasm">The presentation was enthusiastic, interesting, clear and concise 
+                     and was easy to understand</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="enthusiasm" name="enthusiasm" type="number" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+                   <tr> 
+                      <td class="column1">
+                     <label for="visual">Visual aids were used effectively and changeover between speakers
+                     was smoothe and professional</label>
+                      </td>
+                      <td class="column2">
+                          <select class="mark" id="visual" name="visual" type="number" required>
+                              <option value="0">Mark</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>  
+                      </td>
+                  </tr>
+
+
+                  </table>
+                  <div class="button-container">
+                  <input class="button" name="back" type="submit" value="Back" style="float:left;width:150px;">
+                  <input class="button" type="submit" name="submit" value="Submit"></input>
+                  </div>
+              </form> 
+              </div> ';   
+              }
+              
                    
         }
 

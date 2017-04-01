@@ -15,7 +15,6 @@ $unitoffering=$_SESSION['UnitOffering'];
 
 
 
-
 include("dbconnect.php");
 $query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
 $result = mysqli_query($dbc, $query);
