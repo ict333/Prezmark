@@ -22,7 +22,6 @@ while ($rows = mysqli_fetch_array($result))
 function totalTime($hr,$min)
 {
     $totaltime=($hr*60)+$min;
-    return $totaltime;
 }
 
 function convertTo24hr($hr, $ampm)
@@ -102,13 +101,13 @@ function convertTo24hr($hr, $ampm)
         $totalCurrentTime=totalTime($current_hr, $current_min);
         
         //Getting calculating the time in minutes for countdown time
-        $end_hr=23;
-        $end_min=59;
+        $end_hr=3;
+        $end_min=53;
         $totalEndTime=totalTime($end_hr, $end_min);
         
         //Getting the date when the presentation ends and restricting marking time to midnight
         $date=substr($datetime,0,-9);
-        $time="23:59:00";
+        $time="3:53:00";
         $temp=array($date," ",$time);
         $datetime=implode($temp);
        
@@ -396,6 +395,7 @@ function convertTo24hr($hr, $ampm)
         
         ?>
         
+        
     <script>
        function validateForm()
        {
@@ -414,7 +414,11 @@ function convertTo24hr($hr, $ampm)
 
 
 <?php
-if(isset($_POST['submit']))
+if(isset($_POST['Back']))
+{
+}
+
+if(isset($_POST['Submit']))
 {
     $time=date("h:i:s");
     $date=date("Y-m-d");
@@ -435,6 +439,7 @@ if(isset($_POST['submit']))
     $query="INSERT INTO Assessment VALUES ('$teamcode', '$email', '$datetime', "
                   . "'$intro', '$obj', '$demo1', '$demo2', '$conclusion', '$questions', '$preparation', '$structure', '$enthusiasm', '$visual', '33.6666', '-33.222');";
     $result=mysqli_query($dbc,$query);
+    
     if($result)
     {
         echo '<script>alert("Assessment Successful");</script>';
