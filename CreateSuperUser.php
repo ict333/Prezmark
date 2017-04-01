@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
-echo $role;
 if($role!="Admin")
 {
     header("Location: SuperUserLogin.php");
