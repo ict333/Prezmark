@@ -97,7 +97,7 @@
             else if (document.getElementById("role").value==="Visitor")
             {
                     document.getElementById("student").disabled=true;
-                    document.getElementById("affiliation").disabled=true;
+                    document.getElementById("affiliation").disabled=false;
             }
             
         }

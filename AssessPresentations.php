@@ -274,7 +274,7 @@ while ($rows = mysqli_fetch_array($result))
             </table>
             <div class="button-container">
             <input class="button" name="back" type="submit" value="Back" style="float:left;width:150px;">
-            <input class="button" type="submit" name="Assess" value="Assess"></input>
+            <input class="button" type="submit" name="Assess" value="Submit"></input>
             </div>
        
     </form>
