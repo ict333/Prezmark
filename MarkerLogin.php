@@ -150,7 +150,7 @@ if (isset($_POST['m_login']))
                 <br></br>
 
                 <label for="affiliation">Affiliation<br>
-                    <input class="input" type="text" name="affiliation" id="affiliation">
+                    <input class="input" type="text" name="affiliation" id="affiliation" placeholder="Company Name">
                 </label>
                 <br></br>
 
@@ -191,7 +191,13 @@ if (isset($_POST['m_login']))
     <script>
         function check()
         {
-            if (grecaptcha.getResponse().length==0){
+            var fname=document.Register.firstname.value;
+            var lname=document.Register.lastname.value;
+            var affiliation=document.Register.affiliation.value;
+            var student=document.Register.student.value;
+            
+            if (grecaptcha.getResponse().length==0)
+            {
                 alert("PLease verify that you are not a robot!");
                 return false;
             }
@@ -201,6 +207,17 @@ if (isset($_POST['m_login']))
                 document.getElementById("role").focus();
                 return false;
             }
+            else if(fname.length()>=50||lname.length()>=50)
+            {
+                alert("First and Last Names must be within 50 characters!");
+                return false;
+            }
+            else if(isNaN(fname)||isNaN(lname))
+            {
+                alert("First and Last Names must be characters only!");
+                return false;
+            }
+            
         }
         function checkStudent()
         {
