@@ -101,17 +101,21 @@ if(isset($_POST['upload']))
         }
         else
         {
-            $allowed =array("csv"=>"application/vnd.msexcel");
+            $allowed =array(array("csv"=>"application/vnd.msexcel"),array("csv"=>"text/csv"),);
             $filename = $_FILES["csvfile"]["name"];
             $filetype = $_FILES["csvfile"]["type"];
             $filesize = $_FILES["csvfile"]["size"];      
-
+            
             // Verify file extension
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
 
-            if(!array_key_exists($ext, $allowed)) 
+            if(!array_key_exists($ext, $allowed[1])) 
             {
                 die("Error: Please select a valid file format.");
+            }
+            else if(!array_key_exists($ext, $allowed[0]))
+            {
+                die("Error: Please select a valid file format.");                
             }
 
        
@@ -124,7 +128,7 @@ if(isset($_POST['upload']))
             }
 
             // Verify MIME type of the file
-            if(in_array($filetype, $allowed))
+            if(in_array($filetype, $allowed[0])||in_array($filetype, $allowed[1]))
             {
                 // Check whether file exists before uploading it
                 if(file_exists($folder . $_FILES["csvfile"]["name"]))
