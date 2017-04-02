@@ -101,7 +101,7 @@ if(isset($_POST['upload']))
         }
         else
         {
-            $allowed =array("csv"=>"text/csv");
+            $allowed =array("csv"=>"application/vnd.msexcel");
             $filename = $_FILES["csvfile"]["name"];
             $filetype = $_FILES["csvfile"]["type"];
             $filesize = $_FILES["csvfile"]["size"];      
