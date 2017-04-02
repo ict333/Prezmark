@@ -68,7 +68,7 @@ if($role!="UC")
 if(isset($_POST['download']))
 {
 
-    header('Content-Type: application/excel');
+    header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="sample1.csv"');
     $fp = fopen('php://output', 'w');
     $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
