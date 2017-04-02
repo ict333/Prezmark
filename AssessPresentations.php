@@ -165,7 +165,7 @@ function convertTo24hr($hr, $ampm)
                   <tr> 
                       <td class="column1">
                      <label for="introduction">Effectiveness of the Introduction, the value proposition for the project
-                     and clearly explaining the original client problem</label>
+                     and clearly explaining the original client problem.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="introduction" name="introduction" required>
@@ -186,8 +186,8 @@ function convertTo24hr($hr, $ampm)
 
                   <tr> 
                       <td class="column1">
-                     <label for="objective">Clearly identified the objectives of the project explaining the solution 
-                     in terms of the problem and the methodologies the team used to solve the problem</label>
+                     <label for="objective">Clearly identified the requirements of the project, explaining the solution 
+                     in terms of the problem and the methodologies the team used to solve the problem.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="objective" name="objective" required>
@@ -208,8 +208,7 @@ function convertTo24hr($hr, $ampm)
 
                    <tr> 
                       <td class="column1">
-                     <label for="demo1">Product Demonstration: Demonstrated the requirements mentioned in point
-                     3 above</label>
+                     <label for="demo1">Product Demonstration: Demonstrated the requirements mentioned above.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="demo1" name="demo1"  required>
@@ -231,7 +230,7 @@ function convertTo24hr($hr, $ampm)
                    <tr> 
                       <td class="column1">
                      <label for="demo2">Product Demonstration: Appropriate amount of detail, flowed smoothly,
-                     and demonstrating the product well.</label>
+                     and demonstrated the product well.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="demo2" name="demo2" required>
@@ -274,7 +273,7 @@ function convertTo24hr($hr, $ampm)
 
                    <tr> 
                       <td class="column1">
-                     <label for="questions">Responded to questions reasonably</label>
+                     <label for="questions">Responded to questions reasonably.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="questions" name="questions" required>
@@ -295,7 +294,7 @@ function convertTo24hr($hr, $ampm)
 
                    <tr> 
                       <td class="column1">
-                     <label for="preparation">The groups preparation and teamwork was evident</label>
+                     <label for="preparation">The group\'s preparation and teamwork was evident.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="preparation" name="preparation" required>
@@ -316,7 +315,7 @@ function convertTo24hr($hr, $ampm)
 
                    <tr> 
                       <td class="column1">
-                     <label for="structure">The presentation was well-structured, organized into appropriate sections
+                     <label for="structure">The presentation was well-structured, organized into appropriate sections,
                      starting and finishing on time.</label>
                       </td>
                       <td class="column2">
@@ -339,7 +338,7 @@ function convertTo24hr($hr, $ampm)
                    <tr> 
                       <td class="column1">
                      <label for="enthusiasm">The presentation was enthusiastic, interesting, clear and concise 
-                     and was easy to understand</label>
+                     and was easy to understand.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="enthusiasm" name="enthusiasm" type="number" required>
@@ -361,7 +360,7 @@ function convertTo24hr($hr, $ampm)
                    <tr> 
                       <td class="column1">
                      <label for="visual">Visual aids were used effectively and changeover between speakers
-                     was smoothe and professional</label>
+                     was smooth and professional.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="visual" name="visual" type="number" required>
