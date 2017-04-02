@@ -1,12 +1,13 @@
 <?php
+ini_set('display_errors',1);
+error_reporting (E_ALL);
+
 session_start();
 $role= $_SESSION['Role'];
 if($role!="UC")
 {
     header("Location: SuperUserLogin.php");
 }
-ini_set('display_errors',1);
-    error_reporting (E_ALL);
     
 ?>
 <html> 
@@ -34,30 +35,24 @@ ini_set('display_errors',1);
         
         <div class="form">
             
-        <h1>Upload Student Details</h1>
+        <h1>Download Marks</h1>
         <form method="post" action="UploadStudentDetails.php" enctype="multipart/form-data">
-                   
-        <label for="unit">Unit</label>
-        <br> 
-        <input id="unit" name="unit" type="text" required></input>
-        <br> </br>
-            
-        <label for="semester">Semester</label>
-        <br> 
-        <input id="semester" name="semester" type="text" required></input>
-        <br> </br>
-            
-        <label for="year">Year</label>
-        <br> 
-        <input id="year" name="year" type="text" required></input>
+               
+        <label for="date">Date</label><br> 
+        <input id="date" name="date" type="date" required></input>
         <br> </br>
         
-   
-        <label>Choose file to upload</label>
-        <br>
-        <input type="file" name="csvfile" id="csvfile" required> 
-        <br> </br>
-        <input class="button" name="upload" type="submit" value="Upload"/>
+        
+        <label for="date">Unit Offering</label><br>
+        <select name="teamname" id="teamname" required>
+        <?php
+            for($i=0;$i<count($name);$i++)
+            {
+                echo "<option value='$name[$i]'>$name[$i]</option>";
+            }
+        ?>
+        </select>
+        <input class="button" name="download" type="submit" value="Download"/>
      
         </form> 
         </div>
