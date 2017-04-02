@@ -395,19 +395,52 @@ function convertTo24hr($hr, $ampm)
 
         
         ?>
-        
-        
-    <script>
-       function validateForm()
-       {
-            var email=document.SuperUserLogin.email.value;
-            var password=document.SuperUserLogin.password.value;
-            
-            /*some validation tests*/
-        }
-    </script> 
      
+    
+    <p id="demo56"></p>
+
+<script>
+var x = document.getElementById("demo56");
+
+
+    if (navigator.geolocation) 
+    {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    }
+    else 
+    { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+
+function showPosition(position) 
+{
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+}
+
+function showError(error) 
+{
+    switch(error.code) 
+    {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
     </body>
+    
+    
     <footer>
            &#169;2017 All rights reserved by Murdoch University 
      </footer>
@@ -415,11 +448,11 @@ function convertTo24hr($hr, $ampm)
 
 
 <?php
-if(isset($_POST['Back']))
+if(isset($_POST['back']))
 {
 }
 
-if(isset($_POST['Submit']))
+if(isset($_POST['submit']))
 {
     $time=date("h:i:s");
     $date=date("Y-m-d");
