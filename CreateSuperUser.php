@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
-echo $role;
 if($role!="Admin")
 {
     header("Location: SuperUserLogin.php");
@@ -115,14 +114,14 @@ if(isset($_POST['submit']))
 
             echo '<script>alert("Account created successfully!");</script>';
             
-            /*send password email
-            require_once "Mail.php";
+            //send password email
+            require_once "pear2/Mail.php";
 
             $from = '<project_ict333@murdochdubai.ac.ae>';
             $to = $email;
             $subject = 'Prezmark Account Password';
             $body = "Your account password is: $password\n"
-                    . "You can log in by clicking on http://localhost/Prezmark/SuperUserLogin.php";
+                    . "You can log in by clicking on http://ceto.murdoch.edu.au/~team71/SuperUserLogin.php";
             $headers = array(
                 'From' => $from,
                 'To' => $to,
@@ -146,7 +145,7 @@ if(isset($_POST['submit']))
             else 
             {
                 echo('<p>Message successfully sent!</p>');
-            }*/
+            }
           }
           
           else

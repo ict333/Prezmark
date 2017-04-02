@@ -36,22 +36,22 @@ if($role!="UC")
         <div class="form">
             
         <h1>Download Marks</h1>
-        <form method="post" action="UploadStudentDetails.php" enctype="multipart/form-data">
+        <form method="post">
                
         <label for="date">Date</label><br> 
         <input id="date" name="date" type="date" required></input>
         <br> </br>
         
         
-        <label for="date">Unit Offering</label><br>
-        <select name="teamname" id="teamname" required>
+        <!--label for="date">Unit Offering</label><br>
+        <select name="" id="" required>
         <?php
-            for($i=0;$i<count($name);$i++)
+            /*for($i=0;$i<count($name);$i++)
             {
                 echo "<option value='$name[$i]'>$name[$i]</option>";
-            }
+            }*/
         ?>
-        </select>
+        </select-->
         <input class="button" name="download" type="submit" value="Download"/>
      
         </form> 
@@ -65,100 +65,27 @@ if($role!="UC")
 
 <?php
 
-if(isset($_POST['upload']))
+if(isset($_POST['download']))
 {
-    $folder="File/";
-    $unit=$_POST['unit'];
-    $semester=$_POST['semester'];
-    $year=$_POST['year'];
-    $offering=array($unit,$semester,$year);
-    $unitoffering=implode($offering);
-    $teamcode=array();
-    //echo $unitoffering;
+
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="sample1.csv"');
+    $fp = fopen('php://output', 'w');
+    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
+        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
+
     
-    if(isset($_FILES["csvfile"]["error"]))
+    // very simple to increment with i++ if looping through a database result 
+    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
+    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
+    $user_CSV[3] = array('Arthur', 'Vincente', 15);
+
+   
+    foreach ($user_CSV as $line) 
     {
-        if($_FILES["csvfile"]["error"] > 0)
-        {
-            echo "<script>alert('Error: " . $_FILES["csvfile"]["error"] . "')</scrpt>";
-        }
-        else
-        {
-            $allowed =array("csv"=>"text/csv");
-            $filename = $_FILES["csvfile"]["name"];
-            $filetype = $_FILES["csvfile"]["type"];
-            $filesize = $_FILES["csvfile"]["size"];      
-
-            // Verify file extension
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-
-            if(!array_key_exists($ext, $allowed)) 
-            {
-                die("Error: Please select a valid file format.");
-            }
-
-       
-            // Verify file size - 2MB maximum
-            $maxsize = 2 * 1024 * 1024;
-
-            if($filesize > $maxsize)
-            {
-                die("Error: File size is larger than the allowed limit.");
-            }
-
-            // Verify MIME type of the file
-            if(in_array($filetype, $allowed))
-            {
-                // Check whether file exists before uploading it
-                if(file_exists($folder . $_FILES["csvfile"]["name"]))
-                {
-                    echo "<script>alert('".$_FILES["csvfile"]["name"] ." already exists.')</script>";
-                } 
-                else
-                {
-                                       
-                    if(move_uploaded_file($_FILES["csvfile"]["tmp_name"], $folder. $_FILES["csvfile"]["name"]))
-                    {
-                        echo '<script>alert("Your file was uploaded successfully");</script>';
-                    }
-                    
-                    //Read from file
-                    $file = fopen("File/".$_FILES["csvfile"]["name"],"r");
-                    //skips first line
-                    fgetcsv($file);
-                    $count=0;
-                    include 'dbconnect.php';
-                    while (($line = fgetcsv($file)) !== FALSE) 
-                    {                        
-                        $temp=array($unitoffering,$line[6]);
-                        $teamcode[$count]=  implode($temp);
-                        
-                        $query="INSERT INTO Team (TeamCode, TeamNo, TeamName, UnitOffering) VALUES('$teamcode[$count]','$line[6]','$line[5]','$unitoffering')";
-                        //echo $query;
-                        $result = mysqli_query($dbc,$query); 
-                        
-                        $query="INSERT INTO Student VALUES('$line[0]','$teamcode[$count]','$line[2]','$line[3]','$line[1]','$line[4]')";
-                        //echo $query;
-                        $result = mysqli_query($dbc,$query); 
-                        
-                    }
-                  
-                    mysqli_close($dbc);
-                    fclose($file);
-                } 
-
-            }
-            else
-            {
-                echo "<script>alert('Error: There was a problem uploading your file - please try again.')</script>"; 
-            }
-        }
-
+        fputcsv($fp, $line, ',');
     }
-    else
-    {
-        echo "<script>alert('Error: Invalid parameters - please contact your server administrator.')</script>";
-    }
+    fclose($fp);
 }
 
 ?>
