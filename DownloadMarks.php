@@ -10,7 +10,52 @@ if($role!="UC")
 }
     
 ?>
-<html> 
+
+<?php
+
+if(isset($_POST['download']))
+{
+
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="sample1.csv"');
+    $fp1 = fopen('php://output', 'w');
+    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
+        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
+
+    
+    // very simple to increment with i++ if looping through a database result 
+    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
+    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
+    $user_CSV[3] = array('Arthur', 'Vincente', 15);
+
+   
+    foreach ($user_CSV as $line) 
+    {
+        fputcsv($fp1, $line, ',');
+    }
+    fclose($fp1);
+    
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="sample2.csv"');
+    $fp2 = fopen('php://output', 'w');
+    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
+        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
+
+    
+    // very simple to increment with i++ if looping through a database result 
+    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
+    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
+
+   
+    foreach ($user_CSV as $line) 
+    {
+        fputcsv($fp2, $line, ',');
+    }
+    fclose($fp2);
+}
+else
+{
+   echo '<html> 
     <head>        
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" href="icon.png" type="image/x-icon"></link>
@@ -45,47 +90,25 @@ if($role!="UC")
         
         <!--label for="date">Unit Offering</label><br>
         <select name="" id="" required>
-        <?php
-            /*for($i=0;$i<count($name);$i++)
-            {
-                echo "<option value='$name[$i]'>$name[$i]</option>";
-            }*/
-        ?>
+       
+            //insert here
+        
         </select-->
         <input class="button" name="download" type="submit" value="Download"/>
      
         </form> 
         </div>
+        
         <footer>
            &#169;2017 All rights reserved by Murdoch University 
         </footer>
     </body>
-</html>
-
-
-<?php
-
-if(isset($_POST['download']))
-{
-
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="sample1.csv"');
-    $fp = fopen('php://output', 'w');
-    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
-        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
-
-    
-    // very simple to increment with i++ if looping through a database result 
-    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
-    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
-    $user_CSV[3] = array('Arthur', 'Vincente', 15);
-
-   
-    foreach ($user_CSV as $line) 
-    {
-        fputcsv($fp, $line, ',');
-    }
-    fclose($fp);
+</html>'; 
 }
 
+//insert here
+/*for($i=0;$i<count($name);$i++)
+            {
+                <option value='$name[$i]'>$name[$i]</option>
+            }*/
 ?>
