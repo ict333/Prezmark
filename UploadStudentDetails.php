@@ -101,7 +101,7 @@ if(isset($_POST['upload']))
         }
         else
         {
-            $allowed =array(array("csv"=>"application/vnd.msexcel"),array("csv"=>"text/csv"),);
+            //$allowed =array(array("csv"=>"application/vnd.msexcel"),array("csv"=>"text/csv"),);
             $filename = $_FILES["csvfile"]["name"];
             $filetype = $_FILES["csvfile"]["type"];
             $filesize = $_FILES["csvfile"]["size"];      
@@ -109,15 +109,18 @@ if(isset($_POST['upload']))
             // Verify file extension
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
 
-            if(!array_key_exists($ext, $allowed[1])) 
+            /*if(!array_key_exists($ext, $allowed[1])) 
             {
                 die("Error: Please select a valid file format.");
             }
             else if(!array_key_exists($ext, $allowed[0]))
             {
                 die("Error: Please select a valid file format.");                
+            }*/
+            if($ext!="csv")
+            {
+                die("Error: Please select a valid file format.");
             }
-
        
             // Verify file size - 2MB maximum
             $maxsize = 2 * 1024 * 1024;
@@ -127,9 +130,10 @@ if(isset($_POST['upload']))
                 die("Error: File size is larger than the allowed limit.");
             }
 
-            // Verify MIME type of the file
+            /* Verify MIME type of the file
             if(in_array($filetype, $allowed[0])||in_array($filetype, $allowed[1]))
-            {
+            {*/
+            if($ext=="csv"){
                 // Check whether file exists before uploading it
                 if(file_exists($folder . $_FILES["csvfile"]["name"]))
                 {
