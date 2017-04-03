@@ -15,43 +15,49 @@ if($role!="UC")
 
 if(isset($_POST['download']))
 {
-
+    $date=$_POST['date'];
+    include 'dbconnect.php';
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="sample1.csv"');
     $fp1 = fopen('php://output', 'w');
-    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
-        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
+    
+    $downloadMarks[0] = array('Email');
+    $select_date = "SELECT * FROM PresentationSchedule WHERE Date='$date'";
+    //echo $select_date;
+    $result1 = mysqli_query($dbc, $select_date);
+    
+    while ($rows = mysqli_fetch_array($result1)) 
+    {
+        $teamcode = $rows['TeamCode'];
+        //echo $teamcode;
+        array_push($downloadMarks[0], $teamcode);
+        //$download_CSV[0]=array();
+        /*$sort_emails="SELECT * FROM PresentationSchedule WHERE Date='$date'";
+        $result2 = mysqli_query($dbc, $select_date);
+        echo $sort_teamcodes;
+        while ($rows = mysqli_fetch_array($result2)) 
+        {
+            $teamcode=$rows['TeamCode'];
+        }*/
+    
+    }
+    mysqli_close($dbc);
+   /* $downloadMarks[0] = array('Email');
+    array_push($downloadMarks[0],'Team1');
 
     
-    // very simple to increment with i++ if looping through a database result 
+    very simple to increment with i++ if looping through a database result 
     $user_CSV[1] = array('Quentin', 'Del Viento', 34);
     $user_CSV[2] = array('Antoine', 'Del Torro', 55);
     $user_CSV[3] = array('Arthur', 'Vincente', 15);
-
+*/
    
-    foreach ($user_CSV as $line) 
+    foreach ($downloadMarks as $line) 
     {
         fputcsv($fp1, $line, ',');
     }
     fclose($fp1);
-    
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="sample2.csv"');
-    $fp2 = fopen('php://output', 'w');
-    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
-        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
-
-    
-    // very simple to increment with i++ if looping through a database result 
-    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
-    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
-
    
-    foreach ($user_CSV as $line) 
-    {
-        fputcsv($fp2, $line, ',');
-    }
-    fclose($fp2);
 }
 else
 {
@@ -111,4 +117,10 @@ else
             {
                 <option value='$name[$i]'>$name[$i]</option>
             }*/
+
+//shortlist the assessments to the given date
+//the units created by a uc in the drop down
+// shortlist the assessments based on the unit offering
+//store all teamcodes and email. associative array
 ?>
+
