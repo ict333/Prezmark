@@ -8,50 +8,102 @@ if($role!="UC")
 {
     header("Location: SuperUserLogin.php");
 }
-    
 ?>
 
 <?php
 
 if(isset($_POST['download']))
 {
-
+    $date=$_POST['date'];
+    include 'dbconnect.php';
+    
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="sample1.csv"');
-    $fp1 = fopen('php://output', 'w');
-    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
-        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
-
+    $fp = fopen('php://output', 'w');
     
-    // very simple to increment with i++ if looping through a database result 
-    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
-    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
-    $user_CSV[3] = array('Arthur', 'Vincente', 15);
-
-   
-    foreach ($user_CSV as $line) 
+    $downloadMarks[0] = array('Email');
+    
+    $select_date = "SELECT * FROM PresentationSchedule WHERE Date='$date'";
+    $result1 = mysqli_query($dbc, $select_date);
+    
+    while ($rows = mysqli_fetch_array($result1)) 
     {
-        fputcsv($fp1, $line, ',');
+        $teamcode = $rows['TeamCode'];
+        array_push($downloadMarks[0], $teamcode);   
     }
-    fclose($fp1);
     
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="sample2.csv"');
-    $fp2 = fopen('php://output', 'w');
-    $user_CSV[0] = array('Role', 'MarkerFirstName', 'MarkerLastName','Email',
-        'Affiliation','TeamNumber1_Marks','TeamNumber2_Marks','TeamNumber3_Marks','TeamNumber4_Marks');
-
-    
-    // very simple to increment with i++ if looping through a database result 
-    $user_CSV[1] = array('Quentin', 'Del Viento', 34);
-    $user_CSV[2] = array('Antoine', 'Del Torro', 55);
-
-   
-    foreach ($user_CSV as $line) 
+    $query = "SELECT * FROM Assessment";
+    $result = mysqli_query($dbc, $query);
+    $people_assessed=array();
+    while ($rows = mysqli_fetch_array($result)) 
     {
-        fputcsv($fp2, $line, ',');
+        $time=$rows['Time'];
+        $email=$rows['Email'];
+        $all_dates=substr($time,0,-9);
+        
+        if($all_dates==$date)
+        {
+            array_push($people_assessed,$email);
+        }
     }
-    fclose($fp2);
+    
+    $people=array_unique($people_assessed);
+     for($i=1,$j=0;$j<count($people);$j++,$i++)
+     {
+        $downloadMarks[$i]=array();
+        $query= "SELECT * FROM Person WHERE Email='$people[$j]'";
+        $result = mysqli_query($dbc, $query);
+        while ($rows = mysqli_fetch_array($result)) 
+        {
+            $role=$rows['Role'];
+            if($role=="Marker")
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
+         array_push($downloadMarks[$i], $people[$j]);
+     }
+     
+     //put the assessments in the file
+     $query= "SELECT * FROM PresentationSchedule WHERE Date='$date'";
+     $result = mysqli_query($dbc, $query);
+     $teamcodes=array();
+     while ($rows = mysqli_fetch_array($result)) 
+     {
+        array_push($teamcodes, $rows['TeamCode']);
+     }
+     
+     for($k=0;$k<count($teamcodes);$k++)
+     {
+         
+        for($j=0, $i=1;$j<count($people);$j++,$i++)
+        {
+           $query= "SELECT * FROM Assessment WHERE TeamCode='$teamcodes[$k]' AND Email='$people[$j]'";
+           $result = mysqli_query($dbc, $query);
+          
+           while ($rows = mysqli_fetch_array($result)) 
+           {
+                $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
+                            +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
+                    
+                array_push($downloadMarks[$i], $total);
+           }          
+        }
+     }
+
+     
+    mysqli_close($dbc);
+        
+   foreach ($downloadMarks as $line) 
+    {
+        fputcsv($fp, $line, ',');
+    }
+    fclose($fp);
+   
 }
 else
 {
@@ -111,4 +163,10 @@ else
             {
                 <option value='$name[$i]'>$name[$i]</option>
             }*/
+
+//shortlist the assessments to the given date
+//the units created by a uc in the drop down
+// shortlist the assessments based on the unit offering
+//store all teamcodes and email. associative array
 ?>
+
