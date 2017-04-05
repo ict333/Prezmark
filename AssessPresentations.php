@@ -101,7 +101,7 @@ function convertTo24hr($hr, $ampm)
         $current_hr=  convertTo24hr($current_hr, $ampm);
         $totalCurrentTime=totalTime($current_hr, $current_min);
         
-        //Getting calculating the time in minutes for countdown time
+        // Calculating the time in minutes for countdown time
         $end_hr=23;
         $end_min=59;
         $totalEndTime=totalTime($end_hr, $end_min);
@@ -110,15 +110,18 @@ function convertTo24hr($hr, $ampm)
         $date=substr($datetime,0,-9);
         $time="23:59:00";
         $temp=array($date," ",$time);
-        $datetime=implode($temp);
-       
+        $datetime=implode($temp);    
         
         
         if($totalCurrentTime<$totalStartTime)
         {
             echo "Presentation Not Commensed Yet";
         }
-        else
+        else if($totalCurrentTime==$totalEndTime)
+        {       
+            echo 'Presentation Expired'; 
+        }
+        else 
         {
             echo '        
         <script>
@@ -145,14 +148,7 @@ function convertTo24hr($hr, $ampm)
         }, 1000);
         </script>';
             
-            
-        if($totalCurrentTime>$totalEndTime)
-        {
-            echo 'Presentation Expired';
-        }
-        else
-        {
-                echo '
+             echo '
               <div class="form">
               <h1>Assessment</h1>
               <form name="Assess" id="Assess" method="post">
@@ -388,11 +384,7 @@ function convertTo24hr($hr, $ampm)
               </form> 
               </div> ';   
               }
-              
-                   
-        }
-
-        
+                      
         ?>
      
     
@@ -453,7 +445,13 @@ if(isset($_POST['back']))
 
 if(isset($_POST['submit']))
 {
-    $time=date("h:i:s");
+    $current_hr2=date("h");
+    $ampm2=date("a");
+    $mins_sec=date("i:s");
+    $convertedtime= convertTo24hr($current_hr2, $ampm2);
+    $temp=array($convertedtime,":",$mins_sec);
+    $time=implode($temp);
+    
     $date=date("Y-m-d");
     $temp=array($date," ",$time);
     $datetime=implode($temp);

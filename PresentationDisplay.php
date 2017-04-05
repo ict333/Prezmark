@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
+$email=$_SESSION['Email'];
 if($role=="Admin")
 {
     echo '<script>alert("Admin cannot Assess. Please Login as Unit Coordinator or Marker:")';
@@ -60,7 +61,19 @@ if($role=="Admin")
             $j=0;
             $i=0;
             while($rows=mysqli_fetch_array($result))
-            {               
+            {         
+                $tc=$rows['TeamCode'];
+                $query="SELECT * FROM Assessment WHERE TeamCode='$tc'";
+                $result=mysqli_query($dbc,$query);
+                while($rows=mysqli_fetch_array($result))
+                { 
+                    $mail=$rows['Email'];
+                    if($mail==$email)
+                    {
+                        
+                    }
+                }
+                
                 $teamcode[$j]=$rows['TeamCode']; 
                 $j++; 
             }         
