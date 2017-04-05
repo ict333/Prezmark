@@ -41,7 +41,7 @@ if($role=="Admin")
             <a href="index.php"> <img src="logo.png"></a>
            <nav>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-               <a href="index.php">Logout</a>
+               
            </nav>
            </div>';
         }
@@ -57,23 +57,15 @@ if($role=="Admin")
             
             $query="SELECT TeamCode FROM PresentationSchedule WHERE Date='$dateCurrent'";
             $result=mysqli_query($dbc,$query);
-            
+            if(!$result)
+            {
+                echo "No Presentations to Assess";
+            }
+                
             $j=0;
             $i=0;
             while($rows=mysqli_fetch_array($result))
             {         
-                $tc=$rows['TeamCode'];
-                $query="SELECT * FROM Assessment WHERE TeamCode='$tc'";
-                $result=mysqli_query($dbc,$query);
-                while($rows=mysqli_fetch_array($result))
-                { 
-                    $mail=$rows['Email'];
-                    if($mail==$email)
-                    {
-                        
-                    }
-                }
-                
                 $teamcode[$j]=$rows['TeamCode']; 
                 $j++; 
             }         
