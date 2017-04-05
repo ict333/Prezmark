@@ -19,7 +19,7 @@ if($role!="Admin")
     <body>
     <div class="header">
          <a href="index.php"> <img src="logo.png"></a>
-         <nav>
+        <nav>
             <a href="DisableAccounts.php">Disable Account</a>
             <a href="CreateSuperUser.php" class="active">Create Super User</a>
             <a href="Backup.php">Create Backup</a>
