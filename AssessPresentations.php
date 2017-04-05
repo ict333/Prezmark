@@ -71,7 +71,6 @@ function convertTo24hr($hr, $ampm)
            <nav>
                <a href="PresentationDisplay.php" class="active">Display Presentations</a>
            </nav>
-           '.$email.'
            </div>';
         }
         ?>
