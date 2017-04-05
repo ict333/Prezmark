@@ -101,7 +101,7 @@ function convertTo24hr($hr, $ampm)
         $current_hr=  convertTo24hr($current_hr, $ampm);
         $totalCurrentTime=totalTime($current_hr, $current_min);
         
-        //Getting calculating the time in minutes for countdown time
+        // Calculating the time in minutes for countdown time
         $end_hr=23;
         $end_min=59;
         $totalEndTime=totalTime($end_hr, $end_min);
@@ -110,15 +110,18 @@ function convertTo24hr($hr, $ampm)
         $date=substr($datetime,0,-9);
         $time="23:59:00";
         $temp=array($date," ",$time);
-        $datetime=implode($temp);
-       
+        $datetime=implode($temp);    
         
         
         if($totalCurrentTime<$totalStartTime)
         {
             echo "Presentation Not Commensed Yet";
         }
-        else
+        else if($totalCurrentTime==$totalEndTime)
+        {       
+            echo 'Presentation Expired'; 
+        }
+        else 
         {
             echo '        
         <script>
@@ -145,21 +148,14 @@ function convertTo24hr($hr, $ampm)
         }, 1000);
         </script>';
             
-            
-        if($totalCurrentTime>$totalEndTime)
-        {
-            echo 'Presentation Expired';
-        }
-        else
-        {
-                echo '
+             echo '
               <div class="form">
               <h1>Assessment</h1>
-              <form name="Assess" id="Assess" method="post">
+              <form name="Assess" id="Assess" method="post" >
 
                   <label for="teamname">Team Name
 
-                      <input id="teamname" name="teamname" type="text" value="'.$teamname.'"></input>          
+                      <input id="teamname" name="teamname" type="text" value="'.$teamname.'" disabled></input>          
 
                   <table>
                   <tr> 
@@ -382,17 +378,13 @@ function convertTo24hr($hr, $ampm)
 
                   </table>
                   <div class="button-container">
-                  <input class="button" name="back" type="submit" value="Back" style="float:left;width:150px;">
-                  <input class="button" type="submit" name="submit" value="Submit"></input>
+                  <input class="button" type="submit" formaction="PresentationDisplay.php" name="back" value="Back" style="float:left;width:150px;"></input>
+                  <input class="button" type="submit" onclick="return checkMarks()" name="submit" value="Submit"></input>
                   </div>
               </form> 
               </div> ';   
               }
-              
-                   
-        }
-
-        
+                      
         ?>
      
     
@@ -436,6 +428,28 @@ function showError(error)
             break;
     }
 }
+
+function checkMarks()
+{
+    var mark1=document.getElementById("introduction").value;
+    var mark2=document.getElementById("objective").value;
+    var mark3=document.getElementById("demo1").value;
+    var mark4=document.getElementById("demo2").value;
+    var mark5=document.getElementById("conclusion").value;
+    var mark6=document.getElementById("questions").value;
+    var mark7=document.getElementById("visual").value;
+    var mark8=document.getElementById("enthusiasm").value;
+    var mark9=document.getElementById("preparation").value;
+    var mark10=document.getElementById("structure").value;
+    if(mark1=="Mark"||mark2=="Mark"||mark3=="Mark"||mark4=="Mark"||mark5=="Mark"
+    ||mark6=="Mark"||mark7=="Mark"||mark8=="Mark"||mark9=="Mark"||mark10=="Mark")
+    {
+        alert("Please select a mark for all categories!");
+        return false;
+    }
+else
+	return true;   
+}
 </script>
     </body>
     
@@ -453,7 +467,13 @@ if(isset($_POST['back']))
 
 if(isset($_POST['submit']))
 {
-    $time=date("h:i:s");
+    $current_hr2=date("h");
+    $ampm2=date("a");
+    $mins_sec=date("i:s");
+    $convertedtime= convertTo24hr($current_hr2, $ampm2);
+    $temp=array($convertedtime,":",$mins_sec);
+    $time=implode($temp);
+    
     $date=date("Y-m-d");
     $temp=array($date," ",$time);
     $datetime=implode($temp);
