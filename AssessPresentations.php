@@ -55,12 +55,13 @@ function convertTo24hr($hr, $ampm)
            <nav>
                <a href="UploadStudentDetails.php" >Upload Student Details</a>
                <a href="CreateSchedule.php">New Schedule</a>
-               <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
+               <a href="PresentationDisplay.php" class="active">Disply Presentations</a>
                <a href="DownloadMarks.php">Download Marks</a>
               <!-- <a href="">Modify Student Details</a>
                <a href="">Modify Schedule</a-->
               <a href="Logout.php">Logout</a>
            </nav>
+           '.$email.'
            </div>';
         }
         else
@@ -68,8 +69,7 @@ function convertTo24hr($hr, $ampm)
             echo '<div class="header">
             <a href="index.php"> <img src="logo.png"></a>
            <nav>
-               <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-               <a href="index.php">Logout</a>
+               <a href="PresentationDisplay.php" class="active">Display Presentations</a>
            </nav>
            </div>';
         }
@@ -500,7 +500,7 @@ if(isset($_POST['submit']))
     }
     else
     {
-        echo '<script>alert("Assessment Failed! Try again!");</script>';
+        echo '<script>alert("Presentation already assessed!");</script>';
     }
     mysqli_close($dbc);
 }

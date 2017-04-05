@@ -12,16 +12,16 @@ if($role!="UC")
 
 <?php
 
-if(isset($_POST['download']))
+if(isset($_POST['download1']))
 {
     $date=$_POST['date'];
     include 'dbconnect.php';
     
     header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="sample1.csv"');
+    header('Content-Disposition: attachment; filename="Marks_Per_Team_Per_Role.csv"');
     $fp = fopen('php://output', 'w');
     
-    $downloadMarks[0] = array('Email');
+    $downloadMarks[0] = array('Role','MarkerFirstName','MarkerLastName','Email', 'Affiliation');
     
     $select_date = "SELECT * FROM PresentationSchedule WHERE Date='$date'";
     $result1 = mysqli_query($dbc, $select_date);
@@ -55,17 +55,35 @@ if(isset($_POST['download']))
         $result = mysqli_query($dbc, $query);
         while ($rows = mysqli_fetch_array($result)) 
         {
-            $role=$rows['Role'];
-            if($role=="Marker")
+            $role1=$rows['Role'];
+            if($role1=="Marker")
             {
-                
+                $query= "SELECT * FROM Marker WHERE Email='$people[$j]'";
+                $result = mysqli_query($dbc, $query);
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                    $role2=$rows['Role'];
+                    $fname=$rows['FirstName'];
+                    $lname=$rows['LastName'];
+                    $aff=$rows['Affiliation'];
+                    array_push($downloadMarks[$i], $role2);
+                    array_push($downloadMarks[$i], $fname);
+                    array_push($downloadMarks[$i], $lname);
+                    array_push($downloadMarks[$i], $people[$j]);
+                    array_push($downloadMarks[$i], $aff);                  
+                }
             }
             else
             {
+                $query= "SELECT * FROM SuperUser WHERE Email='$people[$j]'";
+                $result = mysqli_query($dbc, $query);
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+
+                }
                 
             }
         }
-         array_push($downloadMarks[$i], $people[$j]);
      }
      
      //put the assessments in the file
@@ -103,6 +121,9 @@ if(isset($_POST['download']))
         fputcsv($fp, $line, ',');
     }
     fclose($fp);
+    
+    
+    
    
 }
 else
@@ -146,8 +167,10 @@ else
             //insert here
         
         </select-->
-        <input class="button" name="download" type="submit" value="Download"/>
-     
+        <div class="button-container">
+            <input class="button" name="download1" type="submit" value="Download1" style="float:left;width:150px;"/>
+            <input class="button" name="download2" type="submit" value="Download2" style="width:150px;">
+        </div>
         </form> 
         </div>
         

@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
+$email=$_SESSION['Email'];
 if($role=="Admin")
 {
     echo '<script>alert("Admin cannot Assess. Please Login as Unit Coordinator or Marker:")';
@@ -40,7 +41,7 @@ if($role=="Admin")
             <a href="index.php"> <img src="logo.png"></a>
            <nav>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-               <a href="index.php">Logout</a>
+               
            </nav>
            </div>';
         }
@@ -56,11 +57,15 @@ if($role=="Admin")
             
             $query="SELECT TeamCode FROM PresentationSchedule WHERE Date='$dateCurrent'";
             $result=mysqli_query($dbc,$query);
-            
+            if(!$result)
+            {
+                echo "No Presentations to Assess";
+            }
+                
             $j=0;
             $i=0;
             while($rows=mysqli_fetch_array($result))
-            {               
+            {         
                 $teamcode[$j]=$rows['TeamCode']; 
                 $j++; 
             }         
