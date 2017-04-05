@@ -1,17 +1,23 @@
-<?php //session_start();
+<?php 
+session_start();
+if($role!="Admin")
+{
+    header("Location: CreateSuperUser.php");
+}
   ini_set('display_errors',1);
     error_reporting (E_ALL);
+    include("dbconnect.php");
     
-    function this()
+    function display()
     {
-        if(isset($_POST['submit']))
+        if(isset($_GET['submit']))
         {
             $host = "localhost";
-            $user = "root";
-            $password = "123";
-            $dbname = "Prezmark";
-            $type=$_POST['Type'];
+            $user = "team71";
+            $password = "IUfkjs*454ds";
+            $dbname = "team71"; 
             $dbc = mysqli_connect($host,$user,$password,$dbname);
+            $type=$_GET['Type'];
             if($type === "Marker")
             {
                 $query="select * from Marker where Active=1";
@@ -26,39 +32,52 @@
             }
             $result= mysqli_query($dbc,$query);
 
-            echo"<select id='email'>";
+            
             while($row = mysqli_fetch_assoc($result))
             {
                 $email = $row['Email'];
                 echo"<option value='$email'>$email</option>";
             }
-            echo"</select><br><br><a href='DisableAccounts.php?email=$email&Type=$type'><button>Disable</button></a>";
         }
          
-    }   
- echo $m=$_GET['Type'];
- function that(){
- if(isset($_GET['email']))
- {echo"<script>alert('yes')</script>";
-    include("dbconnect.php");
-    $type=$_GET['Type'];
-    $mail=$_GET['email'];
-    if($type === "Marker")
-    {
-        $query="update Marker set Active=0 where Email='$mail'";
     }
-    else if($type === "Unit Coordinator")
-    {
-        $query="update SuperUser set Active=0 where Email='$mail'";
-    }
-    else
-    {
-        $query="update SuperUser set Active=0 where Email='$mail'";
-    }
-    $result= mysqli_query($dbc,$query);
- }
- } 
     
+    function disable()
+    {
+        if(isset($_GET['disable']))
+        {   
+            $host = "localhost";
+            $user = "team71";
+            $password = "IUfkjs*454ds";
+            $dbname = "team71"; 
+            $dbc = mysqli_connect($host,$user,$password,$dbname);
+            $type=$_GET['Type'];
+            $mail=$_GET['Account'];
+            if($type === "Marker" && $mail)
+            {
+                $query="update Marker set Active=0 where Email='$mail'";
+            }
+            else if($type === "Unit Coordinator" && $mail)
+            {
+                $query="update SuperUser set Active=0 where Email='$mail'";
+            }
+            else if($type === "Admin" && $mail)
+            {
+                $query="update SuperUser set Active=0 where Email='$mail'";
+            }
+            else
+            {
+                echo"<script>alert('No Account Selected!')</script>";
+            }
+        $result= mysqli_query($dbc,$query);
+        if($result)
+        {
+            echo"<script>alert('Account Disabled!')</script>";
+        }
+        }
+    
+    }
+  
 echo'<html>
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
@@ -69,8 +88,8 @@ echo'<html>
      <div class="header"> <a href="index.php"> 
      <img src="logo.png"></a>
         <nav>
-            <a href="DisableAccounts.php">Disable Account</a>
-            <a href="CreateSuperUser.php" class="active">Create Super User</a>
+            <a href="DisableAccounts.php" class="active">Disable Account</a>
+            <a href="CreateSuperUser.php" >Create Super User</a>
             <a href="Backup.php">Create Backup</a>
             <a href="Logout.php">Logout</a>
         </nav>
@@ -80,7 +99,7 @@ echo'<html>
 
     <div class="form bottom" >
         
-    <form  name="Disable"  id="Disable" method="post" onsubmit="DisableAccounts.php">
+    <form  name="Disable"  id="Disable" method="get">
         <h1>Disable Accounts</h1>
         <label for="Type">Account Type<br>
             <select id="Type" name="Type" >
@@ -89,10 +108,15 @@ echo'<html>
                 <option value="Admin">Admin</option>
             </select>
         </label>
-        <br> </br>';
-        this();
-        that();
-        echo'           
+        <br> </br>
+        <label for="Account">Account<br>
+            <select id="Account" name="Account" >';
+            display();
+            disable();
+            echo'</select>
+        </label>
+        <br> </br>
+        <input class="button" type="submit" name="disable" value="Disable"></input><br>
         <input class="button" type="submit" name="submit" value="Show Accounts"></input>
      
     </form>
