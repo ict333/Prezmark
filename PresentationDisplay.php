@@ -38,7 +38,7 @@ if($role=="Admin")
         else
         {
             echo '<div class="header">
-            <a href="index.php"> <img src="logo.png"></a>
+            <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
                
