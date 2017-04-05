@@ -66,8 +66,14 @@ echo'<html>
     </head>
     
     <body>
-     <div class="header">
-         <a href="index.php"> <img src="logo.png"></a>
+     <div class="header"> <a href="index.php"> 
+     <img src="logo.png"></a>
+        <nav>
+            <a href="DisableAccounts.php">Disable Account</a>
+            <a href="CreateSuperUser.php" class="active">Create Super User</a>
+            <a href="Backup.php">Create Backup</a>
+            <a href="Logout.php">Logout</a>
+        </nav>
     </div>
     <div id="separator"></div>
 
