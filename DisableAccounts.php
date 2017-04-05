@@ -1,9 +1,5 @@
 <?php 
 session_start();
-if($role!="Admin")
-{
-    header("Location: CreateSuperUser.php");
-}
   ini_set('display_errors',1);
     error_reporting (E_ALL);
     include("dbconnect.php");
@@ -109,6 +105,8 @@ echo'<html>
             </select>
         </label>
         <br> </br>
+        <input class="button" type="submit" name="submit" value="Show Accounts"></input>
+        <br> </br>
         <label for="Account">Account<br>
             <select id="Account" name="Account" >';
             display();
@@ -117,7 +115,7 @@ echo'<html>
         </label>
         <br> </br>
         <input class="button" type="submit" name="disable" value="Disable"></input><br>
-        <input class="button" type="submit" name="submit" value="Show Accounts"></input>
+        
      
     </form>
     </div>    
