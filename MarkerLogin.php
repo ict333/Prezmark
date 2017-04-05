@@ -1,7 +1,5 @@
 <?php
-ini_set('display_errors',1);
-error_reporting(E_ALL);
-
+error_reporting(0);
 /* PHP script for the marker registration form */
 if (isset($_POST['m_register']))
 {
@@ -150,7 +148,7 @@ if (isset($_POST['m_login']))
                 <br></br>
 
                 <label for="affiliation">Affiliation<br>
-                    <input class="input" type="text" name="affiliation" id="affiliation" placeholder="Company Name">
+                    <input class="input" type="text" name="affiliation" id="affiliation" placeholder="Company Name/Relation">
                 </label>
                 <br></br>
 
@@ -160,7 +158,7 @@ if (isset($_POST['m_login']))
                 <br></br>
 
                 <div class="captcha">
-                    <div class="g-recaptcha" data-sitekey="6LdqCBgUAAAAALo2kI5Qx2lPIQAzMAVjFc1iNnNV"></div><br>
+                    <div class="g-recaptcha" data-sitekey="6Le3_BkUAAAAAJCTekADAGYtGJHE67goShnAPFM6"></div><br>
                 </div>
                 <input class="button" type="submit" name="m_register" value="Register">
 
@@ -235,7 +233,7 @@ if (isset($_POST['m_login']))
             else if (document.getElementById("role").value==="Visitor")
             {
                     document.getElementById("student").disabled=true;
-                    document.getElementById("affiliation").disabled=true;
+                    document.getElementById("affiliation").disabled=false;
             }
             
         }
