@@ -12,7 +12,11 @@ if($role!="UC")
 $date=$_SESSION['Date'];
 $venue=$_SESSION['Venue'];
 $unitoffering=$_SESSION['UnitOffering'];
-
+$duration=$_SESSION['Duration'];
+$start=$_SESSION['Start'];
+$end=$_SESSION['End'];
+echo"<script>alert('$start')</script>";
+echo"<script>alert('$end')</script>";
 
 
 include("dbconnect.php");
@@ -77,7 +81,15 @@ while ($rows = mysqli_fetch_array($result)) {
                         
             <label for="slot">Time Slot<br>
             <select name="slot" id="slot" required>
-                <option value="9:30-10:00">9:30-10:00</option>
+            <?php
+            while($start<$end)
+            {
+                echo"<option value='$start-$end'>$start-$end</option>";
+                $start++;
+            }
+            ?>
+            <!--?php
+            <option value="9:30-10:00">9:30-10:00</option>
                 <option value="10:00-10:30">10:00-10:30</option>
                 <option value="10:30-11:00">10:30-11:00</option>
                 <option value="11:00-11:30">11:00-11:30</option>
@@ -94,7 +106,6 @@ while ($rows = mysqli_fetch_array($result)) {
                 <option value="4:30-5:00">4:30-5:00</option>
                 <option value="5:00-5:30">5:00-5:30</option>
                 <option value="5:30-6:00">5:30-6:00</option>
-            <!--?php
                 $start = strtotime('9:30 AM');
                 $end   = strtotime('6:30 PM');
                 echo "<script>$t=document.getElementById('duration').value</script>";
