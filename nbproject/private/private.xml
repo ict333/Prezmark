@@ -5,8 +5,6 @@
         <group>
             <file>file:/var/www/html/Prezmark/PresentationDisplay.php</file>
             <file>file:/var/www/html/Prezmark/AssessPresentations.php</file>
-            <file>file:/var/www/html/Prezmark/MarkerLogin.php</file>
-            <file>file:/var/www/html/Prezmark/FillPresentationSchedule.php</file>
             <file>file:/var/www/html/Prezmark/DownloadMarks.php</file>
         </group>
     </open-files>
