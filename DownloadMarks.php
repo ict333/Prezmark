@@ -15,7 +15,6 @@ if($role!="UC")
 
 include 'dbconnect.php';
 
-
 if(isset($_POST['download1']))
 {
     
@@ -166,7 +165,7 @@ if(isset($_POST['download1']))
             }
             else
             {
-                array_push($downloadMarks[$i], " ");
+                array_push($downloadMarks[$i], "");
             }
         }
      }
@@ -178,11 +177,270 @@ if(isset($_POST['download1']))
     {
         fputcsv($fp, $line, ',');
     }
-    fclose($fp);
+    fclose($fp);  
+}
+
+else if(isset($_POST['download2']))
+{
+    $date=$_POST['date'];
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="Total_Average_Per_Team.csv"');
+    $fp2 = fopen('php://output', 'w');
+    
+    $averageMarks[0] = array('TeamNames','Staff','Visitor','Student','Total');
+    $countTeams=1;
+    $select_date = "SELECT * FROM PresentationSchedule WHERE Date='$date'";
+  
+    $result1 = mysqli_query($dbc, $select_date);
+    
+    while ($rows = mysqli_fetch_array($result1)) 
+    {
+        $teamcode = $rows['TeamCode'];
+        $averageMarks[$countTeams]=array();
+        array_push($averageMarks[$countTeams], $teamcode);   
+        $countTeams++;
+    }
+    
+    $query = "SELECT * FROM Assessment";
+    $result = mysqli_query($dbc, $query);
+    $people_assessed=array();
+    while ($rows = mysqli_fetch_array($result)) 
+    {
+        $time=$rows['Time'];
+        $email=$rows['Email'];
+        $all_dates=substr($time,0,-9);
+        
+        if($all_dates==$date)
+        {
+            array_push($people_assessed,$email);
+        }
+    }
+    
+    $people=array_unique($people_assessed);
+    $people=array_values($people);
+    $students=array();
+    $visitors=array();
+    $clients=array();
+    $uc=array();
+    for($i=0;$i<count($people);$i++)
+    {
+        $query= "SELECT * FROM Marker WHERE Email='$people[$i]'";
+        $result = mysqli_query($dbc, $query);
+        
+        if(mysqli_num_rows($result)==0)
+        {
+            array_push($uc,$people[$i]);
+        }
+        while ($rows = mysqli_fetch_array($result)) 
+        {
+            $R=$rows['Role'];
+            if($R=="Student")
+            {
+                array_push($students,$people[$i]);
+            }
+            else if($R=="Visitor")
+            {
+                array_push($visitors,$people[$i]);
+            }
+            else
+            {
+                array_push($clients,$people[$i]);                
+            }
+        }
+    }
+    
+         //put the averages in the file
+     $query= "SELECT * FROM PresentationSchedule WHERE Date='$date'";
+     $result = mysqli_query($dbc, $query);
+     $teamcodes=array();
+     while ($rows = mysqli_fetch_array($result)) 
+     {
+        array_push($teamcodes, $rows['TeamCode']);
+     }
+     
+     for($k=0,$i=1;$k<count($teamcodes);$k++,$i++)
+     {       
+        $staffTotal=0;
+        $visitorTotal=0;
+        $studentTotal=0;
+        $Gtotal=0;
+        
+        $countStaff=0;
+        $countVisitor=0;
+        $countStudent=0;
+        
+        $averageStaff=0.0;
+        $averageVisitor=0.0;
+        $averageStudent=0.0;
+        $averageTotal=0;
+        $t=0.0;
+        
+        
+        //calculating total staff marks for team 'k'
+        for($j=0;$j<count($uc);$j++)
+        {
+           $query= "SELECT * FROM Assessment WHERE TeamCode='$teamcodes[$k]' AND Email='$uc[$j]'";
+           $result = mysqli_query($dbc, $query);
+           
+           if(mysqli_num_rows($result)!=0)
+            {
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                     $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
+                                 +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
+                     $staffTotal+=$total;
+                     $averageTotal+=$total;
+                } 
+                $countStaff++;
+                $Gtotal++;
+            }
+        }
+        //calculating total visitors marks for team 'k'        
+        for($j=0;$j<count($visitors);$j++)
+        {
+           $query= "SELECT * FROM Assessment WHERE TeamCode='$teamcodes[$k]' AND Email='$visitors[$j]'";
+           $result = mysqli_query($dbc, $query);
+           
+           if(mysqli_num_rows($result)!=0)
+            {
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                     $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
+                                 +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
+                     $visitorTotal+=$total;
+                     $averageTotal+=$total;
+                }  
+                $countVisitor++;
+                $Gtotal++;
+            }
+        }
+        
+        //calculating total client marks for team 'k'
+        for($j=0;$j<count($clients);$j++)
+        {
+           $query= "SELECT * FROM Assessment WHERE TeamCode='$teamcodes[$k]' AND Email='$clients[$j]'";
+           $result = mysqli_query($dbc, $query);
+           
+           if(mysqli_num_rows($result)!=0)
+            {
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                     $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
+                                 +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
+                     $visitorTotal+=$total;
+                     $averageTotal+=$total;
+                } 
+                $countVisitor++;
+                $Gtotal++;
+            }
+        }
+        
+        //calculating total student marks for team 'k'
+        for($j=0;$j<count($students);$j++)
+        {
+           $query= "SELECT * FROM Assessment WHERE TeamCode='$teamcodes[$k]' AND Email='$students[$j]'";
+           $result = mysqli_query($dbc, $query);
+           
+           if(mysqli_num_rows($result)!=0)
+            {
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                     $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
+                                 +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
+                     $studentTotal+=$total;
+                     $averageTotal+=$total;
+                }  
+                $countStudent++;
+                $Gtotal++;
+            }
+        }
+      
+        if($countStaff!=0)
+        {   
+            $averageStaff=$staffTotal/$countStaff;
+        }
+        if($countVisitor!=0)
+        {
+           // $averageVistor=$visitorTotal/$countVisitor;  
+            $avg=$visitorTotal/$countVisitor;
+        }
+        if($countStudent!=0)
+        {   
+            $averageStudent=$studentTotal/$countStudent;
+        }
+        
+        $t=$averageTotal/$Gtotal;
+        array_push($averageMarks[$i], $averageStaff);
+        array_push($averageMarks[$i], $avg);
+        array_push($averageMarks[$i], $averageStudent);
+        array_push($averageMarks[$i], $t);
+     }
+    
+    /*
+    $people=array_merge($students,$visitors,$clients,$uc);
+ 
+     for($i=1,$j=0;$j<count($people);$j++,$i++)
+     {
+        $downloadMarks[$i]=array();
+        $query= "SELECT * FROM Person WHERE Email='$people[$j]'";
+        $result = mysqli_query($dbc, $query);
+        
+        while ($rows = mysqli_fetch_array($result)) 
+        {
+            $role1=$rows['Role'];
+            if($role1=="Marker")
+            {
+                $query= "SELECT * FROM Marker WHERE Email='$people[$j]'";
+                $result = mysqli_query($dbc, $query);
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                    $role2=$rows['Role'];
+                    $fname=$rows['FirstName'];
+                    $lname=$rows['LastName'];
+                    $aff=$rows['Affiliation'];
+                    if($role2=="Client")
+                    { 
+                        array_push($downloadMarks[$i], "Visitor");
+                    }
+                    else
+                    {
+                        array_push($downloadMarks[$i], $role2);
+                    }
+                    array_push($downloadMarks[$i], $fname);
+                    array_push($downloadMarks[$i], $lname);
+                    array_push($downloadMarks[$i], $people[$j]);
+                    array_push($downloadMarks[$i], $aff);                  
+                }
+                               
+            }
+            else
+            {
+                $query= "SELECT * FROM SuperUser WHERE Email='$people[$j]'";
+                $result = mysqli_query($dbc, $query);
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                    array_push($downloadMarks[$i], "Staff");
+                    array_push($downloadMarks[$i], " ");
+                    array_push($downloadMarks[$i], " ");
+                    array_push($downloadMarks[$i], $people[$j]);
+                    array_push($downloadMarks[$i], " ");     
+                }
+                
+            }
+        }
+     }
+     
+
+*/
     
     
     
-   
+    
+    foreach ($averageMarks as $line) 
+    {
+        fputcsv($fp2, $line, ',');
+    }
+    fclose($fp2); 
 }
 else
 {
@@ -196,10 +454,10 @@ else
         <div class="header">
          <a href="index.php"> <img src="logo.png" ></a>
         <nav>
-            <a href="UploadStudentDetails.php" class="active">Upload Student Details</a>
+            <a href="UploadStudentDetails.php">Upload Student Details</a>
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="PresentationDisplay.php">Assess Presentations</a>
-            <a href="DownloadMarks.php">Download Marks</a>
+            <a href="DownloadMarks.php"  class="active">Download Marks</a>
             <!--a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>
