@@ -5,6 +5,12 @@ session_start();
 $role= $_SESSION['Role'];
 $email=$_SESSION['Email'];
 $teamcode=$_SESSION['TeamCodeAssess'];
+if((!isset($email)))
+{
+    echo '<script>alert("Session not Set")</script>';
+    header("Location: SuperUserLogin.php");
+}
+
 if($role=="Admin")
 {
     echo '<script>alert("Admin cannot Assess. Please Login as Unit Coordinator or Marker:")</script>';

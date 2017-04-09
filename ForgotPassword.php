@@ -1,99 +1,12 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
+include 'dbconnect.php';
 session_start();
-$role= $_SESSION['Role'];
 $email=$_SESSION['Email'];
 if((!isset($email)))
 {
     echo '<script>alert("Session not Set")</script>';
     header("Location: SuperUserLogin.php");
 }
-if($role!="Admin")
-{
-    header("Location: SuperUserLogin.php");
-}
-?>
-
-<html> 
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css">  
-        <link rel="icon" href="icon.png" type="image/x-icon"></link>      
-    </head>
-    
-    <body>
-    <div class="header">
-         <a href="index.php"> <img src="logo.png"></a>
-        <nav>
-            <a href="DisableAccounts.php">Disable Account</a>
-            <a href="CreateSuperUser.php" class="active">Create Super User</a>
-            <a href="Backup.php">Create Backup</a>
-            <a href="Logout.php">Logout</a>
-        </nav>
-    </div>
-        
-    <div id="separator"></div>
-                
-    <div class="form bottom">
-        
-    <form name="CreateSuperUser" id="CreateSuperUser" method="post" onsubmit="return validateForm()">
-        <h1>Create Super User</h1>         
-        <label for="email">Email<br>
-        <input id="email" name="email" type="email" required></input>
-        </label>
-        <br> </br>
-            
-        <label for="role"> Role<br>
-        <select name="role" required>
-            <option id="role" name="role" value="Admin">Administrator</option>
-            <option id="role" name="role" value="UC">Unit Coordinator</option>
-        </select>
-        </label>
-        <br> </br>
-            
-        <input class="button" type="submit" name="submit" value="Create"></input>
-        
-    </form>
-    </div>   
-    <script>
-        function validateForm()
-        {
-            var email=document.CreateSuperUser.email.value;    
-           /* some tests*/ 
-        }
-    </script>
-    </body>
-     <footer>
-           &#169;2017 All rights reserved by Murdoch University 
-    </footer>  
-</html>
-
-<?php
-function generatePassword() 
-{
-    $passwordRange = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    $pass = array(); 
-    $length = strlen($passwordRange) - 1;
-    for ($i = 0; $i < 8; $i++) 
-    {
-        $n = rand(0, $length);
-        $pass[] = $passwordRange[$n];
-    }
-    $password=implode($pass);
-    echo $password;
-    return $password;       
-}
-function hashPassword($pass)
-{
-    $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
-    return $hashedPassword;
-}
-          
-if(isset($_POST['submit']))
-{
-    include 'dbconnect.php';	
-    $email=$_POST['email'];
     $role1="SuperUser";
     $role2=$_POST['role'];
     $password=  generatePassword();
@@ -165,5 +78,5 @@ if(isset($_POST['submit']))
         {
           echo $email.' is not a valid email address';
         }        
-    }		
-?>
+    
+    ?>

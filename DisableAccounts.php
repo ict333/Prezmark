@@ -1,5 +1,11 @@
 <?php 
 session_start();
+$email=$_SESSION['Email'];
+if((!isset($email)))
+{
+    echo '<script>alert("Session not Set")</script>';
+    header("Location: SuperUserLogin.php");
+}
   ini_set('display_errors',1);
     error_reporting (E_ALL);
     include("dbconnect.php");

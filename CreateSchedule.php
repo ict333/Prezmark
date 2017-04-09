@@ -4,6 +4,12 @@ error_reporting(E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
+$email=$_SESSION['Email'];
+if((!isset($email)))
+{
+    echo '<script>alert("Session not Set")</script>';
+    header("Location: SuperUserLogin.php");
+}
 if($role!="UC")
 {
     header("Location: SuperUserLogin.php");

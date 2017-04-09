@@ -1,6 +1,12 @@
 <?php
 session_start();
 $role= $_SESSION['Role'];
+$email=$_SESSION['Email'];
+if((!isset($email)))
+{
+    echo '<script>alert("Session not Set")</script>';
+    header("Location: SuperUserLogin.php");
+}
 if($role!="UC")
 {
     header("Location: SuperUserLogin.php");
@@ -66,10 +72,15 @@ ini_set('display_errors',1);
             function validate()
             {
                 var year=document.UploadStudent.year.value;
+                var teaching=document.UploadStudent.semester.value;
                 if(isNaN(year))
                 {
                     alert("Please Enter Numeric Values for Year!");
                     return false;
+                }
+                if(teaching.length()>3)
+                {
+                    alert("Please enter a valid teaching period!");
                 }
             }
         </script>

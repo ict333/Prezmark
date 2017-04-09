@@ -3,6 +3,12 @@ ini_set('display_errors',1);
 error_reporting (E_ALL);
 
 session_start();
+$email=$_SESSION['Email'];
+if((!isset($email)))
+{
+    echo '<script>alert("Session not Set")</script>';
+    header("Location: SuperUserLogin.php");
+}
 $role= $_SESSION['Role'];
 if($role!="UC")
 {
@@ -375,65 +381,6 @@ else if(isset($_POST['download2']))
         array_push($averageMarks[$i], $averageStudent);
         array_push($averageMarks[$i], $t);
      }
-    
-    /*
-    $people=array_merge($students,$visitors,$clients,$uc);
- 
-     for($i=1,$j=0;$j<count($people);$j++,$i++)
-     {
-        $downloadMarks[$i]=array();
-        $query= "SELECT * FROM Person WHERE Email='$people[$j]'";
-        $result = mysqli_query($dbc, $query);
-        
-        while ($rows = mysqli_fetch_array($result)) 
-        {
-            $role1=$rows['Role'];
-            if($role1=="Marker")
-            {
-                $query= "SELECT * FROM Marker WHERE Email='$people[$j]'";
-                $result = mysqli_query($dbc, $query);
-                while ($rows = mysqli_fetch_array($result)) 
-                {
-                    $role2=$rows['Role'];
-                    $fname=$rows['FirstName'];
-                    $lname=$rows['LastName'];
-                    $aff=$rows['Affiliation'];
-                    if($role2=="Client")
-                    { 
-                        array_push($downloadMarks[$i], "Visitor");
-                    }
-                    else
-                    {
-                        array_push($downloadMarks[$i], $role2);
-                    }
-                    array_push($downloadMarks[$i], $fname);
-                    array_push($downloadMarks[$i], $lname);
-                    array_push($downloadMarks[$i], $people[$j]);
-                    array_push($downloadMarks[$i], $aff);                  
-                }
-                               
-            }
-            else
-            {
-                $query= "SELECT * FROM SuperUser WHERE Email='$people[$j]'";
-                $result = mysqli_query($dbc, $query);
-                while ($rows = mysqli_fetch_array($result)) 
-                {
-                    array_push($downloadMarks[$i], "Staff");
-                    array_push($downloadMarks[$i], " ");
-                    array_push($downloadMarks[$i], " ");
-                    array_push($downloadMarks[$i], $people[$j]);
-                    array_push($downloadMarks[$i], " ");     
-                }
-                
-            }
-        }
-     }
-     
-
-*/
-    
-    
     
     
     foreach ($averageMarks as $line) 
