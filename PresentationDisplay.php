@@ -38,7 +38,7 @@ if($role=="Admin")
         else
         {
             echo '<div class="header">
-            <a href="index.php"> <img src="logo.png"></a>
+            <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
                
@@ -57,7 +57,7 @@ if($role=="Admin")
             
             $query="SELECT TeamCode FROM PresentationSchedule WHERE Date='$dateCurrent'";
             $result=mysqli_query($dbc,$query);
-            if(!$result)
+            if(mysqli_num_rows($result)==0)
             {
                 echo "No Presentations to Assess";
             }

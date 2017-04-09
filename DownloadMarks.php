@@ -8,14 +8,18 @@ if($role!="UC")
 {
     header("Location: SuperUserLogin.php");
 }
+
 ?>
 
 <?php
 
+include 'dbconnect.php';
+
+
 if(isset($_POST['download1']))
 {
+    
     $date=$_POST['date'];
-    include 'dbconnect.php';
     
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="Marks_Per_Team_Per_Role.csv"');
@@ -48,11 +52,46 @@ if(isset($_POST['download1']))
     }
     
     $people=array_unique($people_assessed);
+    $people=array_values($people);
+    $students=array();
+    $visitors=array();
+    $clients=array();
+    $uc=array();
+    for($i=0;$i<count($people);$i++)
+    {
+        $query= "SELECT * FROM Marker WHERE Email='$people[$i]'";
+        $result = mysqli_query($dbc, $query);
+        
+        if(mysqli_num_rows($result)==0)
+        {
+            array_push($uc,$people[$i]);
+        }
+        while ($rows = mysqli_fetch_array($result)) 
+        {
+            $R=$rows['Role'];
+            if($R=="Student")
+            {
+                array_push($students,$people[$i]);
+            }
+            else if($R=="Visitor")
+            {
+                array_push($visitors,$people[$i]);
+            }
+            else
+            {
+                array_push($clients,$people[$i]);                
+            }
+        }
+    }
+    
+    $people=array_merge($students,$visitors,$clients,$uc);
+ 
      for($i=1,$j=0;$j<count($people);$j++,$i++)
      {
         $downloadMarks[$i]=array();
         $query= "SELECT * FROM Person WHERE Email='$people[$j]'";
         $result = mysqli_query($dbc, $query);
+        
         while ($rows = mysqli_fetch_array($result)) 
         {
             $role1=$rows['Role'];
@@ -66,12 +105,20 @@ if(isset($_POST['download1']))
                     $fname=$rows['FirstName'];
                     $lname=$rows['LastName'];
                     $aff=$rows['Affiliation'];
-                    array_push($downloadMarks[$i], $role2);
+                    if($role2=="Client")
+                    { 
+                        array_push($downloadMarks[$i], "Visitor");
+                    }
+                    else
+                    {
+                        array_push($downloadMarks[$i], $role2);
+                    }
                     array_push($downloadMarks[$i], $fname);
                     array_push($downloadMarks[$i], $lname);
                     array_push($downloadMarks[$i], $people[$j]);
                     array_push($downloadMarks[$i], $aff);                  
                 }
+                               
             }
             else
             {
@@ -79,7 +126,11 @@ if(isset($_POST['download1']))
                 $result = mysqli_query($dbc, $query);
                 while ($rows = mysqli_fetch_array($result)) 
                 {
-
+                    array_push($downloadMarks[$i], "Staff");
+                    array_push($downloadMarks[$i], " ");
+                    array_push($downloadMarks[$i], " ");
+                    array_push($downloadMarks[$i], $people[$j]);
+                    array_push($downloadMarks[$i], " ");     
                 }
                 
             }
@@ -102,18 +153,25 @@ if(isset($_POST['download1']))
         {
            $query= "SELECT * FROM Assessment WHERE TeamCode='$teamcodes[$k]' AND Email='$people[$j]'";
            $result = mysqli_query($dbc, $query);
-          
-           while ($rows = mysqli_fetch_array($result)) 
-           {
-                $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
-                            +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
-                    
-                array_push($downloadMarks[$i], $total);
-           }          
+           
+           if(mysqli_num_rows($result)!=0)
+            {
+                while ($rows = mysqli_fetch_array($result)) 
+                {
+                     $total=$rows['Introduction']+$rows['Objectives']+$rows['Demonstration1']+$rows['Demonstration2']+$rows['Conclusion']
+                                 +$rows['Question']+$rows['Preparation']+$rows['Structure']+$rows['Enthusiasm']+$rows['VisualAid']; 
+
+                     array_push($downloadMarks[$i], $total);
+                }  
+            }
+            else
+            {
+                array_push($downloadMarks[$i], " ");
+            }
         }
      }
 
-     
+ 
     mysqli_close($dbc);
         
    foreach ($downloadMarks as $line) 
@@ -138,10 +196,10 @@ else
         <div class="header">
          <a href="index.php"> <img src="logo.png" ></a>
         <nav>
-            <a href="UploadStudentDetails.php" class="active">Upload Student Details</a>
+            <a href="UploadStudentDetails.php">Upload Student Details</a>
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="PresentationDisplay.php">Assess Presentations</a>
-            <a href="DownloadMarks.php">Download Marks</a>
+            <a href="DownloadMarks.php" class="active">Download Marks</a>
             <!--a href="">Modify Student Details</a>
             <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>

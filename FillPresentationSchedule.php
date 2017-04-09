@@ -15,9 +15,19 @@ $unitoffering=$_SESSION['UnitOffering'];
 $duration=$_SESSION['Duration'];
 $start=$_SESSION['Start'];
 $end=$_SESSION['End'];
-echo"<script>alert('$start')</script>";
-echo"<script>alert('$end')</script>";
-
+$sthr=$_SESSION['StartHR'];
+$stmin=$_SESSION['StartMIN'];
+$enhr=$_SESSION['EndHR'];
+$enmin=$_SESSION['EndMIN'];
+$duration=(int)$duration;
+$sthr=(int)$sthr;
+$stmin=(int)$stmin;
+$enhr=(int)$enhr;
+$enmin=(int)$enmin;
+echo"<script>alert('$sthr')</script>";
+echo"<script>alert('$stmin')</script>";
+echo"<script>alert('$enhr')</script>";
+echo"<script>alert('$enmin')</script>";
 
 include("dbconnect.php");
 $query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
@@ -82,10 +92,23 @@ while ($rows = mysqli_fetch_array($result)) {
             <label for="slot">Time Slot<br>
             <select name="slot" id="slot" required>
             <?php
-            while($start<$end)
+            
+            while($sthr<=$enhr||$stmin!=$enmin)
             {
-                echo"<option value='$start-$end'>$start-$end</option>";
-                $start++;
+                echo"yes";
+                if(($stmin+$duration+5)>=60)
+                {
+                    $sthr2=$sthr+1;
+                    $stmin2="00";
+                }
+                else
+                {
+                    $sthr2=$sthr;
+                    $stmin2=$stmin+$duration+5;
+                }
+                echo"<option value='$sthr:$stmin-$sthr2:$stmin2'>$sthr:$stmin-$sthr2:$stmin2</option>";
+                $sthr=$sthr2;
+                $stmin=$stmin2;
             }
             ?>
             <!--?php

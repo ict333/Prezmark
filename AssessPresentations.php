@@ -55,19 +55,18 @@ function convertTo24hr($hr, $ampm)
            <nav>
                <a href="UploadStudentDetails.php" >Upload Student Details</a>
                <a href="CreateSchedule.php">New Schedule</a>
-               <a href="PresentationDisplay.php" class="active">Disply Presentations</a>
+               <a href="PresentationDisplay.php" class="active">Display Presentations</a>
                <a href="DownloadMarks.php">Download Marks</a>
               <!-- <a href="">Modify Student Details</a>
                <a href="">Modify Schedule</a-->
               <a href="Logout.php">Logout</a>
            </nav>
-           '.$email.'
            </div>';
         }
         else
         {
             echo '<div class="header">
-            <a href="index.php"> <img src="logo.png"></a>
+            <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Display Presentations</a>
            </nav>
@@ -408,6 +407,7 @@ function showPosition(position)
 {
     x.innerHTML = "Latitude: " + position.coords.latitude + 
     "<br>Longitude: " + position.coords.longitude;
+    
 }
 
 function showError(error) 
@@ -441,8 +441,8 @@ function checkMarks()
     var mark8=document.getElementById("enthusiasm").value;
     var mark9=document.getElementById("preparation").value;
     var mark10=document.getElementById("structure").value;
-    if(mark1=="Mark"||mark2=="Mark"||mark3=="Mark"||mark4=="Mark"||mark5=="Mark"
-    ||mark6=="Mark"||mark7=="Mark"||mark8=="Mark"||mark9=="Mark"||mark10=="Mark")
+    if(mark1=="0"||mark2=="0"||mark3=="0"||mark4=="0"||mark5=="0"
+    ||mark6=="0"||mark7=="0"||mark8=="0"||mark9=="0"||mark10=="0")
     {
         alert("Please select a mark for all categories!");
         return false;
@@ -463,6 +463,7 @@ else
 <?php
 if(isset($_POST['back']))
 {
+    header("Location: PresentationDisplay.php");
 }
 
 if(isset($_POST['submit']))
@@ -496,7 +497,7 @@ if(isset($_POST['submit']))
     if($result)
     {
         echo '<script>alert("Assessment Successful");</script>';
-        header("Location: PresentationDisplay.php");
+        
     }
     else
     {

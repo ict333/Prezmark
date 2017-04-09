@@ -16,14 +16,22 @@ if(isset($_POST['next']))
     $unitoffering=$_POST['unitoffering'];
     $duration=$_POST['duration'];
     $start=$_POST['start'];
-    echo"<script>alert('$start')</script>";
     $end=$_POST['end'];
+    $sthr=substr($start,0,-3);
+    $enhr=substr($end,0,-3);
+    $stmin=substr($start,-2);
+    $enmin=substr($end,-2);
     $_SESSION['Date']=$date;
     $_SESSION['Venue']=$venue;
     $_SESSION['UnitOffering']=$unitoffering;
     $_SESSION['Duration']=$duration;
     $_SESSION['Start']=$start;
+    $_SESSION['StartHR']=$sthr;
+    $_SESSION['StartMIN']=$stmin;
     $_SESSION['End']=$end;
+    $_SESSION['EndHR']=$enhr;
+    $_SESSION['EndMIN']=$enmin;
+    
     
       
     header("Location: FillPresentationSchedule.php");
@@ -102,20 +110,20 @@ if(isset($_POST['next']))
                     <option value="11:30">11:30 am</option>
                     <option value="12:00">12:00 pm</option>
                     <option value="12:30">12:30 pm</option>
-                    <option value="1:00">1:00 pm</option>
-                    <option value="1:30">1:30 pm</option>
-                    <option value="2:00">2:00 pm</option>
-                    <option value="2:30">2:30 pm</option>
-                    <option value="3:00">3:00 pm</option>
-                    <option value="3:30">3:30 pm</option>
-                    <option value="4:00">4:00 pm</option>
-                    <option value="4:30">4:30 pm</option>
-                    <option value="5:00">5:00 pm</option>
-                    <option value="5:30">5:30 pm</option>
-                    <option value="6:00">6:00 pm</option>
-                    <option value="6:30">6:30 pm</option>
-                    <option value="7:00">7:00 pm</option>
-                    <option value="7:30">7:30 pm</option>
+                    <option value="13:00">1:00 pm</option>
+                    <option value="13:30">1:30 pm</option>
+                    <option value="14:00">2:00 pm</option>
+                    <option value="14:30">2:30 pm</option>
+                    <option value="15:00">3:00 pm</option>
+                    <option value="15:30">3:30 pm</option>
+                    <option value="16:00">4:00 pm</option>
+                    <option value="16:30">4:30 pm</option>
+                    <option value="17:00">5:00 pm</option>
+                    <option value="17:30">5:30 pm</option>
+                    <option value="18:00">6:00 pm</option>
+                    <option value="18:30">6:30 pm</option>
+                    <option value="19:00">7:00 pm</option>
+                    <option value="19:30">7:30 pm</option>
                 </select>
             </label>
             <br/> <br/>
@@ -128,20 +136,21 @@ if(isset($_POST['next']))
                 <option value="11:30">11:30 am</option>
                 <option value="12:00">12:00 pm</option>
                 <option value="12:30">12:30 pm</option>
-                <option value="1:00">1:00 pm</option>
-                <option value="1:30">1:30 pm</option>
-                <option value="2:00">2:00 pm</option>
-                <option value="2:30">2:30 pm</option>
-                <option value="3:00">3:00 pm</option>
-                <option value="3:30">3:30 pm</option>
-                <option value="4:00">4:00 pm</option>
-                <option value="4:30">4:30 pm</option>
-                <option value="5:00">5:00 pm</option>
-                <option value="5:30">5:30 pm</option>
-                <option value="6:00">6:00 pm</option>
-                <option value="6:30">6:30 pm</option>
-                <option value="7:00">7:00 pm</option>
-                <option value="7:30">7:30 pm</option>
+                <option value="13:00">1:00 pm</option>
+                <option value="13:30">1:30 pm</option>
+                <option value="14:00">2:00 pm</option>
+                <option value="14:30">2:30 pm</option>
+                <option value="15:00">3:00 pm</option>
+                <option value="15:30">3:30 pm</option>
+                <option value="16:00">4:00 pm</option>
+                <option value="16:30">4:30 pm</option>
+                <option value="17:00">5:00 pm</option>
+                <option value="17:30">5:30 pm</option>
+                <option value="18:00">6:00 pm</option>
+                <option value="18:30">6:30 pm</option>
+                <option value="19:00">7:00 pm</option>
+                <option value="19:30">7:30 pm</option>
+                <option value="20:00">8:00 pm</option>
             </select>
             </label>
             <br> </br>

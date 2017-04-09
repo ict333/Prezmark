@@ -44,7 +44,7 @@ ini_set('display_errors',1);
             
         <label for="semester">Teaching Period</label>
         <br> 
-        <input id="semester" name="semester" type="text" required placeholder="For example: S1/S2/TJD/TMD/TSD"></input>
+        <input id="semester" name="semester" onblur="return checkLength()" type="text" required placeholder="For example: S1/S2/TJD/TMD/TSD"></input>
         <br> </br>
             
         <label for="year">Year</label>
@@ -69,6 +69,16 @@ ini_set('display_errors',1);
                 if(isNaN(year))
                 {
                     alert("Please Enter Numeric Values for Year!");
+                    return false;
+                }
+            }
+            
+            function checkLength()
+            {
+                var teach=document.getElementById("semester");
+                if(teach.value.length>3)
+                {
+                    alert("Semester input too long!");
                     return false;
                 }
             }
