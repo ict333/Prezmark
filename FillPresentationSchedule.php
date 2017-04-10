@@ -25,7 +25,8 @@ $query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
 $result = mysqli_query($dbc, $query);
 $name = array();
 $i = 0;
-while ($rows = mysqli_fetch_array($result)) {
+while ($rows = mysqli_fetch_array($result)) 
+{
     $name[$i] = $rows['TeamName'];
     $i++;
 }

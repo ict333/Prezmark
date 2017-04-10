@@ -420,16 +420,10 @@ else
         <form method="post">
                
         <label for="date">Date</label><br> 
-        <input id="date" name="date" type="date" required></input>
+        <input id="date" name="date" type="date" required></input> 
+    
         <br> </br>
         
-        
-        <!--label for="date">Unit Offering</label><br>
-        <select name="" id="" required>
-       
-            //insert here
-        
-        </select-->
         <div class="button-container">
             <input class="button" name="download1" type="submit" value="Download1" style="float:left;width:150px;"/>
             <input class="button" name="download2" type="submit" value="Download2" style="width:150px;">
