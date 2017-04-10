@@ -159,8 +159,8 @@ function convertTo24hr($hr, $ampm)
                   <table>
                   <tr> 
                       <td class="column1">
-                     <label for="introduction">Effectiveness of the introduction and value proposition for the project. 
-                     Clearly explaining the original client problem.</label>
+                     <label for="introduction">Effectiveness of the introduction and value proposition for the project.</br> 
+                     Clearly explained the original client problem.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="introduction" name="introduction" required>
@@ -181,7 +181,7 @@ function convertTo24hr($hr, $ampm)
 
                   <tr> 
                       <td class="column1">
-                     <label for="objective">Clearly identified the requirements of the project. Explained the solution 
+                     <label for="objective">Clearly identified the requirements of the project. </br>Explained the solution 
                      in terms of the problem and the methodologies the team used to solve the problem.</label>
                       </td>
                       <td class="column2">
@@ -203,7 +203,7 @@ function convertTo24hr($hr, $ampm)
 
                    <tr> 
                       <td class="column1">
-                     <label for="demo1">Product Demonstration: demonstrated the requirements mentioned above.</label>
+                     <label for="demo1"><b>Product Demonstration:</b> demonstrated the requirements mentioned above.</label>
                       </td>
                       <td class="column2">
                           <select class="mark" id="demo1" name="demo1"  required>
@@ -224,7 +224,7 @@ function convertTo24hr($hr, $ampm)
 
                    <tr> 
                       <td class="column1">
-                     <label for="demo2">Product Demonstration: appropriate amount of detail, flowed smoothly,
+                     <label for="demo2"></b>Product Demonstration:</b> appropriate amount of detail, flowed smoothly,
                      and demonstrated the product well.</label>
                       </td>
                       <td class="column2">
