@@ -97,7 +97,11 @@ if(isset($_POST['next']))
             <br> </br>
             
             <label for="duration">Duration<br>
-            <input id="duration" name="duration" type="number" required></input>
+                <select id="duration" name="duration" required>
+                    <option value="30">30 mins</option>
+                    <option value="45">45 mins</option>
+                    <option value="60">60 mins</option>
+                </select>
             </label>
             <br> </br>
             
