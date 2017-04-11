@@ -26,7 +26,6 @@
                     $role=$row['Role'];
                     $active=$row['Active'];
                     $password=$row['Password'];
-                    //echo $pass.'----'.$password;
                     if(password_verify($pass, $password))
                     {
                         if($active==1)

@@ -3,12 +3,6 @@ ini_set('display_errors',1);
 error_reporting (E_ALL);
 
 session_start();
-$email=$_SESSION['Email'];
-if((!isset($email)))
-{
-    echo '<script>alert("Session not Set")</script>';
-    header("Location: SuperUserLogin.php");
-}
 $role= $_SESSION['Role'];
 if($role!="UC")
 {
@@ -279,7 +273,6 @@ else if(isset($_POST['download2']))
         $averageVisitor=0.0;
         $averageStudent=0.0;
         $averageTotal=0;
-        $avg=0.0;
         $t=0.0;
         
         
@@ -382,6 +375,7 @@ else if(isset($_POST['download2']))
         array_push($averageMarks[$i], $averageStudent);
         array_push($averageMarks[$i], $t);
      }
+      
     
     
     foreach ($averageMarks as $line) 
@@ -421,10 +415,16 @@ else
         <form method="post">
                
         <label for="date">Date</label><br> 
-        <input id="date" name="date" type="date" required></input> 
-    
+        <input id="date" name="date" type="date" required></input>
         <br> </br>
         
+        
+        <!--label for="date">Unit Offering</label><br>
+        <select name="" id="" required>
+       
+            //insert here
+        
+        </select-->
         <div class="button-container">
             <input class="button" name="download1" type="submit" value="Download1" style="float:left;width:150px;"/>
             <input class="button" name="download2" type="submit" value="Download2" style="width:150px;">
