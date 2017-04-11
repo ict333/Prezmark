@@ -24,10 +24,6 @@ $sthr=(int)$sthr;
 $stmin=(int)$stmin;
 $enhr=(int)$enhr;
 $enmin=(int)$enmin;
-echo"<script>alert('$sthr')</script>";
-echo"<script>alert('$stmin')</script>";
-echo"<script>alert('$enhr')</script>";
-echo"<script>alert('$enmin')</script>";
 
 include("dbconnect.php");
 $query = "SELECT TeamName FROM Team WHERE UnitOffering='$unitoffering';";
@@ -92,56 +88,23 @@ while ($rows = mysqli_fetch_array($result)) {
             <label for="slot">Time Slot<br>
             <select name="slot" id="slot" required>
             <?php
-            
-            while($sthr<=$enhr||$stmin!=$enmin)
+            $duration=$duration+5;
+            while($sthr!=$enhr||$stmin!=$enmin)
             {
-                echo"yes";
-                if(($stmin+$duration+5)>=60)
+                if($sthr<=$enhr)
                 {
-                    $sthr2=$sthr+1;
-                    $stmin2="00";
+                    
+                    $temp=($sthr*60)+$stmin;
+                    $temp2=($temp+$duration)/60;
+                    $sthr2=floor($temp2);
+                    $stmin2=($temp+$duration)-(60*$sthr2);
+                    echo"<option value='$sthr:$stmin-$sthr2:$stmin2'>$sthr:$stmin-$sthr2:$stmin2</option>";
+                    $sthr=$sthr2;
+                    $stmin=$stmin2;
+                    
                 }
-                else
-                {
-                    $sthr2=$sthr;
-                    $stmin2=$stmin+$duration+5;
-                }
-                echo"<option value='$sthr:$stmin-$sthr2:$stmin2'>$sthr:$stmin-$sthr2:$stmin2</option>";
-                $sthr=$sthr2;
-                $stmin=$stmin2;
             }
             ?>
-            <!--?php
-            <option value="9:30-10:00">9:30-10:00</option>
-                <option value="10:00-10:30">10:00-10:30</option>
-                <option value="10:30-11:00">10:30-11:00</option>
-                <option value="11:00-11:30">11:00-11:30</option>
-                <option value="11:30-12:00">11:30-12:00</option>
-                <option value="12:00-12:30">12:00-12:30</option>
-                <option value="12:30-1:00">12:30-1:00</option>
-                <option value="1:00-1:30">1:00-1:30</option>
-                <option value="1:30-2:00">1:30-2:00</option>
-                <option value="2:00-2:30">2:00-2:30</option>
-                <option value="2:30-3:00">2:30-3:00</option>
-                <option value="3:00-3:30">3:00-3:30</option>
-                <option value="3:30-4:00">3:30-4:00</option>
-                <option value="4:00-4:30">4:00-4:30</option>
-                <option value="4:30-5:00">4:30-5:00</option>
-                <option value="5:00-5:30">5:00-5:30</option>
-                <option value="5:30-6:00">5:30-6:00</option>
-                $start = strtotime('9:30 AM');
-                $end   = strtotime('6:30 PM');
-                echo "<script>$t=document.getElementById('duration').value</script>";
-                for ($hours = 9; $hours < 18; $hours++)
-                { // the interval for hours is '1'
-                    if ($hours>12){$hours=$hours-12;}
-                    for ($mins = 0; $mins < 60; $mins+=30) 
-                    { // the interval for mins is '35'
-                    echo '<option>' . str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
-                    . str_pad($mins, 2, '0', STR_PAD_LEFT) . '</option>';
-                    }
-                }
-            ?-->
             </select>
             </label>
             <br></br>
