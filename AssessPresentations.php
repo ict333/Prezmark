@@ -75,6 +75,7 @@ function convertTo24hr($hr, $ampm)
             <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Display Presentations</a>
+              <a href="LogoutMarker.php">Logout</a>
            </nav>
            </div>';
         }

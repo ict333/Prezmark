@@ -46,7 +46,7 @@ if($role=="Admin")
             <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-               
+              <a href="LogoutMarker.php">Logout</a>               
            </nav>
            </div>';
         }
