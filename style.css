@@ -10,8 +10,8 @@ html
 
 body
 {
-    margin-left:12%;
-    margin-right:12%;
+    margin-left:9%;
+    margin-right:9%;
     background-color: white;
 }
 
@@ -181,10 +181,11 @@ th, td {
     text-align: left;
     padding:10px;
 }
+tr:nth-child(even) {background-color: #f2f2f2}
 
 .column1
 { 
-    width:200px;
+    width:500px;
 }
 .column2
 { 
@@ -208,7 +209,23 @@ label
 {
     font-size:16px;
 }
-.expand
+
+.container
 {
-    width:300px;
+    text-align: center;
+    padding:10px 30px 0px 40px;
+}
+.buttonAssess
+{
+    background-color: rgb(102, 0, 0);
+    color: white;
+    font-family: "Arial";
+    font-size:14px;
+    width:60px;
+    padding:8px;
+}
+.buttonAssess:hover
+{
+    background-color: rgb(228, 207, 168);
+    color: rgb(102, 0, 0);
 }

@@ -26,7 +26,6 @@
                     $role=$row['Role'];
                     $active=$row['Active'];
                     $password=$row['Password'];
-                    //echo $pass.'----'.$password;
                     if(password_verify($pass, $password))
                     {
                         if($active==1)
@@ -93,7 +92,6 @@
         <input id="password" name="password" type="password" required></input>
         </label>
         <br> </br>
-        <a href="ForgotPassword.php">Forgot Password?</a><br>
         <input class="button" type="submit" name="submit" value="Login"></input>
      
     </form>

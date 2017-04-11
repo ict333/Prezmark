@@ -46,7 +46,7 @@ if($role=="Admin")
             <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
-               
+              <a href="LogoutMarker.php">Logout</a>               
            </nav>
            </div>';
         }
@@ -66,44 +66,75 @@ if($role=="Admin")
             {
                 echo "No Presentations to Assess";
             }
-                
-            $j=0;
-            $i=0;
-            while($rows=mysqli_fetch_array($result))
-            {         
-                $teamcode[$j]=$rows['TeamCode']; 
-                $j++; 
-            }         
             
-            for($k=0;$k<$j;$k++)
+            else
             {
-                $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
-                $result=mysqli_query($dbc,$query);
-                echo '<table>';
+                $j=0;
+                $i=0;
+                $p=0;
                 while($rows=mysqli_fetch_array($result))
-                {
-                    echo '<tr>';
-                    $teamname=$rows['TeamName'];
-                    $logo=$rows['Logo'];
-                    $description=$rows['Description'];
-                    echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
-                    echo '<td class="column2">'.$teamname.'</td>';
-                    echo '<td class="column3">'.$description.'</td>';
-                    echo '<td> <form method="post">'
-                       . '<input class="button" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
-                       . '</form></td>';
-                    echo '</tr>';
+                {         
+                    $teamcode[$j]=$rows['TeamCode']; 
+                    $j++; 
+                }         
 
-                    if(isset($_POST['assess'.$i]))
-                    {
-                        $_SESSION['TeamCodeAssess']=$teamcode[$k];
-                        header("Location: AssessPresentations.php");
-                    }
-                    $i++;
-                      
-                    echo '</table>'; 
+                $query="SELECT Venue FROM PresentationSchedule WHERE Date='$dateCurrent'";
+                $result=mysqli_query($dbc,$query);
+                 while($rows=mysqli_fetch_array($result))
+                {
+                    $venue[$p]=$rows['Venue']; 
+                    $p++;
                 }
+
+                echo '<div class="container">';
+               echo ' <table>
+                <tr>
+                <td><b>Date:</b> </h4>'.date("d-m-Y").'</td>            
+                </tr>
+                </table>';
+                echo '</div>';
+                                
+                 echo '<table>';
+                 echo '<tr>';
+                 echo '<td class="column2"><b>Team Logo</b></td>';
+                 echo '<td class="column2"><b>Team Name</b></td>';
+                 echo '<td class="column3"><b>Description</b></td>';
+                 echo '<td class="column3"><b>Location</b></td>';
+                 echo '<td></td>';
+                 echo '</tr>';
+                for($k=0;$k<$j;$k++)
+                {
+                    $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
+                    $result=mysqli_query($dbc,$query);
+                    while($rows=mysqli_fetch_array($result))
+                    {
+                        echo '<tr>';
+                        $teamname=$rows['TeamName'];
+                        $logo=$rows['Logo'];
+                        $description=$rows['Description'];
+                        echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
+                        echo '<td class="column2">'.$teamname.'</td>';
+                        echo '<td class="column3">'.$description.'</td>';
+                        echo '<td class="column3">'.$venue[$k].'</td>';
+                        echo '<td> <form method="post">'
+                           . '<input class="buttonAssess" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
+                           . '</form></td>';
+                        echo '</tr>';
+
+                        if(isset($_POST['assess'.$i]))
+                        {
+                            $_SESSION['TeamCodeAssess']=$teamcode[$k];
+                            header("Location: AssessPresentations.php");
+                        }
+                        $i++;
+
+                    }
+                }
+                
+                echo '</table>'; 
             }
+                
+            
            
             mysqli_close($dbc);  
         

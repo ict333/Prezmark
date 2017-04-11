@@ -75,6 +75,7 @@ function convertTo24hr($hr, $ampm)
             <img src="logo.png">
            <nav>
                <a href="PresentationDisplay.php" class="active">Display Presentations</a>
+              <a href="LogoutMarker.php">Logout</a>
            </nav>
            </div>';
         }
@@ -166,10 +167,10 @@ function convertTo24hr($hr, $ampm)
                   <tr> 
                       <td class="column1">
                     <h3>CONTENT</h3><br>
-                     <label class="expand" for="introduction">Effectiveness of the introduction and value proposition for the project.</br> 
+                     <label for="introduction">Effectiveness of the introduction and value proposition for the project.</br> 
                      Clearly explained the original client problem.</label>
                       </td>
-                      <td class="">
+                      <td class="column2">
                           <select class="mark" id="introduction" name="introduction" required>
                               <option value="0">Mark</option>
                               <option value="1">1</option>
