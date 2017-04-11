@@ -45,7 +45,7 @@ ini_set('display_errors',1);
                    
         <label for="unit">Unit</label>
         <br> 
-        <input id="unit" name="unit" type="text" required placeholder="For example: ICT333/ICT312"></input>
+        <input id="unit" name="unit" onblur="return checkLength()" type="text" required placeholder="For example: ICT333/ICT312"></input>
         <br> </br>
             
         <label for="semester">Teaching Period</label>
@@ -55,7 +55,7 @@ ini_set('display_errors',1);
             
         <label for="year">Year</label>
         <br> 
-        <input id="year" name="year" type="text" required></input>
+        <input id="year" name="year" onblur="return checkLength()" type="text" required></input>
         <br> </br>
         
    
@@ -87,9 +87,21 @@ ini_set('display_errors',1);
             function checkLength()
             {
                 var teach=document.getElementById("semester");
+                var year=document.getElementById("year");
+                var unit=document.getElementById("unit");
                 if(teach.value.length>3)
                 {
-                    alert("Semester input too long!");
+                    alert("Teaching period input too long!");
+                    return false;
+                }
+                if(unit.value.length>6)
+                {
+                    alert("Unit input too long!");
+                    return false;
+                }
+                if(year.value.length>4)
+                {
+                    alert("Year input too long!");
                     return false;
                 }
             }
@@ -140,7 +152,8 @@ if(isset($_POST['upload']))
             }*/
             if($ext!="csv")
             {
-                die("Error: Please select a valid file format.");
+                echo "<script>alert('Error: Please select a valid file format!')</script>";
+                die("");
             }
        
             // Verify file size - 2MB maximum
@@ -148,7 +161,9 @@ if(isset($_POST['upload']))
 
             if($filesize > $maxsize)
             {
-                die("Error: File size is larger than the allowed limit.");
+                echo "<script>alert('Error: File size is larger than the allowed limit!')</script>";
+                die("");
+
             }
 
             /* Verify MIME type of the file

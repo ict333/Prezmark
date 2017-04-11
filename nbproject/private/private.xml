@@ -5,6 +5,10 @@
         <group>
             <file>file:/var/www/html/Prezmark/AssessPresentations.php</file>
             <file>file:/var/www/html/Prezmark/FillPresentationSchedule.php</file>
+            <file>file:/var/www/html/Prezmark/DisableAccounts.php</file>
+            <file>file:/var/www/html/Prezmark/dbconnect.php</file>
+            <file>file:/var/www/html/Prezmark/UploadStudentDetails.php</file>
+            <file>file:/var/www/html/Prezmark/CreateSchedule.php</file>
             <file>file:/var/www/html/Prezmark/CreateSuperUser.php</file>
             <file>file:/var/www/html/Prezmark/DownloadMarks.php</file>
             <file>file:/var/www/html/Prezmark/style.css</file>

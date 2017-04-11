@@ -14,12 +14,14 @@ if((!isset($email)))
     {
         if(isset($_GET['submit']))
         {
+            
             $host = "localhost";
             $user = "team71";
             $password = "IUfkjs*454ds";
             $dbname = "team71"; 
             $dbc = mysqli_connect($host,$user,$password,$dbname);
             $type=$_GET['Type'];
+            $_SESSION['Type']=$type;
             if($type === "Marker")
             {
                 $query="select * from Marker where Active=1";
@@ -53,7 +55,7 @@ if((!isset($email)))
             $password = "IUfkjs*454ds";
             $dbname = "team71"; 
             $dbc = mysqli_connect($host,$user,$password,$dbname);
-            $type=$_GET['Type'];
+            $type=$_SESSION['Type'];
             $mail=$_GET['Account'];
             if($type === "Marker" && $mail)
             {

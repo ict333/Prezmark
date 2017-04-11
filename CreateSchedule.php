@@ -98,12 +98,16 @@ if(isset($_POST['next']))
             <br> </br>
             
             <label for="venue">Venue<br>
-            <input id="venue" name="venue" type="text" required></input>
+            <input id="venue" name="venue" onblur="return checkLength()" type="text" required></input>
             </label>
             <br> </br>
             
             <label for="duration">Duration<br>
-            <input id="duration" name="duration" type="number" required></input>
+                <select id="duration" name="duration" required>
+                    <option value="30">30 mins</option>
+                    <option value="45">45 mins</option>
+                    <option value="60">60 mins</option>
+                </select>
             </label>
             <br> </br>
             
@@ -160,7 +164,20 @@ if(isset($_POST['next']))
             </select>
             </label>
             <br> </br>
-            
+            <script>
+                function checkLength()
+                {
+                    if(document.getElementById("venue").value.length>100)
+                    {
+                        alert("Venue input is too long!");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            </script>
             <input class="button" type="submit" name="next" value="Next"></input>
         </form>  
         </div>
