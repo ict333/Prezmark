@@ -85,7 +85,7 @@ while ($rows = mysqli_fetch_array($result)) {
             <br> </br>
             
             <label for="description">Description<br>
-            <input id="description" name="description" type="text"></input>
+            <input id="description" name="description" type="text" required></input>
             </label>
             <br> </br>
                         
@@ -107,8 +107,6 @@ while ($rows = mysqli_fetch_array($result)) {
                     $stmin=$stmin2;
                     
                 }
-                //echo"<script>alert('$sthr')</script>";
-                //echo"<script>alert('still')</script>";
             }
             
             ?>
@@ -117,7 +115,6 @@ while ($rows = mysqli_fetch_array($result)) {
             <br></br>
             <div class="button-container">
             <input class="button" name="next" type="submit" value="Next" style="width:150px;">
-             <!--<input class="button" name="finish" type="submit" value="Finish" style="width:150px;">-->
             </div>
         </form>  
          </div>
@@ -146,8 +143,7 @@ while ($rows = mysqli_fetch_array($result)) {
 
         $query="INSERT INTO PresentationSchedule VALUES('$date','$email','$teamcode','$venue')";
         $result = mysqli_query($dbc,$query); 
-        echo"<script>alert('$slot')</script>";
-        $query="UPDATE Team SET Description='$description',TimeSlot='$date $slot:59' WHERE TeamCode='$teamcode'";
+        $query="UPDATE Team SET Description='$description',TimeSlot='$date $slot:00' WHERE TeamCode='$teamcode'";
         $result = mysqli_query($dbc,$query);                 
                 
         $target_dir = "TeamLogo/";
