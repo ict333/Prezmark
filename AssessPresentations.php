@@ -107,13 +107,13 @@ function convertTo24hr($hr, $ampm)
         $totalCurrentTime=totalTime($current_hr, $current_min);
         
         // Calculating the time in minutes for countdown time
-        $end_hr=11;
+        $end_hr=23;
         $end_min=59;
         $totalEndTime=totalTime($end_hr, $end_min);
         
         //Getting the date when the presentation ends and restricting marking time to midnight
         $date=substr($datetime,0,-9);
-        $time="11:59:00";
+        $time="23:59:00";
         $temp=array($date," ",$time);
         $datetime=implode($temp);    
         
