@@ -184,7 +184,7 @@ th, td {
 
 .column1
 { 
-    width:200px;
+    width:500px;
 }
 .column2
 { 
@@ -207,8 +207,4 @@ th, td {
 label
 {
     font-size:16px;
-}
-.expand
-{
-    width:300px;
 }
