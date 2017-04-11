@@ -75,6 +75,22 @@ if($role=="Admin")
                 $j++; 
             }         
             
+            $query="SELECT Venue FROM PresentationSchedule WHERE Date='$dateCurrent'";
+            $result=mysqli_query($dbc,$query);
+             while($rows=mysqli_fetch_array($result))
+            {
+                $venue=$rows['Venue']; 
+            }
+            
+            echo '<div class="container">';
+           echo ' <table>
+            <tr>
+            <td><b>Venue:</b> '.$venue.' </td>
+            <td><b>Date:</b> </h4>'.date("d-m-Y").'</td>            
+            </tr>
+            </table>';
+            echo '</div>';
+            
             for($k=0;$k<$j;$k++)
             {
                 $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
