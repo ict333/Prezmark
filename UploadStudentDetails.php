@@ -141,7 +141,8 @@ if(isset($_POST['upload']))
             }*/
             if($ext!="csv")
             {
-                die("Error: Please select a valid file format.");
+                echo "<script>alert('Error: Please select a valid file format!')</script>";
+                die("");
             }
        
             // Verify file size - 2MB maximum
@@ -149,7 +150,9 @@ if(isset($_POST['upload']))
 
             if($filesize > $maxsize)
             {
-                die("Error: File size is larger than the allowed limit.");
+                echo "<script>alert('Error: File size is larger than the allowed limit!')</script>";
+                die("");
+
             }
 
             /* Verify MIME type of the file
