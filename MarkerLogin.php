@@ -124,12 +124,12 @@ if (isset($_POST['m_login']))
                 <form name="Register" onsubmit="return check()" method="post">
 
                 <label for="firstname">First Name <br>
-                    <input class="input" type="text" name="firstname" id="firstname" required>
+                    <input class="input" type="text" onblur="return checkFirstName()" name="firstname" id="firstname" required>
                 </label>
                 <br></br>
 
                 <label for="lastname">Last Name<br>
-                    <input class="input" type="text" name="lastname" id="lastname" required>
+                    <input class="input" onblur="return checkLastName()" type="text" name="lastname" id="lastname" required>
                 </label>
                 <br></br>
 
@@ -149,12 +149,12 @@ if (isset($_POST['m_login']))
                 <br></br>
 
                 <label for="affiliation">Affiliation<br>
-                    <input class="input" type="text" name="affiliation" id="affiliation" placeholder="Company Name/Relation">
+                    <input class="input" onblur="return checkAffiliation()" type="text" name="affiliation" id="affiliation" placeholder="Company Name/Relation">
                 </label>
                 <br></br>
 
                 <label for="student">Student Number<br>
-                    <input class="input" type="integer" name="student" id="student">
+                    <input class="input" onblur="return checkID()" type="integer" name="student" id="student">
                 </label>
                 <br></br>
 
@@ -186,6 +186,52 @@ if (isset($_POST['m_login']))
    
 
     <script>
+        function checkFirstName()
+        {
+            var fn=document.getElementById("firstname").value;
+            if(fn.length>50)
+            {
+                alert("Input for First Name too big");
+                return false;
+            }
+            
+            
+        }
+        
+        function checkLastName()
+        {
+            var ln=document.getElementById("lastname").value;
+            
+            if(ln.length>50)
+            {
+                alert("Input for Last Name too big");
+                return false;
+            }
+            
+        }
+        
+        function checkAffiliation()
+        {
+            var aff=document.getElementById("affiliation").value;
+            if(aff.length>100)
+            {
+                alert("Input for Affiliation too big");
+                return false;
+            }
+            
+        }
+        
+        function checkID()
+        {
+            var id=document.getElementById("student").value;
+            if(isNaN(id)===true)
+            {
+                alert("Only numbers allowed in student id field!");
+                return false;
+            }
+            
+        }
+        
         function check()
         {
             var fname=document.Register.firstname.value;

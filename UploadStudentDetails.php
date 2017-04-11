@@ -50,7 +50,7 @@ ini_set('display_errors',1);
             
         <label for="semester">Teaching Period</label>
         <br> 
-        <input id="semester" name="semester" type="text" required placeholder="For example: S1/S2/TJD/TMD/TSD"></input>
+        <input id="semester" name="semester" onblur="return checkLength()" type="text" required placeholder="For example: S1/S2/TJD/TMD/TSD"></input>
         <br> </br>
             
         <label for="year">Year</label>
@@ -81,6 +81,16 @@ ini_set('display_errors',1);
                 if(teaching.length()>3)
                 {
                     alert("Please enter a valid teaching period!");
+                }
+            }
+            
+            function checkLength()
+            {
+                var teach=document.getElementById("semester");
+                if(teach.value.length>3)
+                {
+                    alert("Semester input too long!");
+                    return false;
                 }
             }
         </script>
