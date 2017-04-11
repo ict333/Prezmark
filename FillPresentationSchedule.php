@@ -9,6 +9,10 @@ if($role!="UC")
 {
     header("Location: SuperUserLogin.php");
 }
+if(!$role)
+{
+    header("Location: SuperUserLogin.php");
+}
 $date=$_SESSION['Date'];
 $venue=$_SESSION['Venue'];
 $unitoffering=$_SESSION['UnitOffering'];
@@ -89,7 +93,7 @@ while ($rows = mysqli_fetch_array($result)) {
             <select name="slot" id="slot" required>
             <?php
             $duration=$duration+5;
-            while($sthr!=$enhr||$stmin!=$enmin)
+            while($sthr!=$enhr)
             {
                 if($sthr<=$enhr)
                 {
@@ -98,19 +102,22 @@ while ($rows = mysqli_fetch_array($result)) {
                     $temp2=($temp+$duration)/60;
                     $sthr2=floor($temp2);
                     $stmin2=($temp+$duration)-(60*$sthr2);
-                    echo"<option value='$sthr:$stmin-$sthr2:$stmin2'>$sthr:$stmin-$sthr2:$stmin2</option>";
+                    echo"<option value='$sthr:$stmin'>$sthr:$stmin-$sthr2:$stmin2</option>";
                     $sthr=$sthr2;
                     $stmin=$stmin2;
                     
                 }
+                //echo"<script>alert('$sthr')</script>";
+                //echo"<script>alert('still')</script>";
             }
+            
             ?>
             </select>
             </label>
             <br></br>
             <div class="button-container">
-            <input class="button" name="next" type="submit" value="Next" style="float:left;width:150px;">
-             <input class="button" name="finish" type="submit" value="Finish" style="width:150px;">
+            <input class="button" name="next" type="submit" value="Next" style="width:150px;">
+             <!--<input class="button" name="finish" type="submit" value="Finish" style="width:150px;">-->
             </div>
         </form>  
          </div>
@@ -126,6 +133,7 @@ while ($rows = mysqli_fetch_array($result)) {
     if(isset($_POST['next']))
     {
         $teamname=$_POST['teamname'];
+        $slot=$_POST['slot'];
         $description=$_POST['description'];
         // $time=$_POST['time'];
         $query="SELECT TeamCode FROM Team WHERE TeamName='$teamname' AND UnitOffering='$unitoffering'";
@@ -138,8 +146,8 @@ while ($rows = mysqli_fetch_array($result)) {
 
         $query="INSERT INTO PresentationSchedule VALUES('$date','$email','$teamcode','$venue')";
         $result = mysqli_query($dbc,$query); 
-
-        $query="UPDATE Team SET Description='$description',TimeSlot='2017-03-04 15:27:26' WHERE TeamCode='$teamcode'";
+        echo"<script>alert('$slot')</script>";
+        $query="UPDATE Team SET Description='$description',TimeSlot='$date $slot:59' WHERE TeamCode='$teamcode'";
         $result = mysqli_query($dbc,$query);                 
                 
         $target_dir = "TeamLogo/";
@@ -200,17 +208,5 @@ while ($rows = mysqli_fetch_array($result)) {
             }
         }
 
-        } 
-               
-                               
-                
-            
-            if(isset($_POST['finish']))
-            {
-                
-            }
-            
-          
-            
-        
+        }       
 ?>
