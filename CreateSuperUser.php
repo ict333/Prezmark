@@ -142,22 +142,22 @@ if(isset($_POST['submit']))
             {
                 echo('<p>' . $mail->getMessage() . '</p>');
             } 
-            else 
+            /*else 
             {
                 echo('<p>Message successfully sent!</p>');
-            }
+            }*/
           }
           
           else
           {
-            echo 'This email is already exists!';
+            echo '<script>alert("This email already exists!");</script>';
 
           }
         } 
         
         else
         {
-          echo $email.' is not a valid email address';
+            echo '<script>alert("Please enter a valid email address");</script>';
         }        
     }		
 ?>
