@@ -34,7 +34,8 @@
                          echo '<script>alert("Logged in successfully")</script>';
                          if($role=="Admin")
                          {
-                             $_SESSION['Role']="Admin";  
+                             $_SESSION['Role']="Admin";
+                             $_SESSION['Email']=$email;
                              header("Location: CreateSuperUser.php");
                          }
                          else
