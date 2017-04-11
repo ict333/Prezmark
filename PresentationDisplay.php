@@ -71,6 +71,7 @@ if($role=="Admin")
             {
                 $j=0;
                 $i=0;
+                $p=0;
                 while($rows=mysqli_fetch_array($result))
                 {         
                     $teamcode[$j]=$rows['TeamCode']; 
@@ -81,23 +82,30 @@ if($role=="Admin")
                 $result=mysqli_query($dbc,$query);
                  while($rows=mysqli_fetch_array($result))
                 {
-                    $venue=$rows['Venue']; 
+                    $venue[$p]=$rows['Venue']; 
+                    $p++;
                 }
 
                 echo '<div class="container">';
                echo ' <table>
                 <tr>
-                <td><b>Venue:</b> '.$venue.' </td>
                 <td><b>Date:</b> </h4>'.date("d-m-Y").'</td>            
                 </tr>
                 </table>';
                 echo '</div>';
-
+                                
+                 echo '<table>';
+                 echo '<tr>';
+                 echo '<td class="column2"><b>Team Logo</b></td>';
+                 echo '<td class="column2"><b>Team Name</b></td>';
+                 echo '<td class="column3"><b>Description</b></td>';
+                 echo '<td class="column3"><b>Location</b></td>';
+                 echo '<td></td>';
+                 echo '</tr>';
                 for($k=0;$k<$j;$k++)
                 {
                     $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
                     $result=mysqli_query($dbc,$query);
-                    echo '<table>';
                     while($rows=mysqli_fetch_array($result))
                     {
                         echo '<tr>';
@@ -107,8 +115,9 @@ if($role=="Admin")
                         echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
                         echo '<td class="column2">'.$teamname.'</td>';
                         echo '<td class="column3">'.$description.'</td>';
+                        echo '<td class="column3">'.$venue[$k].'</td>';
                         echo '<td> <form method="post">'
-                           . '<input class="button" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
+                           . '<input class="buttonAssess" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
                            . '</form></td>';
                         echo '</tr>';
 
@@ -119,9 +128,10 @@ if($role=="Admin")
                         }
                         $i++;
 
-                        echo '</table>'; 
                     }
                 }
+                
+                echo '</table>'; 
             }
                 
             

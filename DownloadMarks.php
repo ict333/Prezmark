@@ -279,6 +279,7 @@ else if(isset($_POST['download2']))
         $averageVisitor=0.0;
         $averageStudent=0.0;
         $averageTotal=0;
+        $avg=0.0;
         $t=0.0;
         
         
