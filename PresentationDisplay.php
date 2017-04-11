@@ -66,60 +66,65 @@ if($role=="Admin")
             {
                 echo "No Presentations to Assess";
             }
-                
-            $j=0;
-            $i=0;
-            while($rows=mysqli_fetch_array($result))
-            {         
-                $teamcode[$j]=$rows['TeamCode']; 
-                $j++; 
-            }         
             
-            $query="SELECT Venue FROM PresentationSchedule WHERE Date='$dateCurrent'";
-            $result=mysqli_query($dbc,$query);
-             while($rows=mysqli_fetch_array($result))
+            else
             {
-                $venue=$rows['Venue']; 
-            }
-            
-            echo '<div class="container">';
-           echo ' <table>
-            <tr>
-            <td><b>Venue:</b> '.$venue.' </td>
-            <td><b>Date:</b> </h4>'.date("d-m-Y").'</td>            
-            </tr>
-            </table>';
-            echo '</div>';
-            
-            for($k=0;$k<$j;$k++)
-            {
-                $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
-                $result=mysqli_query($dbc,$query);
-                echo '<table>';
+                $j=0;
+                $i=0;
                 while($rows=mysqli_fetch_array($result))
-                {
-                    echo '<tr>';
-                    $teamname=$rows['TeamName'];
-                    $logo=$rows['Logo'];
-                    $description=$rows['Description'];
-                    echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
-                    echo '<td class="column2">'.$teamname.'</td>';
-                    echo '<td class="column3">'.$description.'</td>';
-                    echo '<td> <form method="post">'
-                       . '<input class="button" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
-                       . '</form></td>';
-                    echo '</tr>';
+                {         
+                    $teamcode[$j]=$rows['TeamCode']; 
+                    $j++; 
+                }         
 
-                    if(isset($_POST['assess'.$i]))
+                $query="SELECT Venue FROM PresentationSchedule WHERE Date='$dateCurrent'";
+                $result=mysqli_query($dbc,$query);
+                 while($rows=mysqli_fetch_array($result))
+                {
+                    $venue=$rows['Venue']; 
+                }
+
+                echo '<div class="container">';
+               echo ' <table>
+                <tr>
+                <td><b>Venue:</b> '.$venue.' </td>
+                <td><b>Date:</b> </h4>'.date("d-m-Y").'</td>            
+                </tr>
+                </table>';
+                echo '</div>';
+
+                for($k=0;$k<$j;$k++)
+                {
+                    $query="SELECT * FROM Team WHERE TeamCode='$teamcode[$k]'";
+                    $result=mysqli_query($dbc,$query);
+                    echo '<table>';
+                    while($rows=mysqli_fetch_array($result))
                     {
-                        $_SESSION['TeamCodeAssess']=$teamcode[$k];
-                        header("Location: AssessPresentations.php");
+                        echo '<tr>';
+                        $teamname=$rows['TeamName'];
+                        $logo=$rows['Logo'];
+                        $description=$rows['Description'];
+                        echo '<td class="column2"><img src="'.$logo.'" style="width:50px;height:50px;"></td>';
+                        echo '<td class="column2">'.$teamname.'</td>';
+                        echo '<td class="column3">'.$description.'</td>';
+                        echo '<td> <form method="post">'
+                           . '<input class="button" type="submit" name="assess'.$i.'" id="assess'.$i.'" value="Assess"></input>'
+                           . '</form></td>';
+                        echo '</tr>';
+
+                        if(isset($_POST['assess'.$i]))
+                        {
+                            $_SESSION['TeamCodeAssess']=$teamcode[$k];
+                            header("Location: AssessPresentations.php");
+                        }
+                        $i++;
+
+                        echo '</table>'; 
                     }
-                    $i++;
-                      
-                    echo '</table>'; 
                 }
             }
+                
+            
            
             mysqli_close($dbc);  
         

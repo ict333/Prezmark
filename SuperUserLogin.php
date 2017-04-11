@@ -92,7 +92,6 @@
         <input id="password" name="password" type="password" required></input>
         </label>
         <br> </br>
-        <a href="ForgotPassword.php">Forgot Password?</a><br>
         <input class="button" type="submit" name="submit" value="Login"></input>
      
     </form>
