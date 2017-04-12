@@ -274,6 +274,7 @@ else if(isset($_POST['download2']))
         $averageStudent=0.0;
         $averageTotal=0;
         $t=0.0;
+        $avg=0.0;
         
         
         //calculating total staff marks for team 'k'
@@ -368,8 +369,10 @@ else if(isset($_POST['download2']))
         {   
             $averageStudent=$studentTotal/$countStudent;
         }
-        
-        $t=$averageTotal/$Gtotal;
+        if($averageTotal!=0)
+        { 
+            $t=$averageTotal/$Gtotal;
+        }
         array_push($averageMarks[$i], $averageStaff);
         array_push($averageMarks[$i], $avg);
         array_push($averageMarks[$i], $averageStudent);
@@ -418,16 +421,9 @@ else
         <input id="date" name="date" type="date" required></input>
         <br> </br>
         
-        
-        <!--label for="date">Unit Offering</label><br>
-        <select name="" id="" required>
-       
-            //insert here
-        
-        </select-->
         <div class="button-container">
-            <input class="button" name="download1" type="submit" value="Download1" style="float:left;width:150px;"/>
-            <input class="button" name="download2" type="submit" value="Download2" style="width:150px;">
+            <input class="button" name="download1" type="submit" value="Marks Per Role" style="float:left;width:150px;"/>
+            <input class="button" name="download2" type="submit" value="Average Team Marks" style="width:150px;">
         </div>
         </form> 
         </div>
