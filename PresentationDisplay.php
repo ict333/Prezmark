@@ -21,6 +21,12 @@ if($role=="Admin")
     <head> 
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" href="icon.png" type="image/x-icon"></link>
+        <!--
+        Authors: Christopher Thomas
+                 Esha Shetty
+                 Sasha Jazzabelle
+        Date: 12th April 2017
+        -->
     </head>
     
     <body>
@@ -34,8 +40,6 @@ if($role=="Admin")
                <a href="CreateSchedule.php">New Schedule</a>
                <a href="PresentationDisplay.php" class="active">Assess Presentations</a>
                <a href="DownloadMarks.php">Download Marks</a>
-              <!-- <a href="">Modify Student Details</a>
-               <a href="">Modify Schedule</a-->
               <a href="Logout.php">Logout</a>
            </nav>
            </div>';

@@ -7,8 +7,6 @@ if((!isset($email)))
     header("Location: SuperUserLogin.php");
 }
 
-  ini_set('display_errors',1);
-    error_reporting (E_ALL);
     if(isset($_POST['submit']))
     {
         include 'dbconnect.php';
@@ -28,6 +26,12 @@ if((!isset($email)))
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" href="icon.png" type="image/x-icon"></link>
+        <!--
+        Authors: Christopher Thomas
+                 Esha Shetty
+                 Sasha Jazzabelle
+        Date: 12th April 2017
+        -->
     </head>
     
     <div class="header">

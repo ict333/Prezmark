@@ -48,6 +48,12 @@ if(isset($_POST['next']))
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" href="logo.png" type="image/x-icon"></link>
+        <!--
+        Authors: Christopher Thomas
+                 Esha Shetty
+                 Sasha Jazzabelle
+        Date: 12th April 2017
+        -->
     </head>
     
     <body>

@@ -108,8 +108,14 @@ if (isset($_POST['m_login']))
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" type="text/css" href="mobile.css" media="screen and max-width(500px)">
-        <link rel="icon" href="icon.png" type="image/x-icon"></link>
+        <link rel="stylesheet" type="text/css" href="mobile.css" media="screen and max-width(500px)"/>
+        <link rel="icon" href="icon.png" type="image/x-icon"/>
+        <!--
+        Authors: Christopher Thomas
+                 Esha Shetty
+                 Sasha Jazzabelle
+        Date: 12th April 2017
+        -->
     </head>
     <body>
       <div class="header">

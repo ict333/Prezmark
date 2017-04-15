@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors',1);
-error_reporting(E_ALL);
-
 session_start();
 $role= $_SESSION['Role'];
 $email=$_SESSION['Email'];
@@ -49,7 +46,13 @@ while ($rows = mysqli_fetch_array($result))
 <html> 
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">  
-        <link rel="icon" href="icon.png" type="image/x-icon"></link>      
+        <link rel="icon" href="icon.png" type="image/x-icon"></link> 
+        <!--
+        Authors: Christopher Thomas
+                 Esha Shetty
+                 Sasha Jazzabelle
+        Date: 12th April 2017
+        -->     
     </head>
     
     <body>
@@ -60,8 +63,6 @@ while ($rows = mysqli_fetch_array($result))
             <a href="CreateSchedule.php" class="active">New Schedule</a>
             <a href="PresentationDisplay.php">Assess Presentations</a>
             <a href="DownloadMarks.php">Download Marks</a>
-            <!--a href="">Modify Student Details</a>
-            <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>
         </nav>
         </div>

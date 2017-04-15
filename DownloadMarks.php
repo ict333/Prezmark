@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors',1);
-error_reporting (E_ALL);
 
 session_start();
 $role= $_SESSION['Role'];
@@ -393,6 +391,12 @@ else
     <head>        
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" href="icon.png" type="image/x-icon"></link>
+        <!--
+        Authors: Christopher Thomas
+                 Esha Shetty
+                 Sasha Jazzabelle
+        Date: 12th April 2017
+        -->
     </head>
     
     <body>
@@ -403,8 +407,6 @@ else
             <a href="CreateSchedule.php">New Schedule</a>
             <a href="PresentationDisplay.php">Assess Presentations</a>
             <a href="DownloadMarks.php"  class="active">Download Marks</a>
-            <!--a href="">Modify Student Details</a>
-            <a href="">Modify Schedule</a-->
             <a href="Logout.php">Logout</a>
         </nav>
         </div>
